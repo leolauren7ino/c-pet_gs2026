@@ -63,7 +63,7 @@ public class DadosAbertosService {
         return bairros.findAll().stream()
                 .map(b -> {
                     List<Caso> lista = porBairro.getOrDefault(b.getId(), List.of());
-                    return new BairroAgregado(b.getId(), b.getNome(), b.getLat(), b.getLng(),
+                    return new BairroAgregado(b.getId(), b.getNome(), Geo.arredondar2(b.getLat()), Geo.arredondar2(b.getLng()),
                             b.getIndiceVulnerabilidade(), contar(lista, true), contar(lista, false), lista.size(),
                             porTipo(lista));
                 })

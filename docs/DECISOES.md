@@ -36,6 +36,10 @@ Onde o enunciado deixou uma escolha em aberto, ficou a opção mais simples. Cad
 
 - **"Entrar como" sem senha**: simplificação de MVP. A tela lista os usuários do seed e abre uma sessão HTTP. Não serve para produção; o próximo passo seria OAuth2 ou SSO da prefeitura.
 - Endpoints públicos: `POST /api/reportes`, `GET /api/acompanhar/{codigo}`, `GET /api/dados/*`, `GET /api/usuarios`, `GET /api/info`. Nenhum devolve coordenada exata nem contato. A linha do tempo pública mostra só o status e a hora, sem as observações internas.
+- **Teste de privacidade** (`PrivacidadeTest`): cria um reporte com contato, descrição, foto e coordenada de 5 casas e confere que nenhum endpoint público (dados abertos, informações gerais e acompanhamento de todos os 40 códigos do seed mais o novo) devolve esses valores, as coordenadas exatas dos casos, nomes de agentes e recursos, nem caminho de foto. Também varre o JSON atrás de campos proibidos e de `lat`/`lng` com mais de 2 casas. Rodei o teste com o arredondamento desligado para ver que ele falha.
+- O centro de bairro exposto em `/api/dados/bairros` passou a sair com 2 casas (antes saía com até 4). Não é o ponto de um caso, mas o contrato público fica uniforme.
+- **Fotos do seed** são ilustrações geradas (`tools/GerarFotos.java`) e ficam em `static/seed-fotos`, acessíveis sem login por serem simuladas. Fotos enviadas por cidadãos continuam só em `/api/fotos/{uuid}`, com login.
+- `GET /api/usuarios` é público de propósito, para a tela "Entrar como" do MVP (lista nomes e o recurso de cada usuário do seed).
 - Células públicas usam a coordenada arredondada a 2 casas (cerca de 1 km), a mesma gravada em `caso.celula`.
 - **Fotos** só saem em `/api/fotos/{nome}` para usuário autenticado. O nome é validado contra o padrão UUID, o que impede path traversal.
 - **Upload**: o tipo vem dos bytes (cabeçalho JPG ou PNG), não do nome nem do `Content-Type`. A imagem é decodificada e gravada de novo com `ImageIO`, o que descarta EXIF e outros metadados. Limite de 5 MB.
