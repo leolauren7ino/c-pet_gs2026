@@ -9,7 +9,7 @@
   let limitesDosBairros = null;
   let enquadrarAoAbrirMapa = false;
 
-  const COR_SCORE = { alto: "#B8431D", medio: "#C9962E", baixo: "#6E7A73" };
+  const COR_SCORE = { alto: "#A9431E", medio: "#C9962E", baixo: "#6B7A7E" };
 
   iniciar("painel.html", { exigir: "OPERADOR" }).then((usuario) => {
     if (!usuario) return;
@@ -134,11 +134,11 @@
       if (n < 5) return;
       const [lat, lng] = celula.split(",").map(Number);
       L.rectangle([[lat - 0.005, lng - 0.005], [lat + 0.005, lng + 0.005]], {
-        color: "#B8431D", weight: 1.5, dashArray: "5 4", fillColor: "#B8431D", fillOpacity: 0.08, interactive: false,
+        color: "#A9431E", weight: 1.5, dashArray: "5 4", fillColor: "#A9431E", fillOpacity: 0.08, interactive: false,
       }).addTo(camadaCelulas);
       L.marker([lat + 0.005, lng - 0.005], {
         interactive: false,
-        icon: L.divIcon({ className: "", html: `<span class="chip" style="background:#fff;color:#8F3112;border-color:#B8431D;transform:translateY(-100%)">${n} abertos na célula</span>`, iconSize: [0, 0] }),
+        icon: L.divIcon({ className: "", html: `<span class="chip" style="background:#fff;color:#7E2F12;border-color:#A9431E;transform:translateY(-100%)">${n} abertos na célula</span>`, iconSize: [0, 0] }),
       }).addTo(camadaCelulas);
     });
 
@@ -147,7 +147,7 @@
       const aberto = ["REPORTADO", "TRIAGEM", "ENCAMINHADO"].includes(c.status);
       const m = L.circleMarker([c.lat, c.lng], {
         radius: aberto ? 7 + Math.round(c.score / 14) : 5,
-        color: "#1B2320",
+        color: "#17252A",
         weight: c.id === estado.selecionado ? 3 : 1,
         fillColor: aberto ? COR_SCORE[classeScore(c.score)] : "#B3AA95",
         fillOpacity: aberto ? 0.85 : 0.5,

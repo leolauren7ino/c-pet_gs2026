@@ -48,8 +48,8 @@
       const c = d.caso;
       pontos.push([c.lat, c.lng]);
       L.circleMarker([c.lat, c.lng], {
-        radius: 8 + Math.round(c.score / 14), color: "#1B2320", weight: 1,
-        fillColor: c.score >= 70 ? "#B8431D" : "#C9962E", fillOpacity: 0.85,
+        radius: 8 + Math.round(c.score / 14), color: "#17252A", weight: 1,
+        fillColor: c.score >= 70 ? "#A9431E" : "#C9962E", fillOpacity: 0.85,
       })
         .bindTooltip(`${TIPOS[c.tipo]}, ${esc(c.bairro)}, prioridade ${c.score}`)
         .on("click", () => document.getElementById(`caso-${c.id}`)?.scrollIntoView({ behavior: "smooth", block: "center" }))

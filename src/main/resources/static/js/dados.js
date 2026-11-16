@@ -2,7 +2,7 @@
   const { api, iniciar, esc, mapaBase, TIPOS } = window.CPET;
   iniciar("dados.html");
 
-  const RAMPA = ["#F1E4C3", "#E3B66B", "#D2832E", "#B8431D", "#7E2410"];
+  const RAMPA = ["#F1E4C3", "#E3B66B", "#D2832E", "#A9431E", "#7E2410"];
   const FAIXAS = [
     [0, "nenhum"],
     [1, "1 a 2"],
@@ -49,7 +49,7 @@
         icon: L.divIcon({
           className: "",
           iconSize: [d, d],
-          html: `<span class="bolha" style="width:${d}px;height:${d}px;background:${cor(n)};color:${n >= 5 ? "#fff" : "#1B2320"}">${n}</span>`,
+          html: `<span class="bolha" style="width:${d}px;height:${d}px;background:${cor(n)};color:${n >= 5 ? "#fff" : "#17252A"}">${n}</span>`,
         }),
         keyboard: false,
       })
@@ -63,7 +63,7 @@
           .sort((a, b) => abertos(b) - abertos(a))
           .slice(0, 5)
           .map(
-            (c) => `<li><span class="bolha-mini" style="background:${cor(abertos(c))};color:${abertos(c) >= 5 ? "#fff" : "#1B2320"}">${abertos(c)}</span>
+            (c) => `<li><span class="bolha-mini" style="background:${cor(abertos(c))};color:${abertos(c) >= 5 ? "#fff" : "#17252A"}">${abertos(c)}</span>
               <span><b>${esc(c.bairro)}</b><small>${esc(resumoTipos(c))}</small></span></li>`
           )
           .join("")
