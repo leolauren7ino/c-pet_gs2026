@@ -4,15 +4,15 @@
 .abertura h1 { max-width: 20ch; }
 .abertura p { margin-top: 14px; max-width: 56ch; font-size: 17px; color: var(--tinta-2); }
 
-.reportar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; padding-top: 32px; align-items: start; }
+.reportar { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; padding-top: 32px; align-items: start; }
 .reportar .coluna-mapa { position: sticky; top: 16px; }
 .reportar .mapa { height: 460px; }
 .leitura-local { font-size: 14px; margin-top: 8px; min-height: 20px; color: var(--tinta-2); }
 .leitura-local.ok { color: var(--musgo-escuro); font-weight: 600; }
 
 .passo { margin-bottom: 36px; }
-.passo > h2 { display: flex; align-items: baseline; gap: 12px; font-size: 1.1rem; margin-bottom: 14px; }
-.passo > h2 .n { font-family: var(--mono); font-weight: 500; font-size: 13px; color: var(--musgo); border: 1px solid var(--musgo); border-radius: 2px; padding: 1px 6px; }
+.passo > h2 { font-size: 1.15rem; margin-bottom: 14px; }
+.passo-rotulo { font-size: 13px; font-weight: 600; color: var(--tinta-2); margin: 0 0 4px; }
 
 .tipos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
 .tipo { position: relative; }
@@ -29,8 +29,8 @@
 .tipo input:focus-visible + label { outline: 2px solid var(--musgo); outline-offset: 2px; }
 
 .linha-contato { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
-.aviso-consent { border-left: 3px solid var(--ocre); background: var(--ocre-claro); padding: 10px 12px; font-size: 13px; color: #4F3A0A; border-radius: 0 var(--raio) var(--raio) 0; }
-.aviso-consent b { display: block; margin-bottom: 2px; }
+.nota-consent { margin: 0; font-size: 13px; line-height: 1.5; color: var(--tinta-2); padding-top: 30px; }
+.nota-consent b { font-weight: 600; color: var(--tinta); }
 
 .acoes-form { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
 .ajuda-envio { font-size: 13px; color: var(--tinta-2); }
@@ -51,7 +51,7 @@
 .busca input { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; font-size: 16px; }
 .resultado { margin-top: 36px; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 48px; max-width: 860px; }
 .resultado dl { margin: 0; }
-.resultado dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tinta-2); font-weight: 700; margin-top: 16px; }
+.resultado dt { font-size: 13px; color: var(--tinta-2); font-weight: 600; margin-top: 16px; }
 .resultado dt:first-child { margin-top: 0; }
 .resultado dd { margin: 3px 0 0; font-size: 16px; }
 
@@ -76,10 +76,12 @@
 .dados-grade { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px; margin-top: 36px; align-items: start; }
 .dados-grade .mapa { height: 480px; }
 .tabela-bairros { width: 100%; border-collapse: collapse; font-size: 14px; }
-.tabela-bairros th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--tinta-2); padding: 0 8px 8px 0; border-bottom: 1px solid var(--tinta); }
-.tabela-bairros td { padding: 10px 8px 10px 0; border-bottom: 1px solid var(--linha); vertical-align: middle; }
-.tabela-bairros tbody th { font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--tinta); padding: 10px 8px 10px 0; border-bottom: 1px solid var(--linha); }
-.tabela-bairros .num { font-family: var(--mono); text-align: right; }
+.tabela-bairros th { text-align: left; font-size: 13px; font-weight: 600; color: var(--tinta-2); padding: 0 0 8px 14px; border-bottom: 1px solid var(--tinta); }
+.tabela-bairros th:first-child, .tabela-bairros td:first-child { padding-left: 0; }
+.tabela-bairros td { padding: 10px 0 10px 14px; border-bottom: 1px solid var(--linha); vertical-align: middle; }
+.tabela-bairros tbody th { font-size: 14px; font-weight: 600; color: var(--tinta); padding: 10px 0 10px 0; border-bottom: 1px solid var(--linha); }
+.tabela-bairros th.num, .tabela-bairros td.num { text-align: right; }
+.tabela-bairros td.num { font-family: var(--mono); }
 .barra { height: 6px; background: var(--papel-2); width: 100%; min-width: 60px; }
 .barra i { display: block; height: 100%; background: var(--ferrugem); }
 .legenda { display: flex; gap: 14px; align-items: center; font-size: 12.5px; color: var(--tinta-2); margin-top: 10px; flex-wrap: wrap; }
@@ -88,12 +90,13 @@
 
 @media (max-width: 900px) {
   .reportar, .dados-grade, .resultado { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .reportar .coluna-mapa { position: static; order: -1; }
+  .reportar .coluna-mapa { position: static; }
   .reportar .mapa { height: 320px; }
   .usuarios { grid-template-columns: minmax(0, 1fr); }
 }
 @media (max-width: 560px) {
   .tipos, .linha-contato { grid-template-columns: minmax(0, 1fr); }
+  .nota-consent { padding-top: 0; }
   .abertura { padding-top: 30px; }
   .numeros .valor { font-size: 1.5rem; }
   .numeros > div { padding: 12px; }

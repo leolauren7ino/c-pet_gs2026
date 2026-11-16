@@ -82,7 +82,7 @@
     const quem = usuario
       ? `<span class="usuario"><span>${esc(usuario.nome)}</span><button type="button" id="sair">Sair</button></span>`
       : "";
-    return `<header class="topo"><a class="marca" href="${usuario ? (usuario.perfil === "OPERADOR" ? "painel.html" : "recurso.html") : "index.html"}">C-PET<small>inteligência para o cuidado animal</small></a><nav aria-label="Principal">${nav}${quem}</nav></header>`;
+    return `<header class="topo"><a class="marca" href="${usuario ? (usuario.perfil === "OPERADOR" ? "painel.html" : "recurso.html") : "index.html"}"><svg class="wordmark" viewBox="0 0 76 24" width="76" height="24" role="img" aria-label="C-PET"><text x="0" y="19">C<tspan class="hifen">-</tspan>PET</text></svg><small>Reporte, prioridade e encaminhamento de animais de rua</small></a><nav aria-label="Principal">${nav}${quem}</nav></header>`;
   }
 
   async function iniciar(ativo, { usuario = null, exigir = null } = {}) {

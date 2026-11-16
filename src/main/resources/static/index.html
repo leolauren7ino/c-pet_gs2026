@@ -20,9 +20,22 @@
     </section>
 
     <form id="form" class="pagina reportar" novalidate>
+      <div class="coluna-mapa">
+        <section class="passo" style="margin-bottom:0">
+          <p class="passo-rotulo">Passo 1 de 3</p>
+          <h2>Onde ele está</h2>
+          <button class="btn-c cheio" type="button" id="localizar">Estou no local: usar minha localização</button>
+          <p class="ajuda-envio my-2">Ou aproxime o mapa e toque no ponto exato onde o animal está.</p>
+          <div id="mapa" class="mapa" role="application" aria-label="Mapa para marcar o local"></div>
+          <p class="leitura-local" id="leitura-local" aria-live="polite">Nenhum ponto marcado.</p>
+          <div class="erro-campo" id="erro-local" hidden></div>
+        </section>
+      </div>
+
       <div>
         <section class="passo">
-          <h2><span class="n">2</span>O que você viu</h2>
+          <p class="passo-rotulo">Passo 2 de 3</p>
+          <h2>O que você viu</h2>
           <div class="tipos" role="radiogroup" aria-label="Tipo da situação">
             <div class="tipo"><input type="radio" name="tipo" id="t-FERIDO" value="FERIDO"><label for="t-FERIDO"><b>Animal ferido</b><span>Machucado, atropelado ou sem conseguir andar</span></label></div>
             <div class="tipo"><input type="radio" name="tipo" id="t-DOENTE" value="DOENTE"><label for="t-DOENTE"><b>Animal doente</b><span>Muito magro, com feridas na pele ou sintomas</span></label></div>
@@ -37,10 +50,6 @@
             <label class="rotulo" for="qtd">Quantos animais</label>
             <input class="form-control mono" id="qtd" name="qtdAnimais" type="number" min="1" max="999" value="1" inputmode="numeric">
           </div>
-        </section>
-
-        <section class="passo">
-          <h2><span class="n">3</span>Detalhes</h2>
           <div class="campo">
             <label class="rotulo" for="descricao">O que está acontecendo</label>
             <textarea class="form-control" id="descricao" name="descricao" rows="4" maxlength="1000" placeholder="Cor, porte, o que chamou atenção, ponto de referência."></textarea>
@@ -58,16 +67,14 @@
         </section>
 
         <section class="passo">
-          <h2><span class="n">4</span>Contato</h2>
+          <p class="passo-rotulo">Passo 3 de 3</p>
+          <h2>Contato</h2>
           <div class="linha-contato">
             <div class="campo mb-0">
               <label class="rotulo" for="contato">E-mail ou telefone <span class="fraco" style="font-weight:400">(opcional)</span></label>
               <input class="form-control" id="contato" name="contato" type="text" maxlength="120" autocomplete="off">
             </div>
-            <div class="aviso-consent" id="consentimento">
-              <b>Para que usamos o contato</b>
-              Só a equipe da central vê este dado, para tirar dúvidas sobre este caso. Ele não aparece em nenhum dado público. Se você deixar em branco, o reporte segue normalmente.
-            </div>
+            <p class="nota-consent" id="consentimento"><b>Para que usamos o contato.</b> Só a equipe da central vê este dado, para tirar dúvidas sobre este caso. Ele não aparece em nenhum dado público. Se você deixar em branco, o reporte segue normalmente.</p>
           </div>
         </section>
 
@@ -76,17 +83,6 @@
           <button class="btn-c" type="submit" id="enviar">Enviar reporte</button>
           <span class="ajuda-envio">Ao enviar, você concorda com o uso do contato como descrito acima.</span>
         </div>
-      </div>
-
-      <div class="coluna-mapa">
-        <section class="passo" style="margin-bottom:0">
-          <h2><span class="n">1</span>Onde ele está</h2>
-          <button class="btn-c cheio" type="button" id="localizar">Estou no local: usar minha localização</button>
-          <p class="ajuda-envio my-2">Ou aproxime o mapa e toque no ponto exato onde o animal está.</p>
-          <div id="mapa" class="mapa" role="application" aria-label="Mapa para marcar o local"></div>
-          <p class="leitura-local" id="leitura-local" aria-live="polite">Nenhum ponto marcado.</p>
-          <div class="erro-campo" id="erro-local" hidden></div>
-        </section>
       </div>
     </form>
   </main>

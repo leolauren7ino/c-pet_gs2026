@@ -60,9 +60,9 @@
 
   function linkContato(texto) {
     const digitos = texto.replace(/\D/g, "");
-    if (texto.includes("@")) return `<a class="mono" href="mailto:${esc(texto)}">${esc(texto)}</a>`;
-    if (digitos.length >= 8) return `<a class="mono" href="tel:+55${digitos}">${esc(texto)}</a>`;
-    return `<span class="mono">${esc(texto)}</span>`;
+    if (texto.includes("@")) return `<a href="mailto:${esc(texto)}">${esc(texto)}</a>`;
+    if (digitos.length >= 8) return `<a href="tel:+55${digitos}">${esc(texto)}</a>`;
+    return `<span>${esc(texto)}</span>`;
   }
 
   function cartao(d) {

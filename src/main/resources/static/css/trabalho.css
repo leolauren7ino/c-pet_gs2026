@@ -24,7 +24,7 @@ body.trabalho.tela-cheia { height: 100vh; display: flex; flex-direction: column;
   position: absolute; right: 16px; top: calc(100% + 4px); width: 400px; max-width: calc(100vw - 32px); max-height: 70vh; overflow: auto;
   background: var(--superficie); border: 1px solid var(--tinta); border-radius: var(--raio); padding: 14px;
 }
-.painel-alertas h3 { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tinta-2); margin: 0 0 8px; }
+.painel-alertas h3 { font-size: 13px; font-weight: 600; color: var(--tinta-2); margin: 0 0 8px; }
 .painel-alertas h3:not(:first-child) { margin-top: 16px; }
 .item-alerta {
   display: flex; gap: 10px; width: 100%; text-align: left; font: inherit; color: inherit; background: none; border: 0; border-top: 1px solid var(--linha);
@@ -69,7 +69,7 @@ body.trabalho.tela-cheia { height: 100vh; display: flex; flex-direction: column;
 .detalhe h2 { font-size: 1.15rem; }
 .detalhe .meta { color: var(--tinta-2); margin-top: 4px; display: flex; flex-wrap: wrap; gap: 4px 12px; align-items: center; }
 .bloco { margin-top: 20px; padding-top: 14px; border-top: 1px solid var(--linha-forte); }
-.bloco > h3 { font-size: 11.5px; text-transform: uppercase; letter-spacing: 0.09em; color: var(--tinta-2); margin: 0 0 10px; }
+.bloco > h3 { font-size: 13px; font-weight: 600; color: var(--tinta-2); margin: 0 0 10px; }
 
 .porque { display: grid; grid-template-columns: 78px minmax(0, 1fr); gap: 14px; align-items: start; }
 .porque .total { font-family: var(--mono); font-weight: 500; font-size: 2.6rem; line-height: 1; }
@@ -87,7 +87,7 @@ body.trabalho.tela-cheia { height: 100vh; display: flex; flex-direction: column;
 .reporte .quando { font-family: var(--mono); font-size: 12px; color: var(--tinta-2); }
 .reporte p { margin-top: 3px; }
 .reporte .contato { margin-top: 4px; font-size: 12.5px; }
-.reporte .contato span { font-family: var(--mono); background: var(--ocre-claro); padding: 0 4px; }
+.reporte .contato span { background: var(--ocre-claro); padding: 0 4px; }
 .foto-caso { margin-top: 8px; display: block; max-width: 100%; max-height: 190px; border: 1px solid var(--linha-forte); }
 .sem-foto { margin-top: 6px; font-size: 12.5px; color: var(--tinta-3); }
 
