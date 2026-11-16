@@ -39,6 +39,10 @@
     });
     document.addEventListener("keydown", (ev) => ev.key === "Escape" && fecharAlertas());
 
+    api("/api/dados/bairros").then((bairros) => {
+      if (bairros.length) mapa.fitBounds(bairros.map((b) => [b.lat, b.lng]), { padding: [60, 60], maxZoom: 12 });
+    });
+
     recarregar().then(() => {
       const id = Number(location.hash.replace("#caso-", ""));
       if (id) selecionar(id);
@@ -133,10 +137,6 @@
       pontos.push([c.lat, c.lng]);
     });
     if (ajustar && pontos.length) mapa.fitBounds(pontos, { padding: [40, 40], maxZoom: 15 });
-    if (!ajustar && !mapa._cpetAjustado && pontos.length) {
-      mapa.fitBounds(pontos, { padding: [40, 40], maxZoom: 15 });
-      mapa._cpetAjustado = true;
-    }
   }
 
   async function selecionar(id) {

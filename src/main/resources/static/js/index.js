@@ -4,6 +4,7 @@
 
   const SAO_PAULO = [-23.5505, -46.6333];
   const mapa = mapaBase("mapa", SAO_PAULO, 11);
+  window.CPET.mapaReporte = mapa;
   let pino = null;
   let ponto = null;
 
@@ -51,19 +52,23 @@
   }
 
   const foto = document.getElementById("foto");
+  const nomeFoto = document.getElementById("nome-foto");
   foto.addEventListener("change", () => {
     const erro = document.getElementById("erro-foto");
     erro.hidden = true;
     const arq = foto.files[0];
+    nomeFoto.textContent = arq ? arq.name : "Nenhuma foto escolhida";
     if (!arq) return;
     if (!/^image\/(jpeg|png)$/.test(arq.type)) {
       erro.textContent = "Escolha uma foto em JPG ou PNG.";
       erro.hidden = false;
       foto.value = "";
+      nomeFoto.textContent = "Nenhuma foto escolhida";
     } else if (arq.size > 5 * 1024 * 1024) {
       erro.textContent = "A foto passa de 5 MB. Escolha uma imagem menor.";
       erro.hidden = false;
       foto.value = "";
+      nomeFoto.textContent = "Nenhuma foto escolhida";
     }
   });
 

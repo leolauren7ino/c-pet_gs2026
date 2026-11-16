@@ -46,8 +46,12 @@
             <textarea class="form-control" id="descricao" name="descricao" rows="4" maxlength="1000" placeholder="Cor, porte, o que chamou atenção, ponto de referência."></textarea>
           </div>
           <div class="campo">
-            <label class="rotulo" for="foto">Foto <span class="fraco" style="font-weight:400">(opcional)</span></label>
-            <input class="form-control" id="foto" name="foto" type="file" accept="image/jpeg,image/png">
+            <span class="rotulo" id="rotulo-foto">Foto <span class="fraco" style="font-weight:400">(opcional)</span></span>
+            <div class="anexo">
+              <input class="so-leitor" id="foto" name="foto" type="file" accept="image/jpeg,image/png" aria-describedby="rotulo-foto">
+              <label class="btn-c sec pequeno" for="foto">Anexar foto</label>
+              <span class="nome-arquivo" id="nome-foto" aria-live="polite">Nenhuma foto escolhida</span>
+            </div>
             <span class="ajuda">JPG ou PNG de até 5 MB. Removemos os dados escondidos da imagem, como a localização do celular.</span>
             <div class="erro-campo" id="erro-foto" hidden></div>
           </div>
