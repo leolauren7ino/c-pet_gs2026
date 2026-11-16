@@ -78,7 +78,7 @@ mvn test
 | `painel.html` | OPERADOR | Fila por score com filtros, mapa de casos e células críticas, detalhe com reportes, foto, "por que esta prioridade", 3 recursos sugeridos, encaminhar e arquivar, badge de alertas. |
 | `recurso.html` | AGENTE | Casos encaminhados ao recurso: aceitar, recusar e marcar atendido, sempre com observação. |
 
-Os usuários do seed: Marina Duarte (operadora), Rafael Nogueira (agente da Clínica Popular Pata Cuidada) e Beatriz Lemos (agente do Instituto Patas Unidas).
+Os usuários do seed: Carlos Almeida (operador), Juliana Rocha (agente da Clínica Veterinária Jardim Sul) e Paulo Mendes (agente do Associação Abrigo Central).
 
 ## Regras (todas em `application.yml`, bloco `cpet.regras`)
 
@@ -118,16 +118,16 @@ Os números abaixo valem para o seed recém-reiniciado e um reporte dentro da c�
 
 1. **Reportar com foto (0:00 a 0:40).** Em `index.html`, dê zoom em Capão Redondo e toque no mapa (ou arraste o pino). Escolha "Animal ferido", escreva uma linha, clique em "Anexar foto" e escolha a imagem, preencha um contato e envie. A tela mostra o código em destaque e avisa que ele fica guardado neste aparelho.
 2. **Acompanhar (0:40 a 0:55).** Clique em "Acompanhar este caso": status Reportado, com as próximas etapas em cinza.
-3. **Painel e prioridade (0:55 a 1:50).** Em `entrar.html`, entre como Marina Duarte.
+3. **Painel e prioridade (0:55 a 1:50).** Em `entrar.html`, entre como Carlos Almeida.
    - A fila vem ordenada por score. O badge de Alertas mostra 8: o caso novo, 5 casos abertos atualizados nas últimas 24 h e 2 células críticas.
    - Abra os Alertas: células de Capão Redondo (8 abertos) e Brasilândia (6), com o mapa mostrando as duas em tracejado.
    - Abra o caso novo. Em "Por que esta prioridade", leia os quatro fatores (urgência 40, densidade 24, vulnerabilidade 18, tempo em aberto 0, total 82). Mostre a foto e o contato.
-4. **Encaminhar (1:50 a 2:10).** Entre os 3 recursos sugeridos, com distância em km e vagas, clique em "Encaminhar" na Clínica Popular Pata Cuidada. O status vira Encaminhado.
-5. **Agente atualiza (2:10 a 2:50).** Clique em Sair e entre como Rafael Nogueira.
+4. **Encaminhar (1:50 a 2:10).** Entre os 3 recursos sugeridos, com distância em km e vagas, clique em "Encaminhar" na Clínica Veterinária Jardim Sul. O status vira Encaminhado.
+5. **Agente atualiza (2:10 a 2:50).** Clique em Sair e entre como Juliana Rocha.
    - O caso novo está no topo, "Aguardando aceite", e o topo da tela diz "2 aguardando seu aceite". As vagas caíram para 1.
    - Clique em "Aceitar caso". Depois em "Marcar atendido", tente confirmar em branco (a tela exige a observação), escreva algo e registre. As vagas voltam a 2.
 6. **Acompanhar de novo (2:50 a 3:05).** Abra `acompanhar.html`: o código já vem preenchido, o status é Atendido e a linha do tempo tem as quatro etapas.
-7. **Alertas e dados abertos (3:05 a 3:30).** Volte ao painel como Marina: o badge caiu para 7, porque o caso atendido saiu dos alertas. Abra `dados.html`, filtre por "Colônia de animais" ou "Risco sanitário" e mostre as bolhas numeradas, o ranking e a frase de que nada ali traz endereço exato.
+7. **Alertas e dados abertos (3:05 a 3:30).** Volte ao painel como Carlos Almeida: o badge caiu para 7, porque o caso atendido saiu dos alertas. Abra `dados.html`, filtre por "Colônia de animais" ou "Risco sanitário" e mostre as bolhas numeradas, o ranking e a frase de que nada ali traz endereço exato.
 
 Se sobrar tempo, repita o reporte no mesmo ponto: a tela diz que já havia um reporte e devolve o mesmo código (regra de duplicata).
 

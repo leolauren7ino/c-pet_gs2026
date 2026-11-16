@@ -23,20 +23,20 @@ BAIRROS = {
 
 # id: nome, tipo, lat, lng, vagas, tipos aceitos
 RECURSOS = {
-    1: ("Clínica Popular Pata Cuidada", "CLINICA", -23.6400, -46.7500, 4, "FERIDO,DOENTE"),
-    2: ("Clínica Veterinária Raio de Sol", "CLINICA", -23.5100, -46.6600, 2, "FERIDO,DOENTE"),
-    3: ("Clínica Bicho Bom Zona Leste", "CLINICA", -23.5450, -46.4700, 0, "FERIDO,DOENTE"),
-    4: ("Instituto Patas Unidas", "ONG", -23.5530, -46.6580, 6, "FERIDO,DOENTE,FILHOTE,COLONIA"),
-    5: ("Casa Lar Focinho Feliz", "ONG", -23.7000, -46.7000, 3, "FILHOTE,COLONIA"),
-    6: ("Unidade Móvel Castra-Rua 01", "UNIDADE_MOVEL", -23.5800, -46.6800, 5, "COLONIA"),
-    7: ("Núcleo de Bem-Estar Animal Sul", "ORGAO_PUBLICO", -23.6700, -46.7200, 8, "MAUS_TRATOS,RISCO_SANITARIO"),
-    8: ("Posto de Vigilância Sanitária Norte", "ORGAO_PUBLICO", -23.4900, -46.6700, 5, "RISCO_SANITARIO,MAUS_TRATOS"),
+    1: ("Clínica Veterinária Jardim Sul", "CLINICA", -23.6400, -46.7500, 4, "FERIDO,DOENTE"),
+    2: ("Clínica Veterinária Vila Norte", "CLINICA", -23.5100, -46.6600, 2, "FERIDO,DOENTE"),
+    3: ("Clínica Veterinária Zona Leste", "CLINICA", -23.5450, -46.4700, 0, "FERIDO,DOENTE"),
+    4: ("Associação Abrigo Central", "ONG", -23.5530, -46.6580, 6, "FERIDO,DOENTE,FILHOTE,COLONIA"),
+    5: ("Associação Lar Temporário Sul", "ONG", -23.7000, -46.7000, 3, "FILHOTE,COLONIA"),
+    6: ("Unidade Móvel de Castração 01", "UNIDADE_MOVEL", -23.5800, -46.6800, 5, "COLONIA"),
+    7: ("Posto de Fiscalização Sanitária Sul", "ORGAO_PUBLICO", -23.6700, -46.7200, 8, "MAUS_TRATOS,RISCO_SANITARIO"),
+    8: ("Posto de Fiscalização Sanitária Norte", "ORGAO_PUBLICO", -23.4900, -46.6700, 5, "RISCO_SANITARIO,MAUS_TRATOS"),
 }
 
 USUARIOS = [
-    (1, "Marina Duarte", "OPERADOR", None),
-    (2, "Rafael Nogueira", "AGENTE", 1),
-    (3, "Beatriz Lemos", "AGENTE", 4),
+    (1, "Carlos Almeida", "OPERADOR", None),
+    (2, "Juliana Rocha", "AGENTE", 1),
+    (3, "Paulo Mendes", "AGENTE", 4),
 ]
 
 DESCRICOES = {
@@ -205,20 +205,20 @@ def main():
         etapas = [(None, "REPORTADO", "Cidadão", "Reporte recebido")]
         rec = None
         if status != "REPORTADO":
-            etapas.append(("REPORTADO", "TRIAGEM", "Marina Duarte", "Triagem iniciada"))
+            etapas.append(("REPORTADO", "TRIAGEM", "Carlos Almeida", "Triagem iniciada"))
         if status in ("ENCAMINHADO", "ATENDIDO") or "recusa" in opc:
             if "recusa" in opc:
                 rec = opc["recusa"][0]
             else:
                 rec = opc.get("rec") or recurso_mais_proximo(tipo, lat, lng)
-            etapas.append(("TRIAGEM", "ENCAMINHADO", "Marina Duarte", f"Encaminhado para {RECURSOS[rec][0]}"))
+            etapas.append(("TRIAGEM", "ENCAMINHADO", "Carlos Almeida", f"Encaminhado para {RECURSOS[rec][0]}"))
         if "recusa" in opc:
             etapas.append(("ENCAMINHADO", "TRIAGEM", RECURSOS[rec][0], "Recusado: " + opc["recusa"][1]))
             rec = None
         if status == "ATENDIDO":
             etapas.append(("ENCAMINHADO", "ATENDIDO", RECURSOS[rec][0], OBS_ATENDIMENTO[caso_id % len(OBS_ATENDIMENTO)]))
         if status == "ARQUIVADO":
-            etapas.append(("TRIAGEM", "ARQUIVADO", "Marina Duarte", opc["obs"]))
+            etapas.append(("TRIAGEM", "ARQUIVADO", "Carlos Almeida", opc["obs"]))
         if status == "ENCAMINHADO":
             vagas[rec] = max(0, vagas[rec] - 1)
             if opc.get("aceito"):

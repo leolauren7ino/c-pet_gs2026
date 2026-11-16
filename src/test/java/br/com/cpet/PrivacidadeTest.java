@@ -69,8 +69,8 @@ class PrivacidadeTest {
         String codigoNovo = reportarComFoto();
         JsonNode fila = ler(get("/api/casos").session(operador));
 
-        List<String> segredos = new ArrayList<>(List.of(CONTATO, DESCRICAO, "Marina Duarte", "Rafael Nogueira",
-                "Beatriz Lemos", "Clínica Popular", "Instituto Patas Unidas", "seed-fotos", "/api/fotos", ".png"));
+        List<String> segredos = new ArrayList<>(List.of(CONTATO, DESCRICAO, "Carlos Almeida", "Juliana Rocha",
+                "Paulo Mendes", "Clínica Veterinária Jardim", "Associação Abrigo Central", "seed-fotos", "/api/fotos", ".png"));
         for (JsonNode caso : fila) {
             segredos.add(caso.get("lat").asText());
             segredos.add(caso.get("lng").asText());
