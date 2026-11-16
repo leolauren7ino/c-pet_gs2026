@@ -24,11 +24,19 @@
       init.headers = { "Content-Type": "application/json" };
       init.body = JSON.stringify(init.json);
     }
+    const leitura = !init.method || init.method.toUpperCase() === "GET";
     let resp;
-    try {
-      resp = await fetch(url, init);
-    } catch (e) {
-      throw { status: 0, erro: "Sem conexão com o servidor. Tente de novo em instantes." };
+    for (let tentativa = 0; ; tentativa++) {
+      try {
+        resp = await fetch(url, init);
+        break;
+      } catch (e) {
+        if (leitura && tentativa === 0) {
+          await new Promise((r) => setTimeout(r, 400));
+          continue;
+        }
+        throw { status: 0, erro: "Sem conexão com o servidor. Tente de novo em instantes." };
+      }
     }
     const texto = await resp.text();
     const corpo = texto ? JSON.parse(texto) : null;
@@ -91,7 +99,12 @@
       try {
         atual = await api("/api/sessao");
       } catch (e) {
-        location.replace("entrar.html");
+        if (e.status === 401 || e.status === 403) {
+          location.replace("entrar.html");
+        } else {
+          document.getElementById("cabecalho").innerHTML = cabecalho(ativo, null);
+          document.querySelector("main").innerHTML = `<div class="pagina"><div class="alerta-erro mb-3">${esc(e.erro)}</div><button type="button" class="btn-c sec" onclick="location.reload()">Tentar de novo</button></div>`;
+        }
         return null;
       }
       if (atual.perfil !== exigir) {

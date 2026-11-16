@@ -104,6 +104,7 @@ O seed traz 6 bairros de São Paulo, 8 recursos fictícios, 40 casos com concent
 
 ## Antes de gravar
 
+- [ ] **Subir e esperar.** Depois de iniciar o app, espere o log `Started CpetApplication` e abra a tela `entrar.html` antes de gravar. Isso deixa o servidor aquecido e confirma que a lista de usuários carrega.
 - [ ] **Reiniciar os dados simulados.** Abra `entrar.html` e clique em "Reiniciar dados simulados". Isso apaga o que foi criado nos ensaios e recarrega os 40 casos, com as datas recalculadas para agora. Faça isso logo antes de gravar: os alertas dependem das últimas 24 horas.
 - [ ] **Internet ligada.** Os tiles do mapa vêm do OpenStreetMap. Sem rede, os pinos aparecem sobre fundo liso.
 - [ ] **Porta e URL.** O app responde em `http://localhost:8080` (ou na porta que você passou em `--server.port`). Abra sempre pela mesma URL, porque a sessão e o código guardado ficam atrelados ao endereço.

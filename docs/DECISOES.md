@@ -61,3 +61,12 @@ Percorri as telas como uma moradora de 55 anos no celular, um voluntário de ONG
 5. **Fila do agente.** Casos aguardando aceite vêm primeiro, o topo mostra quantos aguardam, o contato vira link de e-mail ou telefone e o ponto tem botão "Ver o ponto no mapa".
 
 Ficaram de fora: o badge de alertas conta todos os casos atualizados em 24 h (inclusive atendidos), então o número no seed é alto; e o campo de foto usa o texto do navegador, que muda com o idioma dele.
+
+## Falha intermitente após subir o app (investigação encerrada no limite de tempo)
+
+No primeiro roteiro automatizado, 3 requisições do painel falharam com erro de rede. Repeti o roteiro em 5 subidas a frias seguidas e o erro voltou: 2 de 5 execuções (e 3 de 8 no total), sempre no passo em que se troca de agente para operador e o painel faz suas primeiras chamadas. Não apareceu erro no log do app, o tempo de subida foi o mesmo (4,8 a 5,9 s) nas execuções boas e nas ruins.
+
+- **Descartado:** o limite de 100 requisições por conexão keep-alive do Tomcat. Um teste de estresse no navegador fez 650 requisições seguidas (400 GET e 250 POST) sem nenhuma falha.
+- **Não provado:** se a falha vem do `--virtual-time-budget` do Edge, que comprime os tempos, ou de uma queda real de conexão. Não consegui cronometrar em tempo real com este navegador.
+- **Fragilidade real encontrada e corrigida no front:** `iniciar()` tratava qualquer erro, inclusive de rede, como "sem login" e mandava o usuário de volta à tela de entrada; e `api()` não tentava de novo uma leitura que falhasse. Agora só 401 e 403 voltam para a entrada, uma leitura (GET) com erro de rede tenta de novo uma vez, e a falha seguida mostra o aviso com "Tentar de novo". Escritas (POST) não são repetidas, para não duplicar nada.
+- **Resultado depois da correção:** 5 de 5 subidas a frio sem erro. Cinco execuções não provam a ausência de um problema raro. Por isso o README manda esperar o log `Started` e abrir a tela de entrada antes de gravar.
