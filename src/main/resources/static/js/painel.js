@@ -245,7 +245,7 @@
       ${aviso ? `<div class="aviso-ok" role="status">${esc(aviso)}</div>` : ""}
       <h2>${TIPOS[c.tipo]}</h2>
       <div class="meta">${chipStatus(c.status)}<span class="mono">${esc(c.codigo)}</span><span>${esc(c.bairro)}</span><span>${c.qtdAnimais} ${c.qtdAnimais === 1 ? "animal" : "animais"}</span><span>aberto ${haTempo(c.criadoEm)}</span></div>
-      <p class="mono mt-2" style="font-size:12px;color:var(--tinta-2)">Local exato: ${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}
+      <p class="mt-2" style="font-size:12.5px;color:var(--tinta-2)">Local exato: <span class="mono">${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}</span>
         <a href="https://www.openstreetmap.org/?mlat=${c.lat}&mlon=${c.lng}#map=18/${c.lat}/${c.lng}" target="_blank" rel="noopener">abrir mapa</a></p>
 
       <div class="bloco"><h3>Por que esta prioridade</h3>
