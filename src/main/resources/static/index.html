@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Reportar um animal | C-PET</title>
+  <meta name="description" content="Reporte um animal em situação de rua e acompanhe o atendimento pelo código do caso.">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/cidadao.css">
+</head>
+<body>
+  <div id="cabecalho"></div>
+
+  <main id="tela-form">
+    <section class="abertura">
+      <h1>Viu um animal em situação de rua? Marque onde ele está.</h1>
+      <p>Leva um minuto e não precisa de cadastro. Você recebe um código para acompanhar o que acontece com o caso.</p>
+    </section>
+
+    <form id="form" class="pagina reportar" novalidate>
+      <div>
+        <section class="passo">
+          <h2><span class="n">2</span>O que você viu</h2>
+          <div class="tipos" role="radiogroup" aria-label="Tipo da situação">
+            <div class="tipo"><input type="radio" name="tipo" id="t-FERIDO" value="FERIDO"><label for="t-FERIDO"><b>Animal ferido</b><span>Machucado, atropelado ou sem conseguir andar</span></label></div>
+            <div class="tipo"><input type="radio" name="tipo" id="t-DOENTE" value="DOENTE"><label for="t-DOENTE"><b>Animal doente</b><span>Muito magro, com feridas na pele ou sintomas</span></label></div>
+            <div class="tipo"><input type="radio" name="tipo" id="t-FILHOTE" value="FILHOTE"><label for="t-FILHOTE"><b>Filhote desamparado</b><span>Sem a mãe e sem abrigo</span></label></div>
+            <div class="tipo"><input type="radio" name="tipo" id="t-COLONIA" value="COLONIA"><label for="t-COLONIA"><b>Colônia de animais</b><span>Vários animais vivendo no mesmo ponto</span></label></div>
+            <div class="tipo"><input type="radio" name="tipo" id="t-MAUS_TRATOS" value="MAUS_TRATOS"><label for="t-MAUS_TRATOS"><b>Maus-tratos</b><span>Agressão, abandono ou corrente curta</span></label></div>
+            <div class="tipo"><input type="radio" name="tipo" id="t-RISCO_SANITARIO" value="RISCO_SANITARIO"><label for="t-RISCO_SANITARIO"><b>Risco sanitário</b><span>Carcaça, lixo acumulado ou foco de doença</span></label></div>
+          </div>
+          <div class="erro-campo" id="erro-tipo" hidden></div>
+
+          <div class="campo mt-3" style="max-width:180px">
+            <label class="rotulo" for="qtd">Quantos animais</label>
+            <input class="form-control mono" id="qtd" name="qtdAnimais" type="number" min="1" max="999" value="1" inputmode="numeric">
+          </div>
+        </section>
+
+        <section class="passo">
+          <h2><span class="n">3</span>Detalhes</h2>
+          <div class="campo">
+            <label class="rotulo" for="descricao">O que está acontecendo</label>
+            <textarea class="form-control" id="descricao" name="descricao" rows="4" maxlength="1000" placeholder="Cor, porte, o que chamou atenção, ponto de referência."></textarea>
+          </div>
+          <div class="campo">
+            <label class="rotulo" for="foto">Foto <span class="fraco" style="font-weight:400">(opcional)</span></label>
+            <input class="form-control" id="foto" name="foto" type="file" accept="image/jpeg,image/png">
+            <span class="ajuda">JPG ou PNG de até 5 MB. Removemos os dados escondidos da imagem, como a localização do celular.</span>
+            <div class="erro-campo" id="erro-foto" hidden></div>
+          </div>
+        </section>
+
+        <section class="passo">
+          <h2><span class="n">4</span>Contato</h2>
+          <div class="linha-contato">
+            <div class="campo mb-0">
+              <label class="rotulo" for="contato">E-mail ou telefone <span class="fraco" style="font-weight:400">(opcional)</span></label>
+              <input class="form-control" id="contato" name="contato" type="text" maxlength="120" autocomplete="off">
+            </div>
+            <div class="aviso-consent" id="consentimento">
+              <b>Para que usamos o contato</b>
+              Só a equipe da central vê este dado, para tirar dúvidas sobre este caso. Ele não aparece em nenhum dado público. Se você deixar em branco, o reporte segue normalmente.
+            </div>
+          </div>
+        </section>
+
+        <div class="alerta-erro mb-3" id="erro-geral" role="alert" hidden></div>
+        <div class="acoes-form">
+          <button class="btn-c" type="submit" id="enviar">Enviar reporte</button>
+          <span class="ajuda-envio">Ao enviar, você concorda com o uso do contato como descrito acima.</span>
+        </div>
+      </div>
+
+      <div class="coluna-mapa">
+        <section class="passo" style="margin-bottom:0">
+          <h2><span class="n">1</span>Onde ele está</h2>
+          <div id="mapa" class="mapa" role="application" aria-label="Mapa para marcar o local"></div>
+          <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
+            <button class="btn-c sec pequeno" type="button" id="localizar">Usar minha localização</button>
+            <span class="ajuda-envio">ou toque no mapa para marcar o ponto</span>
+          </div>
+          <p class="leitura-local mono" id="leitura-local" aria-live="polite">Nenhum ponto marcado.</p>
+          <div class="erro-campo" id="erro-local" hidden></div>
+        </section>
+      </div>
+    </form>
+  </main>
+
+  <main id="tela-recebido" class="recebido" hidden>
+    <h1 id="rec-titulo">Reporte recebido.</h1>
+    <div class="carimbo" id="codigo" aria-label="Código de acompanhamento"></div>
+    <p id="rec-texto"></p>
+    <p>Guarde este código. Com ele você acompanha cada etapa, sem precisar de login.</p>
+    <div class="acoes-form">
+      <a class="btn-c" id="ver-andamento" href="acompanhar.html">Acompanhar este caso</a>
+      <button class="btn-c sec" type="button" id="copiar">Copiar código</button>
+      <a class="btn-c sec" href="index.html">Reportar outro animal</a>
+    </div>
+  </main>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

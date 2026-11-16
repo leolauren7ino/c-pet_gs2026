@@ -1,0 +1,100 @@
+/* Telas do cidadão: mais respiro, uma tarefa por tela. */
+
+.abertura { padding: 44px 20px 8px; max-width: 1120px; margin: 0 auto; }
+.abertura h1 { max-width: 20ch; }
+.abertura p { margin-top: 14px; max-width: 56ch; font-size: 17px; color: var(--tinta-2); }
+
+.reportar { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr); gap: 48px; padding-top: 32px; align-items: start; }
+.reportar .coluna-mapa { position: sticky; top: 16px; }
+.reportar .mapa { height: 460px; }
+.leitura-local { font-size: 13px; margin-top: 8px; min-height: 20px; color: var(--tinta-2); }
+
+.passo { margin-bottom: 36px; }
+.passo > h2 { display: flex; align-items: baseline; gap: 12px; font-size: 1.1rem; margin-bottom: 14px; }
+.passo > h2 .n { font-family: var(--mono); font-weight: 500; font-size: 13px; color: var(--musgo); border: 1px solid var(--musgo); border-radius: 2px; padding: 1px 6px; }
+
+.tipos { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+.tipo { position: relative; }
+.tipo input { position: absolute; opacity: 0; inset: 0; cursor: pointer; }
+.tipo label {
+  display: block; height: 100%; padding: 11px 12px; background: var(--superficie);
+  border: 1px solid var(--linha-forte); border-radius: var(--raio); cursor: pointer;
+  transition: border-color var(--t), background var(--t);
+}
+.tipo label b { display: block; font-size: 14.5px; }
+.tipo label span { display: block; font-size: 12.5px; color: var(--tinta-2); margin-top: 2px; line-height: 1.35; }
+.tipo input:hover + label { border-color: var(--musgo); }
+.tipo input:checked + label { border-color: var(--musgo); background: var(--musgo-claro); box-shadow: inset 0 0 0 1px var(--musgo); }
+.tipo input:focus-visible + label { outline: 2px solid var(--musgo); outline-offset: 2px; }
+
+.linha-contato { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.aviso-consent { border-left: 3px solid var(--ocre); background: var(--ocre-claro); padding: 10px 12px; font-size: 13px; color: #4F3A0A; border-radius: 0 var(--raio) var(--raio) 0; }
+.aviso-consent b { display: block; margin-bottom: 2px; }
+
+.acoes-form { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+.ajuda-envio { font-size: 13px; color: var(--tinta-2); }
+
+/* Confirmação */
+.recebido { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; }
+.carimbo {
+  display: inline-block; margin: 22px 0 14px; padding: 14px 22px; border: 2px solid var(--tinta);
+  font-family: var(--mono); font-weight: 500; font-size: clamp(1.9rem, 8vw, 2.8rem); letter-spacing: 0.08em;
+  transform: rotate(-1.5deg); background: var(--superficie);
+}
+.recebido .acoes-form { margin-top: 26px; }
+.recebido p { max-width: 54ch; color: var(--tinta-2); font-size: 16px; }
+.recebido p + p { margin-top: 10px; }
+
+/* Acompanhar */
+.busca { display: flex; gap: 10px; max-width: 480px; margin-top: 22px; }
+.busca input { font-family: var(--mono); text-transform: uppercase; letter-spacing: 0.06em; font-size: 16px; }
+.resultado { margin-top: 36px; display: grid; grid-template-columns: minmax(0, 300px) minmax(0, 1fr); gap: 48px; max-width: 860px; }
+.resultado dl { margin: 0; }
+.resultado dt { font-size: 12px; text-transform: uppercase; letter-spacing: 0.08em; color: var(--tinta-2); font-weight: 700; margin-top: 16px; }
+.resultado dt:first-child { margin-top: 0; }
+.resultado dd { margin: 3px 0 0; font-size: 16px; }
+
+/* Entrar */
+.usuarios { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin-top: 28px; }
+.usuario-cartao {
+  text-align: left; font: inherit; color: inherit; background: var(--superficie);
+  border: 1px solid var(--linha-forte); border-radius: var(--raio); padding: 16px; cursor: pointer;
+  transition: border-color var(--t), background var(--t);
+}
+.usuario-cartao:hover { border-color: var(--musgo); background: var(--musgo-claro); }
+.usuario-cartao b { display: block; font-size: 16px; }
+.usuario-cartao .perfil { margin-top: 10px; display: inline-block; }
+.usuario-cartao span.onde { display: block; font-size: 13.5px; color: var(--tinta-2); margin-top: 2px; }
+
+/* Dados abertos */
+.numeros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--linha-forte); background: var(--superficie); margin-top: 28px; }
+.numeros > div { padding: 16px 18px; border-left: 1px solid var(--linha); }
+.numeros > div:first-child { border-left: 0; }
+.numeros .valor { font-family: var(--mono); font-size: 2rem; font-weight: 500; line-height: 1.1; }
+.numeros .rotulo { font-size: 13px; color: var(--tinta-2); margin-top: 4px; }
+.dados-grade { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px; margin-top: 36px; align-items: start; }
+.dados-grade .mapa { height: 480px; }
+.tabela-bairros { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tabela-bairros th { text-align: left; font-size: 12px; text-transform: uppercase; letter-spacing: 0.07em; color: var(--tinta-2); padding: 0 8px 8px 0; border-bottom: 1px solid var(--tinta); }
+.tabela-bairros td { padding: 10px 8px 10px 0; border-bottom: 1px solid var(--linha); vertical-align: middle; }
+.tabela-bairros tbody th { font-size: 14px; font-weight: 600; text-transform: none; letter-spacing: 0; color: var(--tinta); padding: 10px 8px 10px 0; border-bottom: 1px solid var(--linha); }
+.tabela-bairros .num { font-family: var(--mono); text-align: right; }
+.barra { height: 6px; background: var(--papel-2); width: 100%; min-width: 60px; }
+.barra i { display: block; height: 100%; background: var(--ferrugem); }
+.legenda { display: flex; gap: 14px; align-items: center; font-size: 12.5px; color: var(--tinta-2); margin-top: 10px; flex-wrap: wrap; }
+.legenda span.q { display: inline-block; width: 14px; height: 14px; margin-right: 5px; vertical-align: -2px; border: 1px solid rgba(0,0,0,.2); }
+.nota-privacidade { margin-top: 28px; font-size: 13.5px; color: var(--tinta-2); max-width: 70ch; }
+
+@media (max-width: 900px) {
+  .reportar, .dados-grade, .resultado { grid-template-columns: minmax(0, 1fr); gap: 28px; }
+  .reportar .coluna-mapa { position: static; order: -1; }
+  .reportar .mapa { height: 320px; }
+  .usuarios { grid-template-columns: minmax(0, 1fr); }
+}
+@media (max-width: 560px) {
+  .tipos, .linha-contato { grid-template-columns: minmax(0, 1fr); }
+  .abertura { padding-top: 30px; }
+  .numeros .valor { font-size: 1.5rem; }
+  .numeros > div { padding: 12px; }
+  .dados-grade .mapa { height: 320px; }
+}

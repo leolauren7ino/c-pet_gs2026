@@ -1,0 +1,8 @@
+# Direção de design do C-PET
+
+1. **Direção de arte:** caderno de campo de uma central pública. Papel quente, tinta escura, linhas finas de 1 px no lugar de sombras e cartões flutuantes. O mapa é o protagonista; o resto é registro, tabela e carimbo.
+2. **Paleta (tokens em `css/app.css`):** papel `#F2EEE4`, superfície `#FBFAF6`, tinta `#1B2320`, musgo `#2C5A4C` para ação, ferrugem `#B8431D` só para urgência e erro, ocre `#9A6B12` para atenção. Nada de roxo, azul ou degradê; a cor sempre significa estado.
+3. **Tipografia:** Schibsted Grotesk (400, 500, 600, 700) para interface e títulos, IBM Plex Mono para código de acompanhamento, score, coordenadas e horas. Ambas locais, em `static/fonts`. Texto corrido a partir de 15 px; o painel usa 13 a 14 px.
+4. **Níveis do skill:** ousadia média (cabeçalho em bloco de tinta, código de acompanhamento grande como carimbo, números do score em mono), movimento baixo (só transição de 120 ms em hover e foco), densidade alta no painel e no recurso, respiro maior no fluxo do cidadão.
+5. **Componentes:** raio de 3 px, bordas de 1 px, botões retangulares com estado de hover e de pressionado, chips de status com borda, barras de fator do score em linha fina, foco visível em musgo com 2 px de contorno. Bootstrap entra só para grade e campos de formulário.
+6. **Proibido:** fonte Inter, emoji, ícones em cartões flutuantes, seções genéricas de marketing, travessão no texto da interface. Todo texto fala com quem usa: verbo e objeto nos botões, substantivo nos títulos, sem slogan.

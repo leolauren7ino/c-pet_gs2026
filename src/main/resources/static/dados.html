@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dados abertos | C-PET</title>
+  <meta name="description" content="Densidade de casos por região e por bairro, sem localização exata.">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/cidadao.css">
+</head>
+<body>
+  <div id="cabecalho"></div>
+  <main class="pagina">
+    <h1>Onde estão os casos</h1>
+    <p class="suave mt-2" style="max-width:60ch">Densidade de casos em aberto por quadra de cerca de 1 km e por bairro. Nada aqui mostra o endereço exato de um animal nem dados de quem reportou.</p>
+
+    <div class="numeros" id="numeros"></div>
+
+    <div class="dados-grade">
+      <section>
+        <h2 class="mb-3">Mapa por célula</h2>
+        <div id="mapa" class="mapa" role="img" aria-label="Mapa com a densidade de casos abertos por célula"></div>
+        <div class="legenda" id="legenda"></div>
+      </section>
+      <section>
+        <h2 class="mb-3">Por bairro</h2>
+        <table class="tabela-bairros">
+          <thead><tr><th scope="col">Bairro</th><th scope="col" class="num">Abertos</th><th scope="col">Densidade</th><th scope="col" class="num">Atendidos</th></tr></thead>
+          <tbody id="bairros"></tbody>
+        </table>
+      </section>
+    </div>
+    <p class="nota-privacidade">As células são recortes de latitude e longitude arredondados a duas casas. Cada caso é contado na célula em que está, e o ponto exato nunca sai da central.</p>
+  </main>
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/dados.js"></script>
+</body>
+</html>

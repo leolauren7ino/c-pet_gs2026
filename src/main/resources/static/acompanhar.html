@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Acompanhar um caso | C-PET</title>
+  <meta name="description" content="Digite o código do seu reporte e veja cada etapa do atendimento.">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/cidadao.css">
+</head>
+<body>
+  <div id="cabecalho"></div>
+  <main class="pagina">
+    <h1>Acompanhe o seu caso</h1>
+    <p class="suave mt-2" style="max-width:54ch">Digite o código que apareceu depois do reporte. Ele começa com CP.</p>
+
+    <form class="busca" id="busca" novalidate>
+      <label class="so-leitor" for="codigo">Código de acompanhamento</label>
+      <input class="form-control" id="codigo" name="codigo" placeholder="CP-XXXXXX" maxlength="12" autocomplete="off" spellcheck="false">
+      <button class="btn-c" type="submit">Buscar</button>
+    </form>
+    <div class="alerta-erro mt-3" id="erro" role="alert" hidden style="max-width:480px"></div>
+
+    <section class="resultado" id="resultado" hidden aria-live="polite">
+      <dl>
+        <dt>Caso</dt><dd class="mono" id="r-codigo"></dd>
+        <dt>Situação</dt><dd id="r-tipo"></dd>
+        <dt>Região</dt><dd id="r-bairro"></dd>
+        <dt>Status agora</dt><dd id="r-status"></dd>
+        <dt>Última atualização</dt><dd class="mono" id="r-atualizado"></dd>
+      </dl>
+      <div>
+        <h2 class="mb-3">Linha do tempo</h2>
+        <ol class="linha-tempo" id="etapas"></ol>
+      </div>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+  <script src="js/acompanhar.js"></script>
+</body>
+</html>
