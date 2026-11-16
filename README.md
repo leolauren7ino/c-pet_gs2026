@@ -65,7 +65,7 @@ Se algo falhar no Oracle, execute `schema.sql` e `seed.sql` à mão no SQL Devel
 mvn test
 ```
 
-44 testes: score, duplicata (Haversine, 50 m, 48 h), encaminhamento (3 mais próximos, vagas, tipos), transições de status e um teste de integração com MockMvc do fluxo completo (reportar, priorizar, encaminhar, aceitar, atender e acompanhar), mais recusa, privacidade e permissões. As regras são lidas do `application.yml` real.
+52 testes: score, duplicata (Haversine, 50 m, 48 h), encaminhamento (3 mais próximos, vagas, tipos), transições de status e um teste de integração com MockMvc do fluxo completo (reportar, priorizar, encaminhar, aceitar, atender e acompanhar), mais recusa, privacidade e permissões. As regras são lidas do `application.yml` real.
 
 ## Telas
 
@@ -91,26 +91,47 @@ Os usuários do seed: Marina Duarte (operadora), Rafael Nogueira (agente da Clí
 ## Privacidade
 
 - Endpoints públicos devolvem só agregados por célula (coordenadas arredondadas a 2 casas) e o andamento de um código, sem observações internas.
-- Coordenada exata, contato e fotos só para usuário autenticado.
+- Coordenada exata, contato e fotos enviadas por cidadãos só para usuário autenticado. As 6 imagens do seed são ilustrações geradas, sem pessoas, e ficam em `static/seed-fotos`, abertas por serem simuladas.
+- Um teste automatizado (`PrivacidadeTest`) garante que nenhum endpoint público devolve coordenada exata, contato, descrição, nome de agente ou caminho de foto.
 - Upload de JPG ou PNG até 5 MB: o formato é conferido pelos bytes, a imagem é recodificada (o que remove o EXIF) e salva com nome UUID em `./uploads`.
 - O formulário mostra o aviso de consentimento ao lado do campo de contato.
 
 ## Dados simulados
 
-O seed traz 6 bairros de São Paulo, 8 recursos fictícios, 40 casos com concentração em Capão Redondo e Brasilândia, e 3 usuários. Tudo vem com `simulado = 1` e a interface exibe a faixa "Dados simulados para demonstração".
+O seed traz 6 bairros de São Paulo, 8 recursos fictícios, 40 casos com concentração em Capão Redondo e Brasilândia, e 3 usuários, além de 6 ilustrações associadas a casos abertos. Cerca de 5 casos abertos aparecem como atualizados nas últimas 24 h. Tudo vem com `simulado = 1` e a interface exibe a faixa "Dados simulados para demonstração".
 
 `POST /api/demo/reset` apaga tudo e recria o seed (há um botão em `entrar.html`). Para regerar o `seed.sql` com datas novas: `python -X utf8 tools/gerar_seed.py`.
 
-## Roteiro de demonstração (2 minutos)
+## Antes de gravar
 
-Antes de gravar, abra `entrar.html` e use "Reiniciar dados simulados".
+- [ ] **Reiniciar os dados simulados.** Abra `entrar.html` e clique em "Reiniciar dados simulados". Isso apaga o que foi criado nos ensaios e recarrega os 40 casos, com as datas recalculadas para agora. Faça isso logo antes de gravar: os alertas dependem das últimas 24 horas.
+- [ ] **Internet ligada.** Os tiles do mapa vêm do OpenStreetMap. Sem rede, os pinos aparecem sobre fundo liso.
+- [ ] **Porta e URL.** O app responde em `http://localhost:8080` (ou na porta que você passou em `--server.port`). Abra sempre pela mesma URL, porque a sessão e o código guardado ficam atrelados ao endereço.
+- [ ] **Perfil do navegador limpo.** Use uma janela anônima ou um perfil novo, sem extensões, em zoom 100%. Isso evita cache de JavaScript antigo e o código de reportes de ensaio na tela Acompanhar.
+- [ ] **Foto de ensaio pronta.** Use uma das ilustrações de `src/main/resources/static/seed-fotos` (por exemplo `ferido.jpg`). São JPG, sem pessoas, bem abaixo de 5 MB.
+- [ ] **Apagar fotos de ensaio.** Remova a pasta `uploads/` do projeto, se existir, para não sobrar foto de teste.
+- [ ] **Rodar `mvn test`** uma vez antes de gravar. Se algo falhar, não grave.
 
-1. **0:00 Reportar (25 s).** Em `index.html`, dê zoom em Capão Redondo e toque no mapa. Escolha "Animal ferido", escreva uma linha, anexe uma foto e deixe um contato. Envie e mostre o código em destaque.
-2. **0:25 Reportar de novo no mesmo ponto (10 s).** Envie outro reporte do mesmo tipo no mesmo ponto. A tela diz que já havia um reporte e devolve o mesmo código: é a regra de duplicata.
-3. **0:35 Acompanhar (10 s).** Em `acompanhar.html`, o código mais recente já vem preenchido neste aparelho: status Reportado e a linha do tempo com as próximas etapas.
-4. **0:45 Painel (40 s).** Em `entrar.html`, entre como Marina Duarte. Mostre a fila ordenada por score, o badge de alertas (duas células críticas) e as células tracejadas no mapa. Abra o caso novo: o bloco "Por que esta prioridade" com os quatro fatores, a foto e o contato, e os 3 recursos com distância em km e vagas. Clique em Encaminhar na Clínica Popular Pata Cuidada.
-5. **1:25 Recurso (25 s).** Saia, entre como Rafael Nogueira. O caso está em "Aguardando aceite" e as vagas caíram em 1. Aceite e depois marque como atendido com uma observação. As vagas voltam.
-6. **1:50 Fechamento (10 s).** Em `acompanhar.html`, atualize a busca: a linha do tempo mostra Atendido. Termine em `dados.html`, que mostra a densidade por célula sem localização exata.
+## Roteiro de demonstração (cerca de 3 minutos de tela)
+
+Os números abaixo valem para o seed recém-reiniciado e um reporte dentro da célula de Capão Redondo.
+
+1. **Reportar com foto (0:00 a 0:40).** Em `index.html`, dê zoom em Capão Redondo e toque no mapa (ou arraste o pino). Escolha "Animal ferido", escreva uma linha, clique em "Anexar foto" e escolha a imagem, preencha um contato e envie. A tela mostra o código em destaque e avisa que ele fica guardado neste aparelho.
+2. **Acompanhar (0:40 a 0:55).** Clique em "Acompanhar este caso": status Reportado, com as próximas etapas em cinza.
+3. **Painel e prioridade (0:55 a 1:50).** Em `entrar.html`, entre como Marina Duarte.
+   - A fila vem ordenada por score. O badge de Alertas mostra 8: o caso novo, 5 casos abertos atualizados nas últimas 24 h e 2 células críticas.
+   - Abra os Alertas: células de Capão Redondo (8 abertos) e Brasilândia (6), com o mapa mostrando as duas em tracejado.
+   - Abra o caso novo. Em "Por que esta prioridade", leia os quatro fatores (urgência 40, densidade 24, vulnerabilidade 18, tempo em aberto 0, total 82). Mostre a foto e o contato.
+4. **Encaminhar (1:50 a 2:10).** Entre os 3 recursos sugeridos, com distância em km e vagas, clique em "Encaminhar" na Clínica Popular Pata Cuidada. O status vira Encaminhado.
+5. **Agente atualiza (2:10 a 2:50).** Clique em Sair e entre como Rafael Nogueira.
+   - O caso novo está no topo, "Aguardando aceite", e o topo da tela diz "2 aguardando seu aceite". As vagas caíram para 1.
+   - Clique em "Aceitar caso". Depois em "Marcar atendido", tente confirmar em branco (a tela exige a observação), escreva algo e registre. As vagas voltam a 2.
+6. **Acompanhar de novo (2:50 a 3:05).** Abra `acompanhar.html`: o código já vem preenchido, o status é Atendido e a linha do tempo tem as quatro etapas.
+7. **Alertas e dados abertos (3:05 a 3:30).** Volte ao painel como Marina: o badge caiu para 7, porque o caso atendido saiu dos alertas. Abra `dados.html`, filtre por "Colônia de animais" ou "Risco sanitário" e mostre as bolhas numeradas, o ranking e a frase de que nada ali traz endereço exato.
+
+Se sobrar tempo, repita o reporte no mesmo ponto: a tela diz que já havia um reporte e devolve o mesmo código (regra de duplicata).
+
+Se algo sair do esperado durante a gravação, volte a `entrar.html`, reinicie os dados simulados e comece de novo.
 
 ## Estrutura
 
