@@ -155,7 +155,7 @@ public class CasoService {
         List<HistoricoStatus> hist = historicos.findByCasoIdOrderByCriadoEmAscIdAsc(id);
         List<ReporteVisao> listaReportes = reportes.findByCasoIdOrderByCriadoEmAscIdAsc(id).stream()
                 .map(r -> new ReporteVisao(r.getId(), r.getDescricao(),
-                        r.getFotoPath() == null ? null : "/api/fotos/" + r.getFotoPath(),
+                        urlDaFoto(r.getFotoPath()),
                         r.getContatoOpcional(), r.getCriadoEm()))
                 .toList();
         boolean elegivelParaSugestao = comSugestoes
@@ -336,6 +336,14 @@ public class CasoService {
                 c.getStatus(), c.getScore(), c.getRecursoId(),
                 c.getRecursoId() == null ? null : ctx.recursos().get(c.getRecursoId()),
                 c.getCriadoEm(), c.getAtualizadoEm(), c.getSimulado() == 1, qtdReportes);
+    }
+
+    /** Fotos do seed são ilustrações públicas em static/seed-fotos; as enviadas por cidadãos só saem autenticadas. */
+    private static String urlDaFoto(String fotoPath) {
+        if (fotoPath == null) {
+            return null;
+        }
+        return fotoPath.startsWith("seed-fotos/") ? "/" + fotoPath : "/api/fotos/" + fotoPath;
     }
 
     private Map<Long, Long> contarReportes() {

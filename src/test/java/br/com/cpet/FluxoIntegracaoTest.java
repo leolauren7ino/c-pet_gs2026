@@ -208,6 +208,29 @@ class FluxoIntegracaoTest {
     }
 
     @Test
+    void seedDeDemonstracaoTemCincoAlertasDuasCelulasCriticasEFotos() throws Exception {
+        MockHttpSession operador = entrar(OPERADOR);
+
+        JsonNode alertas = ler(get("/api/alertas").session(operador));
+        assertThat(alertas.get("casosAtualizados")).hasSize(5);
+        assertThat(alertas.get("celulasCriticas")).extracting(c -> c.get("bairro").asText())
+                .containsExactlyInAnyOrder("Capão Redondo", "Brasilândia");
+
+        long abertosComFoto = 0;
+        for (JsonNode c : ler(get("/api/casos").session(operador))) {
+            if (!List.of("REPORTADO", "TRIAGEM", "ENCAMINHADO").contains(c.get("status").asText())) {
+                continue;
+            }
+            JsonNode d = ler(get("/api/casos/" + c.get("id").asLong()).session(operador));
+            if (d.at("/reportes/0/fotoUrl").asText().startsWith("/seed-fotos/")) {
+                abertosComFoto++;
+            }
+        }
+        assertThat(abertosComFoto).isGreaterThanOrEqualTo(6);
+        mvc.perform(get("/seed-fotos/ferido.jpg")).andExpect(status().isOk());
+    }
+
+    @Test
     void rejeitaArquivoQueNaoEhImagem() throws Exception {
         MockMultipartFile falso = new MockMultipartFile("foto", "x.jpg", "image/jpeg", "nao sou imagem".getBytes());
 
@@ -238,7 +261,7 @@ class FluxoIntegracaoTest {
 
     private JsonNode ler(org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder req) throws Exception {
         MvcResult r = mvc.perform(req).andExpect(status().isOk()).andReturn();
-        return json.readTree(r.getResponse().getContentAsString());
+        return json.readTree(r.getResponse().getContentAsString(java.nio.charset.StandardCharsets.UTF_8));
     }
 
     private static JsonNode encontrarPorCodigo(JsonNode lista, String codigo) {

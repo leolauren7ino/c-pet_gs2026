@@ -84,12 +84,12 @@ CONTATOS = ["joana.s@exemplo.com", "(11) 90000-1234", "seu.antonio@exemplo.com",
 
 # bairro, tipo, qtd, dx(m), dy(m), status, horas desde a criacao, opcoes
 CASOS = [
-    (1, "FERIDO", 1, 40, -60, "REPORTADO", 5, {"extra": 2}),
-    (1, "COLONIA", 6, -220, 130, "REPORTADO", 26, {"extra": 1}),
-    (1, "FILHOTE", 4, 310, 220, "REPORTADO", 70, {}),
-    (1, "DOENTE", 1, -300, -210, "TRIAGEM", 60, {}),
-    (1, "RISCO_SANITARIO", 1, 150, 330, "TRIAGEM", 110, {}),
-    (1, "FERIDO", 1, -120, -330, "ENCAMINHADO", 55, {"rec": 1, "aceito": True, "extra": 1}),
+    (1, "FERIDO", 1, 40, -60, "REPORTADO", 5, {"extra": 2, "foto": "ferido"}),
+    (1, "COLONIA", 6, -220, 130, "REPORTADO", 30, {"extra": 1, "foto": "colonia"}),
+    (1, "FILHOTE", 4, 310, 220, "REPORTADO", 70, {"foto": "filhote"}),
+    (1, "DOENTE", 1, -300, -210, "TRIAGEM", 60, {"foto": "doente"}),
+    (1, "RISCO_SANITARIO", 1, 150, 330, "TRIAGEM", 110, {"foto": "risco"}),
+    (1, "FERIDO", 1, -120, -330, "ENCAMINHADO", 55, {"rec": 1, "aceito": True, "extra": 1, "foto": "ferido"}),
     (1, "COLONIA", 8, 260, -250, "ENCAMINHADO", 130, {"rec": 5, "extra": 1}),
     (1, "MAUS_TRATOS", 2, -80, 90, "ATENDIDO", 230, {"rec": 7}),
     (1, "DOENTE", 1, 380, 40, "ATENDIDO", 190, {"rec": 1}),
@@ -97,9 +97,9 @@ CASOS = [
     (2, "FERIDO", 1, 100, 120, "REPORTADO", 9, {"extra": 1}),
     (2, "COLONIA", 10, -200, -100, "REPORTADO", 48, {"extra": 2}),
     (2, "DOENTE", 2, 240, -180, "TRIAGEM", 75, {}),
-    (2, "MAUS_TRATOS", 1, -90, 210, "TRIAGEM", 50, {"recusa": (8, "Fora da área de atuação do posto.")}),
-    (2, "FILHOTE", 5, -250, 170, "ENCAMINHADO", 100, {"rec": 4, "extra": 1}),
-    (2, "FERIDO", 1, 180, 260, "ENCAMINHADO", 38, {"rec": 4, "aceito": True}),
+    (2, "MAUS_TRATOS", 1, -90, 210, "TRIAGEM", 50, {"recusa": (8, "Fora da área de atuação do posto."), "foto": "maustratos"}),
+    (2, "FILHOTE", 5, -250, 170, "ENCAMINHADO", 100, {"rec": 4, "extra": 1, "foto": "filhote"}),
+    (2, "FERIDO", 1, 180, 260, "ENCAMINHADO", 38, {"rec": 4, "aceito": True, "ult": 6, "foto": "ferido"}),
     (2, "RISCO_SANITARIO", 1, -40, -250, "ATENDIDO", 210, {"rec": 8}),
     (2, "DOENTE", 1, 300, 50, "ATENDIDO", 140, {"rec": 2}),
     (2, "COLONIA", 4, -310, -60, "ARQUIVADO", 120, {"obs": "Local visitado e nenhum animal encontrado."}),
@@ -109,7 +109,7 @@ CASOS = [
     (3, "DOENTE", 1, -500, -900, "ATENDIDO", 250, {"rec": 3}),
     (3, "MAUS_TRATOS", 1, 1200, 300, "ATENDIDO", 300, {"rec": 7}),
     (3, "RISCO_SANITARIO", 1, -1300, 100, "ARQUIVADO", 200, {"obs": "Duplicado de caso já atendido."}),
-    (4, "DOENTE", 1, 400, -700, "REPORTADO", 20, {}),
+    (4, "DOENTE", 1, 400, -700, "REPORTADO", 30, {}),
     (4, "FILHOTE", 2, -800, 500, "TRIAGEM", 66, {}),
     (4, "FERIDO", 1, 900, 900, "ENCAMINHADO", 82, {"rec": 1}),
     (4, "COLONIA", 5, -300, -1100, "ATENDIDO", 180, {"rec": 6}),
@@ -121,7 +121,7 @@ CASOS = [
     (5, "FILHOTE", 2, -100, 700, "ATENDIDO", 200, {"rec": 4}),
     (5, "RISCO_SANITARIO", 1, 800, 100, "ATENDIDO", 280, {"rec": 8}),
     (6, "FERIDO", 1, -200, 200, "TRIAGEM", 28, {}),
-    (6, "COLONIA", 4, 400, -300, "REPORTADO", 6, {}),
+    (6, "COLONIA", 4, 400, -300, "REPORTADO", 40, {}),
     (6, "DOENTE", 1, -500, -200, "ATENDIDO", 100, {"rec": 4}),
     (6, "MAUS_TRATOS", 1, 100, 500, "ATENDIDO", 170, {"rec": 8}),
 ]
@@ -190,7 +190,7 @@ def main():
         lng = round(blng + dx / (M_POR_GRAU * math.cos(math.radians(blat))), 6)
         celula = f"{round(lat, 2):.2f},{round(lng, 2):.2f}"
         criado = criado_h * 60
-        ultimo = max(25, criado * 0.3)
+        ultimo = opc["ult"] * 60 if "ult" in opc else max(26 * 60, criado * 0.3)
 
         etapas = [(None, "REPORTADO", "Cidadão", "Reporte recebido")]
         rec = None
@@ -214,6 +214,7 @@ def main():
             if opc.get("aceito"):
                 etapas.append(("ENCAMINHADO", "ENCAMINHADO", RECURSOS[rec][0], "Aceito pelo recurso"))
 
+        ultimo = criado if len(etapas) == 1 else min(ultimo, criado - 60)
         passo = (criado - ultimo) / max(1, len(etapas) - 1)
         for i, (ant, novo, autor, obs) in enumerate(etapas):
             hist_id += 1
@@ -222,7 +223,7 @@ def main():
                 f"INSERT INTO HISTORICO_STATUS (ID, CASO_ID, STATUS_ANTERIOR, STATUS_NOVO, AUTOR, OBSERVACAO, CRIADO_EM) VALUES "
                 f"({hist_id}, {caso_id}, {esc(ant) if ant else 'NULL'}, {esc(novo)}, {esc(autor)}, {esc(obs)}, {ts(quando)});"
             )
-        atualizado = ultimo
+        ultimo_reporte = criado
 
         n_reportes = 1 + opc.get("extra", 0)
         for k in range(n_reportes):
@@ -231,12 +232,16 @@ def main():
             texto = DESCRICOES[tipo][idx % len(DESCRICOES[tipo])] if k == 0 else rng.choice(
                 ["Continua no mesmo lugar.", "Mais um morador avisando: a situação segue igual.", "Passei hoje e o animal ainda está aqui."]
             )
-            quando = criado if k == 0 else rng.uniform(ultimo, criado * 0.9)
+            quando = criado if k == 0 else rng.uniform(min(ultimo, criado * 0.9), criado * 0.9)
+            ultimo_reporte = min(ultimo_reporte, quando)
+            foto = esc("seed-fotos/" + opc["foto"] + ".jpg") if k == 0 and "foto" in opc else "NULL"
             contato = esc(rng.choice(CONTATOS)) if rng.random() < 0.35 else "NULL"
             reportes.append(
                 f"INSERT INTO REPORTE (ID, CASO_ID, DESCRICAO, FOTO_PATH, CONTATO_OPCIONAL, CRIADO_EM) VALUES "
-                f"({rep_id}, {caso_id}, {esc(texto)}, NULL, {contato}, {ts(quando)});"
+                f"({rep_id}, {caso_id}, {esc(texto)}, {foto}, {contato}, {ts(quando)});"
             )
+
+        atualizado = min(ultimo, ultimo_reporte)
 
         casos_sql.append(
             "INSERT INTO CASO (ID, TIPO, QTD_ANIMAIS, LAT, LNG, CELULA, BAIRRO_ID, STATUS, SCORE, RECURSO_ID, "
