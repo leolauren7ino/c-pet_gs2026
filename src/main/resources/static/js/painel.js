@@ -291,8 +291,8 @@
       caixa.innerHTML = `
         <h3>Células com 5 ou mais casos abertos</h3>
         ${a.celulasCriticas.length ? a.celulasCriticas.map((c) => `<button type="button" class="item-alerta" data-celula="${esc(c.celula)}"><span class="score alto">${c.abertos}</span><span class="quem"><b>${esc(c.bairro)}</b><small class="mono">${esc(c.celula)}</small></span></button>`).join("") : '<p class="suave">Nenhuma célula crítica.</p>'}
-        <h3>Atualizados nas últimas 24 h</h3>
-        ${a.casosAtualizados.length ? a.casosAtualizados.map((c) => `<button type="button" class="item-alerta" data-caso="${c.id}"><span class="score ${c.status === "ATENDIDO" || c.status === "ARQUIVADO" ? "baixo" : classeScore(c.score)}">${c.status === "ATENDIDO" || c.status === "ARQUIVADO" ? "-" : c.score}</span><span class="quem"><b>${TIPOS[c.tipo]}</b>, ${esc(c.bairro)}<small>${STATUS[c.status]} ${haTempo(c.atualizadoEm)}</small></span></button>`).join("") : '<p class="suave">Nada novo.</p>'}`;
+        <h3>Casos abertos atualizados nas últimas 24 h</h3>
+        ${a.casosAtualizados.length ? a.casosAtualizados.map((c) => `<button type="button" class="item-alerta" data-caso="${c.id}"><span class="score ${classeScore(c.score)}">${c.score}</span><span class="quem"><b>${TIPOS[c.tipo]}</b>, ${esc(c.bairro)}<small>${STATUS[c.status]} ${haTempo(c.atualizadoEm)}</small></span></button>`).join("") : '<p class="suave">Nada novo.</p>'}`;
       caixa.querySelectorAll("[data-caso]").forEach((b) => b.addEventListener("click", () => { fecharAlertas(); selecionar(Number(b.dataset.caso)); }));
       caixa.querySelectorAll("[data-celula]").forEach((b) =>
         b.addEventListener("click", () => {

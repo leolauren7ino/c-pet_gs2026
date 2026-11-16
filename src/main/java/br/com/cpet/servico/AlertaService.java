@@ -52,6 +52,7 @@ public class AlertaService {
         LocalDateTime desde = LocalDateTime.now(relogio).minus(Duration.ofHours(regras.getAlertas().getJanelaHoras()));
 
         List<AlertaCaso> recentes = casos.findByAtualizadoEmAfter(desde).stream()
+                .filter(c -> c.getStatus().aberto())
                 .sorted(Comparator.comparing(Caso::getAtualizadoEm).reversed())
                 .map(c -> new AlertaCaso(c.getId(), c.getCodigoAcompanhamento(), c.getTipo(), c.getStatus(),
                         mapaBairros.get(c.getBairroId()).getNome(), c.getScore(), c.getAtualizadoEm()))

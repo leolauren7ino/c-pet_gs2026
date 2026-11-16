@@ -66,7 +66,7 @@ Os usuários do seed: Marina Duarte (operadora), Rafael Nogueira (agente da Clí
 - **Duplicata:** reporte do mesmo tipo a até 50 m de um caso aberto criado nas últimas 48 h vira novo REPORTE do caso existente.
 - **Score (0 a 100):** urgência do tipo (FERIDO 40, DOENTE 30, FILHOTE, MAUS_TRATOS e RISCO_SANITARIO 25, COLONIA 15) + densidade da célula (3 por caso aberto, teto 25) + vulnerabilidade do bairro (0 a 20) + envelhecimento (2 por dia, teto 15). A API devolve o detalhamento por fator.
 - **Encaminhamento:** tabela tipo do caso para tipo de recurso, só recursos ativos, com vagas e que aceitem o tipo. Devolve os 3 mais próximos com a distância em km. Encaminhar desconta uma vaga; atender, recusar ou arquivar devolve.
-- **Alertas:** `GET /api/alertas` traz os casos atualizados nas últimas 24 h e as células com 5 ou mais casos abertos.
+- **Alertas:** `GET /api/alertas` traz os casos abertos atualizados nas últimas 24 h e as células com 5 ou mais casos abertos.
 - **Status:** REPORTADO, TRIAGEM, ENCAMINHADO e depois ATENDIDO ou ARQUIVADO. A recusa do agente volta para TRIAGEM. Toda transição é validada e gravada em `HISTORICO_STATUS`.
 
 ## Privacidade

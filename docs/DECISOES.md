@@ -29,7 +29,7 @@ Onde o enunciado deixou uma escolha em aberto, ficou a opção mais simples. Cad
 - **Aceite** do agente não muda o status. Fica registrado no histórico como ENCAMINHADO para ENCAMINHADO (autor: o recurso). O painel do recurso mostra "aceito" a partir daí.
 - **Recusa e atendimento exigem observação.** Recusa devolve a vaga, limpa `recurso_id` e volta o caso para TRIAGEM. Atendimento devolve a vaga e mantém `recurso_id` como registro.
 - **Arquivar** um caso ENCAMINHADO também devolve a vaga.
-- **Alertas**: "atualização nas últimas 24 h" considera qualquer status. O contador do badge soma casos atualizados e células críticas.
+- **Alertas** (regra alterada): `GET /api/alertas` devolve só casos ainda abertos (REPORTADO, TRIAGEM ou ENCAMINHADO) com atualização nas últimas 24 h, mais as células com 5 ou mais casos abertos. Casos ATENDIDO e ARQUIVADO saem da lista mesmo que tenham sido atualizados agora. O badge do painel soma as duas listas. Antes, a lista incluía qualquer status e o número ficava alto demais.
 - **Casos novos** nascem com `simulado = 0`. A faixa "Dados simulados para demonstração" aparece enquanto existir qualquer caso simulado.
 
 ## Privacidade e acesso

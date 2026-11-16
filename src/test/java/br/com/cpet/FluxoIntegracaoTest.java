@@ -181,7 +181,30 @@ class FluxoIntegracaoTest {
 
         assertThat(alertas.get("celulasCriticas")).isNotEmpty()
                 .allSatisfy(c -> assertThat(c.get("abertos").asInt()).isGreaterThanOrEqualTo(5));
-        assertThat(alertas.get("casosAtualizados")).isNotEmpty();
+        assertThat(alertas.get("casosAtualizados")).isNotEmpty()
+                .allSatisfy(c -> assertThat(c.get("status").asText()).isIn("REPORTADO", "TRIAGEM", "ENCAMINHADO"));
+        assertThat(alertas.get("total").asInt())
+                .isEqualTo(alertas.get("casosAtualizados").size() + alertas.get("celulasCriticas").size());
+    }
+
+    @Test
+    void casoAtendidoSaiDosAlertasMesmoComAtualizacaoRecente() throws Exception {
+        MockHttpSession operador = entrar(OPERADOR);
+        MockHttpSession agente = entrar(AGENTE_ONG);
+        String codigo = enviarReporte(-23.5720, -46.6820, "FERIDO", null).get("codigo").asText();
+        long id = encontrarPorCodigo(ler(get("/api/casos").session(operador)), codigo).get("id").asLong();
+        assertThat(ler(get("/api/alertas").session(operador)).get("casosAtualizados"))
+                .anyMatch(c -> c.get("id").asLong() == id);
+
+        mvc.perform(post("/api/casos/" + id + "/encaminhar").session(operador)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"recursoId\":" + RECURSO_ONG + "}"))
+                .andExpect(status().isOk());
+        mvc.perform(post("/api/recurso/casos/" + id + "/atender").session(agente)
+                .contentType(MediaType.APPLICATION_JSON).content("{\"observacao\":\"Atendido.\"}"))
+                .andExpect(status().isOk());
+
+        assertThat(ler(get("/api/alertas").session(operador)).get("casosAtualizados"))
+                .noneMatch(c -> c.get("id").asLong() == id);
     }
 
     @Test
