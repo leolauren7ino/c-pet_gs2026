@@ -220,9 +220,9 @@
               )
               .join("")
           : '<p class="suave">Nenhum recurso ativo e com vaga atende este tipo de caso agora.</p>'
-      }</div>`;
+      }<p class="nota-sim">O encaminhamento fica registrado no C-PET. Nenhuma mensagem sai para o recurso: simulado na demonstração.</p></div>`;
     } else if (c.status === "ENCAMINHADO") {
-      blocoRecurso = `<div class="bloco"><h3>Encaminhamento</h3><p><b>${esc(c.recurso)}</b></p><p class="suave">${d.aceito ? "O recurso aceitou o caso." : "Aguardando o aceite do recurso."}</p></div>`;
+      blocoRecurso = `<div class="bloco"><h3>Encaminhamento</h3><p><b>${esc(c.recurso)}</b></p><p class="suave">${d.aceito ? "O recurso aceitou o caso." : "Aguardando o aceite do recurso."}</p><p class="nota-sim">Registro interno do C-PET. Nenhuma mensagem sai para o recurso: simulado na demonstração.</p></div>`;
     }
 
     const blocoArquivar = aberto
@@ -311,6 +311,7 @@
       selo.classList.toggle("zero", a.total === 0);
       const caixa = document.getElementById("painel-alertas");
       caixa.innerHTML = `
+        <p class="nota-sim mb-2">Alertas só aparecem aqui. Nenhum aviso é enviado a ninguém: simulado na demonstração.</p>
         <h3>Células com 5 ou mais casos abertos</h3>
         ${a.celulasCriticas.length ? a.celulasCriticas.map((c) => `<button type="button" class="item-alerta" data-celula="${esc(c.celula)}"><span class="score alto">${c.abertos}</span><span class="quem"><b>${esc(c.bairro)}</b><small class="mono">${esc(c.celula)}</small></span></button>`).join("") : '<p class="suave">Nenhuma célula crítica.</p>'}
         <h3>Casos abertos atualizados nas últimas 24 h</h3>
