@@ -88,7 +88,7 @@ Antes de gravar, abra `entrar.html` e use "Reiniciar dados simulados".
 
 1. **0:00 Reportar (25 s).** Em `index.html`, dê zoom em Capão Redondo e toque no mapa. Escolha "Animal ferido", escreva uma linha, anexe uma foto e deixe um contato. Envie e mostre o código em destaque.
 2. **0:25 Reportar de novo no mesmo ponto (10 s).** Envie outro reporte do mesmo tipo no mesmo ponto. A tela diz que já havia um reporte e devolve o mesmo código: é a regra de duplicata.
-3. **0:35 Acompanhar (10 s).** Em `acompanhar.html`, busque o código: status Reportado e a linha do tempo com as próximas etapas.
+3. **0:35 Acompanhar (10 s).** Em `acompanhar.html`, o código mais recente já vem preenchido neste aparelho: status Reportado e a linha do tempo com as próximas etapas.
 4. **0:45 Painel (40 s).** Em `entrar.html`, entre como Marina Duarte. Mostre a fila ordenada por score, o badge de alertas (duas células críticas) e as células tracejadas no mapa. Abra o caso novo: o bloco "Por que esta prioridade" com os quatro fatores, a foto e o contato, e os 3 recursos com distância em km e vagas. Clique em Encaminhar na Clínica Popular Pata Cuidada.
 5. **1:25 Recurso (25 s).** Saia, entre como Rafael Nogueira. O caso está em "Aguardando aceite" e as vagas caíram em 1. Aceite e depois marque como atendido com uma observação. As vagas voltam.
 6. **1:50 Fechamento (10 s).** Em `acompanhar.html`, atualize a busca: a linha do tempo mostra Atendido. Termine em `dados.html`, que mostra a densidade por célula sem localização exata.

@@ -22,7 +22,8 @@
       pino.setLatLng([lat, lng]);
     }
     if (aproximar) mapa.setView([lat, lng], Math.max(mapa.getZoom(), 16));
-    leitura.textContent = `Ponto marcado: ${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+    leitura.textContent = "Ponto marcado no mapa. Arraste o pino se precisar ajustar.";
+    leitura.classList.add("ok");
     erroLocal.hidden = true;
   }
 
@@ -73,17 +74,23 @@
     erroTipo.hidden = erroGeral.hidden = true;
 
     const tipo = document.querySelector('input[name="tipo"]:checked');
-    let valido = true;
+    const faltas = [];
+    if (!ponto) {
+      mostrarErroLocal("Marque no mapa onde o animal está.");
+      faltas.push("marcar no mapa onde o animal está");
+    }
     if (!tipo) {
       erroTipo.textContent = "Escolha o que você viu.";
       erroTipo.hidden = false;
-      valido = false;
+      faltas.push("escolher o que você viu");
     }
-    if (!ponto) {
-      mostrarErroLocal("Marque no mapa onde o animal está.");
-      valido = false;
+    if (faltas.length) {
+      erroGeral.textContent = `Ainda falta ${faltas.join(" e ")}. O aviso em vermelho mostra onde.`;
+      erroGeral.hidden = false;
+      const primeiroErro = !ponto ? erroLocal : erroTipo;
+      primeiroErro.scrollIntoView({ block: "center" });
+      return;
     }
-    if (!valido) return;
 
     const dados = new FormData();
     dados.append("tipo", tipo.value);
@@ -108,7 +115,18 @@
     }
   });
 
+  function guardarCodigo(codigo) {
+    try {
+      const lista = JSON.parse(localStorage.getItem("cpet.codigos") || "[]").filter((c) => c.codigo !== codigo);
+      lista.unshift({ codigo, em: new Date().toISOString() });
+      localStorage.setItem("cpet.codigos", JSON.stringify(lista.slice(0, 10)));
+    } catch (e) {
+      /* navegação privada: o código continua na tela */
+    }
+  }
+
   function mostrarRecebido(r) {
+    guardarCodigo(r.codigo);
     document.getElementById("tela-form").hidden = true;
     document.getElementById("tela-recebido").hidden = false;
     document.getElementById("codigo").textContent = r.codigo;

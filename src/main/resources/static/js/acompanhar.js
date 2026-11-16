@@ -53,7 +53,32 @@
     buscar(campo.value);
   });
 
-  const inicial = new URLSearchParams(location.search).get("codigo");
+  function codigosGuardados() {
+    try {
+      return JSON.parse(localStorage.getItem("cpet.codigos") || "[]");
+    } catch (e) {
+      return [];
+    }
+  }
+
+  function mostrarGuardados(lista) {
+    const caixa = document.getElementById("guardados");
+    if (!lista.length) return;
+    caixa.innerHTML =
+      '<p class="titulo-secao">Reportes feitos neste aparelho</p>' +
+      lista.map((c) => `<button type="button" class="btn-c sec pequeno mono" data-codigo="${esc(c.codigo)}">${esc(c.codigo)}</button>`).join(" ");
+    caixa.hidden = false;
+    caixa.querySelectorAll("button").forEach((b) =>
+      b.addEventListener("click", () => {
+        campo.value = b.dataset.codigo;
+        buscar(b.dataset.codigo);
+      })
+    );
+  }
+
+  const guardados = codigosGuardados();
+  mostrarGuardados(guardados);
+  const inicial = new URLSearchParams(location.search).get("codigo") || (guardados[0] && guardados[0].codigo);
   if (inicial) {
     campo.value = inicial;
     buscar(inicial);

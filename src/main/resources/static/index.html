@@ -67,7 +67,7 @@
           </div>
         </section>
 
-        <div class="alerta-erro mb-3" id="erro-geral" role="alert" hidden></div>
+        <div class="alerta-erro mb-3" id="erro-geral" role="alert" tabindex="-1" hidden></div>
         <div class="acoes-form">
           <button class="btn-c" type="submit" id="enviar">Enviar reporte</button>
           <span class="ajuda-envio">Ao enviar, você concorda com o uso do contato como descrito acima.</span>
@@ -77,12 +77,10 @@
       <div class="coluna-mapa">
         <section class="passo" style="margin-bottom:0">
           <h2><span class="n">1</span>Onde ele está</h2>
+          <button class="btn-c cheio" type="button" id="localizar">Estou no local: usar minha localização</button>
+          <p class="ajuda-envio my-2">Ou aproxime o mapa e toque no ponto exato onde o animal está.</p>
           <div id="mapa" class="mapa" role="application" aria-label="Mapa para marcar o local"></div>
-          <div class="d-flex flex-wrap gap-2 align-items-center mt-2">
-            <button class="btn-c sec pequeno" type="button" id="localizar">Usar minha localização</button>
-            <span class="ajuda-envio">ou toque no mapa para marcar o ponto</span>
-          </div>
-          <p class="leitura-local mono" id="leitura-local" aria-live="polite">Nenhum ponto marcado.</p>
+          <p class="leitura-local" id="leitura-local" aria-live="polite">Nenhum ponto marcado.</p>
           <div class="erro-campo" id="erro-local" hidden></div>
         </section>
       </div>
@@ -93,7 +91,7 @@
     <h1 id="rec-titulo">Reporte recebido.</h1>
     <div class="carimbo" id="codigo" aria-label="Código de acompanhamento"></div>
     <p id="rec-texto"></p>
-    <p>Guarde este código. Com ele você acompanha cada etapa, sem precisar de login.</p>
+    <p>Anote ou tire um print deste código. Com ele você acompanha cada etapa, sem login. Neste aparelho, a página Acompanhar também lembra dele.</p>
     <div class="acoes-form">
       <a class="btn-c" id="ver-andamento" href="acompanhar.html">Acompanhar este caso</a>
       <button class="btn-c sec" type="button" id="copiar">Copiar código</button>

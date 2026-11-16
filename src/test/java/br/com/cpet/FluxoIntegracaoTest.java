@@ -167,6 +167,11 @@ class FluxoIntegracaoTest {
             assertThat(c.get("lat").asDouble()).isEqualTo(Math.round(c.get("lat").asDouble() * 100) / 100.0);
             assertThat(c.get("lng").asDouble()).isEqualTo(Math.round(c.get("lng").asDouble() * 100) / 100.0);
             assertThat(c.has("codigo")).isFalse();
+            long somaPorTipo = 0;
+            for (JsonNode n : c.get("abertosPorTipo")) {
+                somaPorTipo += n.asLong();
+            }
+            assertThat(somaPorTipo).isEqualTo(c.get("abertos").asLong());
         }
     }
 

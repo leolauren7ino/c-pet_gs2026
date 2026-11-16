@@ -45,3 +45,15 @@ Onde o enunciado deixou uma escolha em aberto, ficou a opção mais simples. Cad
 - **Mapa**: Leaflet servido de `static/vendor/leaflet`, com tiles do OpenStreetMap. Os tiles precisam de internet; sem rede o mapa abre com fundo liso, e os pinos e células continuam aparecendo.
 - **Fontes locais** em `static/fonts` (Schibsted Grotesk e IBM Plex Mono, licença OFL). Bootstrap 5 local, só para grade e formulários.
 - **Skill de design**: foi seguido nas regras de gosto (copy direta, sem emoji nem degradê, tokens, hierarquia clara). As partes de landing page (hero dealt, gate de checagem, fotos de banco) não se aplicam a uma ferramenta de trabalho e ficaram de fora.
+
+## Ajustes depois do teste com três perfis de uso
+
+Percorri as telas como uma moradora de 55 anos no celular, um voluntário de ONG com pressa e um servidor de zoonoses. Os cinco problemas mais graves para a demonstração foram corrigidos sem tocar nas regras de negócio:
+
+1. **Erro do formulário invisível.** No celular o botão Enviar ficava a 2098 px do topo e os avisos a 815 px e 1333 px; ao enviar incompleto nada mudava na tela. Agora a página rola até o primeiro aviso e uma mensagem junto ao botão diz o que falta.
+2. **Primeiro passo confuso.** "Usar minha localização" virou o botão principal, acima do mapa, e a confirmação do pino deixou de mostrar coordenadas.
+3. **Código sem recuperação.** O código do reporte é guardado no `localStorage` do aparelho, e a tela Acompanhar o oferece e já abre com o mais recente. Nada vai para o servidor; quem limpar os dados do navegador perde a lista.
+4. **Dados abertos sem tipo.** O agregado por célula e por bairro ganhou `abertosPorTipo` (só contagens), com filtro por tipo, números dentro dos círculos, balão ao toque e ranking das células com mais casos. Continua sem coordenada exata.
+5. **Fila do agente.** Casos aguardando aceite vêm primeiro, o topo mostra quantos aguardam, o contato vira link de e-mail ou telefone e o ponto tem botão "Ver o ponto no mapa".
+
+Ficaram de fora: o badge de alertas conta todos os casos atualizados em 24 h (inclusive atendidos), então o número no seed é alto; e o campo de foto usa o texto do navegador, que muda com o idioma dele.

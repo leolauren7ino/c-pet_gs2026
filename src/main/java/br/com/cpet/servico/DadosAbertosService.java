@@ -1,6 +1,7 @@
 package br.com.cpet.servico;
 
 import java.util.Comparator;
+import java.util.EnumMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -13,6 +14,7 @@ import br.com.cpet.dominio.Caso;
 import br.com.cpet.dominio.Repositorios.BairroRepository;
 import br.com.cpet.dominio.Repositorios.CasoRepository;
 import br.com.cpet.dominio.StatusCaso;
+import br.com.cpet.dominio.TipoCaso;
 import br.com.cpet.regras.Geo;
 
 /** Somente agregados. Nenhum método devolve a coordenada exata de um caso. */
@@ -21,11 +23,11 @@ import br.com.cpet.regras.Geo;
 public class DadosAbertosService {
 
     public record CelulaAgregada(String celula, double lat, double lng, String bairro, long abertos, long atendidos,
-                                 long total) {
+                                 long total, Map<TipoCaso, Long> abertosPorTipo) {
     }
 
     public record BairroAgregado(Long id, String nome, double lat, double lng, int indiceVulnerabilidade,
-                                 long abertos, long atendidos, long total) {
+                                 long abertos, long atendidos, long total, Map<TipoCaso, Long> abertosPorTipo) {
     }
 
     public record Resumo(long abertos, long atendidos, long total, long simulados) {
@@ -49,7 +51,7 @@ public class DadosAbertosService {
                     List<Caso> lista = e.getValue();
                     return new CelulaAgregada(e.getKey(), centro[0], centro[1],
                             mapaBairros.get(lista.get(0).getBairroId()).getNome(),
-                            contar(lista, true), contar(lista, false), lista.size());
+                            contar(lista, true), contar(lista, false), lista.size(), porTipo(lista));
                 })
                 .sorted(Comparator.comparingLong(CelulaAgregada::abertos).reversed())
                 .toList();
@@ -62,7 +64,8 @@ public class DadosAbertosService {
                 .map(b -> {
                     List<Caso> lista = porBairro.getOrDefault(b.getId(), List.of());
                     return new BairroAgregado(b.getId(), b.getNome(), b.getLat(), b.getLng(),
-                            b.getIndiceVulnerabilidade(), contar(lista, true), contar(lista, false), lista.size());
+                            b.getIndiceVulnerabilidade(), contar(lista, true), contar(lista, false), lista.size(),
+                            porTipo(lista));
                 })
                 .sorted(Comparator.comparingLong(BairroAgregado::abertos).reversed())
                 .toList();
@@ -73,6 +76,12 @@ public class DadosAbertosService {
         return new Resumo(contar(todos, true),
                 todos.stream().filter(c -> c.getStatus() == StatusCaso.ATENDIDO).count(),
                 todos.size(), casos.countBySimulado(1));
+    }
+
+    private static Map<TipoCaso, Long> porTipo(List<Caso> lista) {
+        return lista.stream()
+                .filter(c -> c.getStatus().aberto())
+                .collect(Collectors.groupingBy(Caso::getTipo, () -> new EnumMap<>(TipoCaso.class), Collectors.counting()));
     }
 
     private static long contar(List<Caso> lista, boolean abertos) {

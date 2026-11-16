@@ -19,11 +19,15 @@
   });
 
   async function carregar(aviso) {
-    const [recurso, casos] = await Promise.all([api("/api/recurso"), api("/api/recurso/casos")]);
+    const [recurso, recebidos] = await Promise.all([api("/api/recurso"), api("/api/recurso/casos")]);
+    const casos = [...recebidos].sort((a, b) => Number(a.aceito) - Number(b.aceito) || b.caso.score - a.caso.score);
+    const novos = casos.filter((d) => !d.aceito).length;
     document.getElementById("nome-recurso").textContent = recurso.nome;
     document.getElementById("tipo-recurso").textContent = RECURSOS[recurso.tipo];
     document.getElementById("vagas").innerHTML = `${recurso.vagas}<small>${recurso.vagas === 1 ? "vaga disponível" : "vagas disponíveis"}</small>`;
-    document.getElementById("resumo-casos").textContent = `${casos.length} ${casos.length === 1 ? "caso encaminhado" : "casos encaminhados"}`;
+    document.getElementById("resumo-casos").innerHTML = novos
+      ? `<b>${novos} aguardando seu aceite</b>, ${casos.length} no total`
+      : `${casos.length} ${casos.length === 1 ? "caso encaminhado" : "casos encaminhados"}, nenhum aguardando aceite`;
 
     const lista = document.getElementById("lista");
     lista.innerHTML =
@@ -47,6 +51,13 @@
     if (pontos.length) mapa.fitBounds(pontos, { padding: [50, 50], maxZoom: 14 });
   }
 
+  function linkContato(texto) {
+    const digitos = texto.replace(/\D/g, "");
+    if (texto.includes("@")) return `<a class="mono" href="mailto:${esc(texto)}">${esc(texto)}</a>`;
+    if (digitos.length >= 8) return `<a class="mono" href="tel:+55${digitos}">${esc(texto)}</a>`;
+    return `<span class="mono">${esc(texto)}</span>`;
+  }
+
   function cartao(d) {
     const c = d.caso;
     const foto = d.reportes.find((r) => r.fotoUrl);
@@ -65,8 +76,8 @@
           ${descricoes || '<p class="fraco">Sem descrição.</p>'}
           <dl class="dados-campo">
             <dt>Bairro</dt><dd>${esc(c.bairro)}, ${c.qtdAnimais} ${c.qtdAnimais === 1 ? "animal" : "animais"}</dd>
-            <dt>Local exato</dt><dd class="mono">${c.lat.toFixed(5)}, ${c.lng.toFixed(5)} <a href="https://www.openstreetmap.org/?mlat=${c.lat}&mlon=${c.lng}#map=18/${c.lat}/${c.lng}" target="_blank" rel="noopener">abrir mapa</a></dd>
-            <dt>Contato</dt><dd>${contatos.length ? contatos.map((x) => `<span class="mono">${esc(x)}</span>`).join(", ") : '<span class="fraco">Não informado</span>'}</dd>
+            <dt>Local exato</dt><dd><span class="mono">${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}</span> <a class="btn-c sec pequeno" href="https://www.openstreetmap.org/?mlat=${c.lat}&mlon=${c.lng}#map=18/${c.lat}/${c.lng}" target="_blank" rel="noopener">Ver o ponto no mapa</a></dd>
+            <dt>Contato</dt><dd>${contatos.length ? contatos.map(linkContato).join(", ") : '<span class="fraco">Não informado</span>'}</dd>
             <dt>Reportes</dt><dd>${d.reportes.length}, o primeiro ${haTempo(c.criadoEm)}</dd>
             ${notaCentral ? `<dt>Encaminhado</dt><dd>${quando(notaCentral.criadoEm)} por ${esc(notaCentral.autor)}</dd>` : ""}
           </dl>
