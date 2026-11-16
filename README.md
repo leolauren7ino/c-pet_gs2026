@@ -40,6 +40,25 @@ No PowerShell: `$env:CPET_DB_URL = "..."` e as demais.
 
 Na primeira subida o app executa `db/schema.sql` (se a tabela CASO não existir) e `db/seed.sql` (se BAIRRO estiver vazia). Nas subidas seguintes não mexe nos dados. Os dois arquivos também podem ser executados à mão no SQL Developer; funcionam em Oracle 12c ou superior.
 
+### O que foi verificado no banco, e o que é suposição
+
+Verificado no **H2 em modo Oracle** (em memória e em arquivo), por teste automatizado e por execução do jar:
+
+- `schema.sql` e `seed.sql` rodam na primeira subida.
+- Segunda subida sobre um banco já criado não dá erro, não recria o schema e não apaga os dados (o app só cria o schema se a tabela CASO não existir e só semeia se BAIRRO estiver vazia).
+- `POST /api/demo/reset` apaga as seis tabelas e recria o seed pela mesma rotina nas duas bases, em uma única transação.
+
+**Suposição, nunca testada em Oracle real:**
+
+- Os tipos (`NUMBER`, `VARCHAR2`, `TIMESTAMP`), as sequences `START WITH 1000 INCREMENT BY 1 NOCACHE` e as constraints `CHECK` aceitos pelo Oracle 12c ou superior. Não há `IDENTITY`: os ids vêm de sequences e do seed.
+- As datas do seed no formato `LOCALTIMESTAMP - INTERVAL '2' DAY - INTERVAL '5' HOUR`.
+- O Hibernate gerando `SEQ_CASO.nextval` e a leitura de `getSchema()` do driver `ojdbc11` para detectar a tabela.
+- Banco em UTF-8 (por exemplo AL32UTF8), para os acentos do seed.
+- Usuário com permissão de criar tabelas e sequences.
+- Atomicidade do seed e do reset: o DML roda em transação, mas o DDL do Oracle confirma sozinho.
+
+Se algo falhar no Oracle, execute `schema.sql` e `seed.sql` à mão no SQL Developer, na ordem, e suba o app: ele pula o que já existe.
+
 ## Testes
 
 ```bash

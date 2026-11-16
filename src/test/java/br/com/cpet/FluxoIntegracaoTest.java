@@ -231,6 +231,32 @@ class FluxoIntegracaoTest {
     }
 
     @Test
+    void segundaSubidaComBancoJaCriadoNaoFalhaNemApagaDados() throws Exception {
+        MockHttpSession operador = entrar(OPERADOR);
+        String codigo = enviarReporte(-23.5730, -46.6830, "DOENTE", null).get("codigo").asText();
+        int antes = ler(get("/api/casos").session(operador)).size();
+
+        banco.run(null);
+
+        JsonNode depois = ler(get("/api/casos").session(operador));
+        assertThat(depois).hasSize(antes);
+        assertThat(encontrarPorCodigo(depois, codigo)).isNotNull();
+    }
+
+    @Test
+    void resetApagaOQueFoiCriadoERecriaOSeed() throws Exception {
+        MockHttpSession operador = entrar(OPERADOR);
+        String codigo = enviarReporte(-23.5740, -46.6840, "FILHOTE", null).get("codigo").asText();
+        assertThat(ler(get("/api/casos").session(operador)).size()).isEqualTo(41);
+
+        mvc.perform(post("/api/demo/reset")).andExpect(status().isOk());
+
+        JsonNode fila = ler(get("/api/casos").session(operador));
+        assertThat(fila).hasSize(40);
+        assertThat(fila).noneMatch(c -> codigo.equals(c.get("codigo").asText()));
+    }
+
+    @Test
     void rejeitaArquivoQueNaoEhImagem() throws Exception {
         MockMultipartFile falso = new MockMultipartFile("foto", "x.jpg", "image/jpeg", "nao sou imagem".getBytes());
 

@@ -12,6 +12,8 @@ import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.support.TransactionTemplate;
 
 import br.com.cpet.dominio.Repositorios.CasoRepository;
 
@@ -27,12 +29,15 @@ public class BancoService implements ApplicationRunner {
     private final JdbcTemplate jdbc;
     private final CasoService casoService;
     private final CasoRepository casos;
+    private final TransactionTemplate transacao;
 
-    public BancoService(DataSource dataSource, JdbcTemplate jdbc, CasoService casoService, CasoRepository casos) {
+    public BancoService(DataSource dataSource, JdbcTemplate jdbc, CasoService casoService, CasoRepository casos,
+                        PlatformTransactionManager gerenteTransacao) {
         this.dataSource = dataSource;
         this.jdbc = jdbc;
         this.casoService = casoService;
         this.casos = casos;
+        this.transacao = new TransactionTemplate(gerenteTransacao);
     }
 
     @Override
@@ -46,14 +51,21 @@ public class BancoService implements ApplicationRunner {
         }
     }
 
+    /** Limpeza e seed na mesma transação: se algo falhar, o banco volta ao estado anterior. */
     public void recriarSeed() {
-        for (String tabela : TABELAS_EM_ORDEM_DE_LIMPEZA) {
-            jdbc.update("DELETE FROM " + tabela);
-        }
-        semear();
+        transacao.executeWithoutResult(status -> {
+            for (String tabela : TABELAS_EM_ORDEM_DE_LIMPEZA) {
+                jdbc.update("DELETE FROM " + tabela);
+            }
+            semearNaTransacao();
+        });
     }
 
     private void semear() {
+        transacao.executeWithoutResult(status -> semearNaTransacao());
+    }
+
+    private void semearNaTransacao() {
         executar("db/seed.sql");
         casoService.recalcularTodos();
         casos.flush();
