@@ -1,0 +1,59 @@
+spring:
+  application:
+    name: cpet
+  profiles:
+    default: h2
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: none
+  sql:
+    init:
+      mode: never
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 6MB
+  jackson:
+    default-property-inclusion: non_null
+
+server:
+  port: 8080
+
+cpet:
+  demo:
+    reset-habilitado: true
+  upload:
+    pasta: ./uploads
+    max-bytes: 5242880
+  regras:
+    duplicata:
+      raio-metros: 50
+      janela-horas: 48
+    score:
+      urgencia:
+        FERIDO: 40
+        DOENTE: 30
+        FILHOTE: 25
+        MAUS_TRATOS: 25
+        RISCO_SANITARIO: 25
+        COLONIA: 15
+      densidade:
+        pontos-por-caso: 3
+        teto: 25
+      vulnerabilidade-max: 20
+      envelhecimento:
+        pontos-por-dia: 2
+        teto: 15
+    encaminhamento:
+      max-sugestoes: 3
+      tipos-de-recurso:
+        FERIDO: [CLINICA, ONG]
+        DOENTE: [CLINICA, ONG]
+        FILHOTE: [ONG]
+        COLONIA: [UNIDADE_MOVEL, ONG]
+        MAUS_TRATOS: [ORGAO_PUBLICO]
+        RISCO_SANITARIO: [ORGAO_PUBLICO]
+    alertas:
+      janela-horas: 24
+      casos-por-celula: 5

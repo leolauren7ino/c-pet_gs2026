@@ -1,0 +1,7 @@
+target/
+uploads/
+*.log
+.idea/
+*.iml
+.claude/settings.local.json
+scratch_mvn.sh

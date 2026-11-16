@@ -1,0 +1,6 @@
+spring:
+  datasource:
+    url: ${CPET_DB_URL}
+    username: ${CPET_DB_USER}
+    password: ${CPET_DB_PASSWORD}
+    driver-class-name: oracle.jdbc.OracleDriver
