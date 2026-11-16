@@ -6,3 +6,4 @@ uploads/
 .claude/settings.local.json
 scratch_mvn.sh
 shots/
+src/main/resources/static/_*.html

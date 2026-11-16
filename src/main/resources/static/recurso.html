@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Casos do recurso | C-PET</title>
+  <meta name="description" content="Casos encaminhados ao seu recurso: aceitar, recusar ou marcar como atendido.">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/trabalho.css">
+</head>
+<body class="trabalho tela-cheia">
+  <div id="cabecalho"></div>
+
+  <div class="barra-ferramenta">
+    <div class="cabeca-recurso">
+      <div>
+        <h1 id="nome-recurso">Meu recurso</h1>
+        <span class="resumo" id="tipo-recurso"></span>
+      </div>
+      <div class="vagas" id="vagas" aria-live="polite"></div>
+    </div>
+    <div class="direita"><span class="resumo" id="resumo-casos"></span></div>
+  </div>
+
+  <div class="abas" role="tablist" aria-label="Áreas da tela">
+    <button type="button" role="tab" data-aba="lista" aria-selected="true">Casos</button>
+    <button type="button" role="tab" data-aba="mapa" aria-selected="false">Mapa</button>
+  </div>
+
+  <main class="recurso-grade" id="grade">
+    <section class="col-lista" aria-label="Casos encaminhados">
+      <div class="lista-casos" id="lista"></div>
+    </section>
+    <section class="col-mapa" aria-label="Mapa dos casos">
+      <div id="mapa" class="mapa" role="application" aria-label="Mapa dos casos encaminhados"></div>
+    </section>
+  </main>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/recurso.js"></script>
+</body>
+</html>

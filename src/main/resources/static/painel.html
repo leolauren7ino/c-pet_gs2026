@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Painel da central | C-PET</title>
+  <meta name="description" content="Fila de casos por prioridade, mapa e encaminhamento para os recursos parceiros.">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/trabalho.css">
+</head>
+<body class="trabalho tela-cheia">
+  <div id="cabecalho"></div>
+
+  <div class="barra-ferramenta">
+    <h1>Fila de prioridade</h1>
+    <span class="resumo" id="resumo-fila"></span>
+    <div class="direita">
+      <button type="button" class="btn-alerta" id="btn-alertas" aria-expanded="false" aria-controls="painel-alertas">
+        Alertas <span class="selo zero" id="selo-alertas">0</span>
+      </button>
+    </div>
+    <div class="painel-alertas" id="painel-alertas" hidden></div>
+  </div>
+
+  <div class="abas" role="tablist" aria-label="Áreas do painel">
+    <button type="button" role="tab" data-aba="fila" aria-selected="true">Fila</button>
+    <button type="button" role="tab" data-aba="mapa" aria-selected="false">Mapa</button>
+    <button type="button" role="tab" data-aba="detalhe" aria-selected="false">Caso</button>
+  </div>
+
+  <main class="painel-grade ver-fila" id="grade">
+    <section class="col-fila" aria-label="Fila de casos">
+      <div class="filtros">
+        <label class="so-leitor" for="f-status">Status</label>
+        <select class="form-select largo" id="f-status">
+          <option value="ABERTOS">Casos abertos</option>
+          <option value="REPORTADO">Reportado</option>
+          <option value="TRIAGEM">Triagem</option>
+          <option value="ENCAMINHADO">Encaminhado</option>
+          <option value="ATENDIDO">Atendido</option>
+          <option value="ARQUIVADO">Arquivado</option>
+          <option value="TODOS">Todos os status</option>
+        </select>
+        <label class="so-leitor" for="f-tipo">Tipo</label>
+        <select class="form-select" id="f-tipo"><option value="">Todos os tipos</option></select>
+        <label class="so-leitor" for="f-bairro">Bairro</label>
+        <select class="form-select" id="f-bairro"><option value="">Todos os bairros</option></select>
+      </div>
+      <ul class="fila" id="fila"></ul>
+    </section>
+
+    <section class="col-mapa" aria-label="Mapa de casos">
+      <div id="mapa" class="mapa" role="application" aria-label="Mapa dos casos e células críticas"></div>
+    </section>
+
+    <section class="col-detalhe" aria-label="Detalhe do caso" id="detalhe" aria-live="polite">
+      <div class="vazio">Escolha um caso na fila para ver os reportes, o motivo da prioridade e os recursos sugeridos.</div>
+    </section>
+  </main>
+
+  <script src="vendor/leaflet/leaflet.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/painel.js"></script>
+</body>
+</html>

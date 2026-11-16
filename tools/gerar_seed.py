@@ -183,7 +183,6 @@ def main():
     usados = set()
     historico, reportes, casos_sql = [], [], []
     hist_id = rep_id = 0
-    descr_idx = {t: 0 for t in DESCRICOES}
 
     for caso_id, (bid, tipo, qtd, dx, dy, status, criado_h, opc) in enumerate(CASOS, start=1):
         _, blat, blng, _ = BAIRROS[bid]
@@ -191,7 +190,7 @@ def main():
         lng = round(blng + dx / (M_POR_GRAU * math.cos(math.radians(blat))), 6)
         celula = f"{round(lat, 2):.2f},{round(lng, 2):.2f}"
         criado = criado_h * 60
-        ultimo = max(25, criado * 0.12)
+        ultimo = max(25, criado * 0.3)
 
         etapas = [(None, "REPORTADO", "Cidadão", "Reporte recebido")]
         rec = None
@@ -228,8 +227,7 @@ def main():
         n_reportes = 1 + opc.get("extra", 0)
         for k in range(n_reportes):
             rep_id += 1
-            idx = descr_idx[tipo]
-            descr_idx[tipo] += 1
+            idx = caso_id
             texto = DESCRICOES[tipo][idx % len(DESCRICOES[tipo])] if k == 0 else rng.choice(
                 ["Continua no mesmo lugar.", "Mais um morador avisando: a situação segue igual.", "Passei hoje e o animal ainda está aqui."]
             )
