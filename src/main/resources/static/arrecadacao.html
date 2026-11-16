@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Arrecadação para casos | C-PET</title>
+  <meta name="description" content="Protótipo, fora do escopo funcional do MVP.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/cidadao.css">
+</head>
+<body>
+  <div id="cabecalho"></div>
+  <main class="pagina">
+    <p class="selo-proto">Protótipo, fora do escopo funcional do MVP</p>
+    <h1>Arrecadação para casos</h1>
+    <p class="suave mt-2" style="max-width:62ch">Mostraria campanhas de apoio a casos e parceiros. Todos os dados abaixo são fictícios. Esta tela não envia nada, não grava nada e não tem botões de ação.</p>
+    <section class="proto-bloco">
+      <h2>Campanhas abertas</h2>
+      <table class="tabela-bairros">
+        <thead><tr><th scope="col">Campanha</th><th scope="col">Recurso parceiro</th><th scope="col" class="num">Meta</th><th scope="col" class="num">Arrecadado</th></tr></thead>
+        <tbody>
+          <tr><td>Castração de gatos da Vila Norte</td><td>Associação Abrigo Central</td><td class="num mono">R$ 4.000</td><td class="num mono">R$ 1.650</td></tr>
+          <tr><td>Ração para o lar temporário Sul</td><td>Lar Temporário Sul</td><td class="num mono">R$ 1.200</td><td class="num mono">R$ 980</td></tr>
+          <tr><td>Cirurgia de cão atropelado</td><td>Clínica Veterinária Jardim Sul</td><td class="num mono">R$ 2.500</td><td class="num mono">R$ 2.500</td></tr>
+        </tbody>
+      </table>
+      <p class="nota-sim">Valores fictícios. A versão funcional exigiria meio de pagamento e prestação de contas, que o MVP não tem.</p>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+  <script>window.CPET.iniciar("arrecadacao.html");</script>
+</body>
+</html>

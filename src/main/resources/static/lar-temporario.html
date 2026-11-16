@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Lar temporário | C-PET</title>
+  <meta name="description" content="Protótipo, fora do escopo funcional do MVP.">
+  <link rel="icon" type="image/png" href="img/favicon.png">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/cidadao.css">
+</head>
+<body>
+  <div id="cabecalho"></div>
+  <main class="pagina">
+    <p class="selo-proto">Protótipo, fora do escopo funcional do MVP</p>
+    <h1>Lar temporário</h1>
+    <p class="suave mt-2" style="max-width:62ch">Mostraria lares com vaga para acolher animais por um período. Todos os dados abaixo são fictícios. Esta tela não envia nada, não grava nada e não tem botões de ação.</p>
+    <section class="proto-bloco">
+      <h2>Lares temporários com vaga</h2>
+      <table class="tabela-bairros">
+        <thead><tr><th scope="col">Lar</th><th scope="col">Bairro</th><th scope="col">Aceita</th><th scope="col" class="num">Vagas</th></tr></thead>
+        <tbody>
+          <tr><td>Lar Temporário Sul</td><td>Grajaú</td><td>Cães e gatos</td><td class="num mono">2</td></tr>
+          <tr><td>Lar da Vila Norte</td><td>Brasilândia</td><td>Gatos e filhotes</td><td class="num mono">1</td></tr>
+          <tr><td>Lar Zona Leste</td><td>Itaquera</td><td>Cães de porte pequeno</td><td class="num mono">0</td></tr>
+        </tbody>
+      </table>
+      <p class="nota-sim">Lares e vagas fictícios, separados dos recursos reais do seed. Não há cadastro nem pedido de acolhimento nesta tela.</p>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+  <script>window.CPET.iniciar("lar-temporario.html");</script>
+</body>
+</html>

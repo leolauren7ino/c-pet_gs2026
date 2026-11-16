@@ -27,6 +27,8 @@ Abra http://localhost:8080. O perfil `h2` é o padrão quando nenhum perfil é i
 
 ## Rodar com Oracle
 
+**Execução de demonstração em H2 em modo Oracle; script Oracle incluso e não testado em instância real.**
+
 Crie um usuário vazio no banco e informe a conexão por variáveis de ambiente:
 
 ```bash
@@ -79,6 +81,31 @@ mvn test
 | `recurso.html` | AGENTE | Casos encaminhados ao recurso: aceitar, recusar e marcar atendido, sempre com observação. |
 
 Os usuários do seed: Carlos Almeida (operador), Juliana Rocha (agente da Clínica Veterinária Jardim Sul) e Paulo Mendes (agente do Associação Abrigo Central).
+
+## Cobertura dos casos de uso
+
+A lista oficial UC01 a UC07 não foi informada ao autor desta seção, então os nomes abaixo são **descrições do que o código faz**, na ordem em que o enunciado trata os fluxos (UC01, 02, 05 e 06 funcionais; UC03, 04 e 07 protótipos). Confira os nomes com a lista do grupo antes de entregar.
+
+| UC | Cobertura | Telas | Endpoints reais |
+|---|---|---|---|
+| UC01 (supõe-se: reportar animal) | Funcional | `index.html` | `POST /api/reportes` |
+| UC02 (supõe-se: acompanhar caso) | Funcional | `acompanhar.html` | `GET /api/acompanhar/{codigo}` |
+| UC05 (supõe-se: triagem e encaminhamento pela central) | Funcional | `painel.html` | `GET /api/casos`, `GET /api/casos/{id}`, `POST /api/casos/{id}/encaminhar`, `POST /api/casos/{id}/arquivar`, `GET /api/alertas` |
+| UC06 (supõe-se: recurso parceiro atende o caso) | Funcional | `recurso.html` | `GET /api/recurso`, `GET /api/recurso/casos`, `POST /api/recurso/casos/{id}/aceitar`, `.../recusar`, `.../atender` |
+| UC03 (arrecadação) | Protótipo estático, dados fictícios | `arrecadacao.html` | nenhum |
+| UC04 (lar temporário) | Protótipo estático, dados fictícios | `lar-temporario.html` | nenhum |
+| UC07 (painel do gestor) | Protótipo, só números agregados existentes | `gestor.html` | lê `GET /api/dados/resumo` e `GET /api/dados/bairros` (já existentes, públicos) |
+
+Apoio: `dados.html` (`/api/dados/celulas`, `/api/dados/bairros`, `/api/dados/resumo`), `entrar.html` (`/api/sessao`, `/api/usuarios`, `/api/demo/reset`).
+
+**Lacunas conhecidas, sem funcionalidade inventada:**
+
+- Nenhuma mensagem sai do sistema. Encaminhar e alertar apenas registram e exibem dentro do C-PET; as telas dizem "simulado na demonstração".
+- Não há notificação ao cidadão quando o status muda: ele precisa consultar pelo código.
+- Não há cadastro de recursos nem edição de vagas pela interface (vêm do seed).
+- UC03, UC04 e UC07 não têm persistência nem ações.
+
+**Roadmap fase 2 (não implementado):** padrinho recorrente, notificação de proximidade e reativação de usuário (CRM).
 
 ## Regras (todas em `application.yml`, bloco `cpet.regras`)
 
