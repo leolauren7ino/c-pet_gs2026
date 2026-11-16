@@ -15,6 +15,18 @@
     }
   }
 
+  document.getElementById("reset").addEventListener("click", async (ev) => {
+    const msg = document.getElementById("reset-msg");
+    ev.target.disabled = true;
+    try {
+      await api("/api/demo/reset", { method: "POST" });
+      msg.textContent = "Dados simulados recarregados.";
+    } catch (e) {
+      msg.textContent = e.erro;
+    }
+    ev.target.disabled = false;
+  });
+
   api("/api/usuarios")
     .then((usuarios) => {
       lista.innerHTML = usuarios
