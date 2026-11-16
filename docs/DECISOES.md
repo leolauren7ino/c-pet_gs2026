@@ -70,3 +70,11 @@ No primeiro roteiro automatizado, 3 requisições do painel falharam com erro de
 - **Não provado:** se a falha vem do `--virtual-time-budget` do Edge, que comprime os tempos, ou de uma queda real de conexão. Não consegui cronometrar em tempo real com este navegador.
 - **Fragilidade real encontrada e corrigida no front:** `iniciar()` tratava qualquer erro, inclusive de rede, como "sem login" e mandava o usuário de volta à tela de entrada; e `api()` não tentava de novo uma leitura que falhasse. Agora só 401 e 403 voltam para a entrada, uma leitura (GET) com erro de rede tenta de novo uma vez, e a falha seguida mostra o aviso com "Tentar de novo". Escritas (POST) não são repetidas, para não duplicar nada.
 - **Resultado depois da correção:** 5 de 5 subidas a frio sem erro. Cinco execuções não provam a ausência de um problema raro. Por isso o README manda esperar o log `Started` e abrir a tela de entrada antes de gravar.
+
+## Rodada de contexto, protótipos e logo
+
+- Os nomes dos UC01 a UC07 não foram informados (o campo do enunciado ficou com o marcador). O README descreve o que o código faz e marca os nomes como suposição.
+- Emblema: `img/logo-cpet.png` recortado por CSS (círculo, com um retângulo da cor do fundo sobre o texto "C-PET" que fica dentro do círculo). O favicon `img/favicon.png` é um recorte gerado uma vez do mesmo arquivo, porque favicon não aceita CSS.
+- Cor de destaque: o slide de capa do pitch não estava disponível; usei o terracota `#E58A63` (6,2:1 sobre a tinta do cabeçalho) no "PET" do wordmark e no sublinhado da navegação. Botões continuam musgo e a ferrugem segue reservada a urgência e erro, para a cor não perder significado. Ajustar o hex se o pitch usar outro tom.
+- Oracle: variáveis CPET_DB_* não definidas nesta máquina, então nenhuma conexão foi tentada.
+- A porta 8080 estava ocupada por um processo que não é deste trabalho; não foi encerrado. Os testes de subida a frio usaram a porta 8099.
