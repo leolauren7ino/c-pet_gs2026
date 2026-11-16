@@ -225,7 +225,7 @@
       blocoRecurso = `<div class="bloco"><h3>Encaminhamento</h3><p><b>${esc(c.recurso)}</b></p><p class="suave">${d.aceito ? "O recurso aceitou o caso." : "Aguardando o aceite do recurso."}</p></div>`;
     }
 
-    const arquivar = aberto
+    const blocoArquivar = aberto
       ? `<div class="bloco"><details class="arquivar"><summary>Arquivar este caso</summary>
           <form id="form-arquivar">
             <label class="so-leitor" for="obs-arquivar">Motivo</label>
@@ -258,7 +258,7 @@
       ${blocoRecurso}
 
       <div class="bloco"><h3>Reportes (${d.reportes.length})</h3>${reportes}</div>
-      ${arquivar}
+      ${blocoArquivar}
       <div class="bloco"><h3>Histórico</h3><ul class="historico">${historico}</ul></div>
     </div>`;
 
@@ -266,7 +266,7 @@
       b.addEventListener("click", () => encaminhar(c.id, Number(b.dataset.encaminhar), b))
     );
     const form = document.getElementById("form-arquivar");
-    if (form) form.addEventListener("submit", (ev) => arquivar(ev, c.id));
+    if (form) form.addEventListener("submit", (ev) => arquivarCaso(ev, c.id));
   }
 
   async function encaminhar(id, recursoId, botao) {
@@ -284,7 +284,7 @@
     }
   }
 
-  async function arquivar(ev, id) {
+  async function arquivarCaso(ev, id) {
     ev.preventDefault();
     const obs = document.getElementById("obs-arquivar").value.trim();
     const erro = document.getElementById("erro-arquivar");
