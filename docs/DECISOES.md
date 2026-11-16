@@ -78,3 +78,11 @@ No primeiro roteiro automatizado, 3 requisições do painel falharam com erro de
 - Cor de destaque: o slide de capa do pitch não estava disponível; usei o terracota `#E58A63` (6,2:1 sobre a tinta do cabeçalho) no "PET" do wordmark e no sublinhado da navegação. Botões continuam musgo e a ferrugem segue reservada a urgência e erro, para a cor não perder significado. Ajustar o hex se o pitch usar outro tom.
 - Oracle: variáveis CPET_DB_* não definidas nesta máquina, então nenhuma conexão foi tentada.
 - A porta 8080 estava ocupada por um processo que não é deste trabalho; não foi encerrado. Os testes de subida a frio usaram a porta 8099.
+
+## Rodada de identidade visual
+
+- Paleta extraída de `img/logo-cpet.png` (Pillow): fundo `#121212`; emblema em menta `#5AC9AD`, petróleo `#135969` e `#2F8183`. Primária teal `#135969`; destaque terracota `#A9431E`, também usado para urgência e erro; creme `#F2EEE4`; texto `#17252A`; borda `#D6CFBF`. Não havia print do deck em `docs/`, então o terracota é escolha própria. Tokens renomeados de `--musgo*` para `--teal*`. Contrastes medidos por script: todos os pares usados passam de 4,5:1 (menor: terracota sobre `#E9E3D5`, 4,68).
+- Cabeçalho creme com linha fina e marca em teal, em vez de teal escuro: as telas são de papel creme, e uma barra escura repetia o disco escuro que era o problema.
+- Marca: pata em rede em SVG (`marca-cpet.svg`, inline no cabeçalho), `favicon.ico` e `apple-touch-icon.png` gerados por `tools/gerar_icones.py`.
+- O PNG do logo grande foi testado a 340 px: o fragmento branco no T, o hífen branco e os hexágonos soltos nos cantos aparecem, então não é usado no site (fica no repositório só como fonte da paleta).
+- Capturas em `docs/capturas/` (antes e depois, 1280 e 390 px). Os 390 px são um iframe de 390 px, porque o Edge headless não renderiza janela tão estreita.
