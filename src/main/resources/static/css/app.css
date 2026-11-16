@@ -88,6 +88,10 @@ a:hover { color: var(--musgo-escuro); }
 .wordmark { display: block; color: var(--papel); }
 .wordmark text { font-family: var(--fonte); font-weight: 700; font-size: 23px; letter-spacing: 0.02em; fill: currentColor; }
 .wordmark .hifen { fill: #7FA392; }
+.wordmark .pet { fill: #E58A63; }
+.emblema { position: relative; display: block; flex: none; width: 34px; height: 34px; border-radius: 50%; overflow: hidden; background: #121212; }
+.emblema img { position: absolute; width: 201%; max-width: none; left: -52.7%; top: -60.4%; }
+.emblema i { position: absolute; left: 29%; width: 42%; top: 0; height: 15%; background: #121212; }
 .marca small { font-weight: 400; font-size: 12.5px; color: #B4BDB6; letter-spacing: 0; }
 .topo nav { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; align-items: center; }
 .topo nav a {
@@ -97,7 +101,7 @@ a:hover { color: var(--musgo-escuro); }
   transition: border-color var(--t), color var(--t);
 }
 .topo nav a:hover { border-bottom-color: #7FA392; }
-.topo nav a[aria-current="page"] { border-bottom-color: var(--papel); }
+.topo nav a[aria-current="page"] { border-bottom-color: #E58A63; }
 .topo .usuario { font-size: 13px; color: #C9D1CB; display: flex; align-items: center; gap: 12px; }
 .topo .usuario button {
   background: none; border: 1px solid #5B6862; color: var(--papel); border-radius: var(--raio);
@@ -206,3 +210,5 @@ a:hover { color: var(--musgo-escuro); }
 .fila li button:focus-visible, .item-alerta:focus-visible { outline-offset: -3px; }
 .usuario-cartao:focus-visible, .btn-alerta:focus-visible { outline-offset: 2px; }
 .form-control::placeholder, textarea.form-control::placeholder { color: #5F6A64; opacity: 1; }
+
+.nota-sim { font-size: 12.5px; color: var(--tinta-3); margin-top: 10px; }
