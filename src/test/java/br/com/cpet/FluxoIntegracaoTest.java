@@ -236,7 +236,7 @@ class FluxoIntegracaoTest {
         String codigo = enviarReporte(-23.5730, -46.6830, "DOENTE", null).get("codigo").asText();
         int antes = ler(get("/api/casos").session(operador)).size();
 
-        banco.run(null);
+        banco.inicializar();
 
         JsonNode depois = ler(get("/api/casos").session(operador));
         assertThat(depois).hasSize(antes);

@@ -6,8 +6,7 @@ import java.sql.SQLException;
 
 import javax.sql.DataSource;
 
-import org.springframework.boot.ApplicationArguments;
-import org.springframework.boot.ApplicationRunner;
+import org.springframework.beans.factory.SmartInitializingSingleton;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
@@ -19,7 +18,7 @@ import br.com.cpet.dominio.Repositorios.CasoRepository;
 
 /** Cria o schema se faltar, semeia na primeira subida e recria o seed sob demanda. */
 @Service
-public class BancoService implements ApplicationRunner {
+public class BancoService implements SmartInitializingSingleton {
 
     private static final String[] TABELAS_EM_ORDEM_DE_LIMPEZA = {
         "HISTORICO_STATUS", "REPORTE", "CASO", "USUARIO", "RECURSO", "BAIRRO"
@@ -40,8 +39,17 @@ public class BancoService implements ApplicationRunner {
         this.transacao = new TransactionTemplate(gerenteTransacao);
     }
 
+    /** Roda antes de o servidor abrir a porta, para nenhuma requisição ver o banco vazio. */
     @Override
-    public void run(ApplicationArguments args) throws Exception {
+    public void afterSingletonsInstantiated() {
+        try {
+            inicializar();
+        } catch (SQLException e) {
+            throw new IllegalStateException("Não foi possível preparar o banco de dados.", e);
+        }
+    }
+
+    public void inicializar() throws SQLException {
         if (!tabelaExiste("CASO")) {
             executar("db/schema.sql");
         }

@@ -6,6 +6,8 @@
   let camadaCasos;
   let camadaCelulas;
   const marcadores = new Map();
+  let limitesDosBairros = null;
+  let enquadrarAoAbrirMapa = false;
 
   const COR_SCORE = { alto: "#B8431D", medio: "#C9962E", baixo: "#6E7A73" };
 
@@ -40,21 +42,41 @@
     document.addEventListener("keydown", (ev) => ev.key === "Escape" && fecharAlertas());
 
     api("/api/dados/bairros").then((bairros) => {
-      if (bairros.length) mapa.fitBounds(bairros.map((b) => [b.lat, b.lng]), { padding: [60, 60], maxZoom: 12 });
-    });
+      if (!bairros.length) return;
+      limitesDosBairros = bairros.map((b) => [b.lat, b.lng]);
+      mapa.fitBounds(limitesDosBairros, { padding: [60, 60], maxZoom: 12 });
+      enquadrarAoAbrirMapa = true;
+    }).catch(() => {});
 
-    recarregar().then(() => {
-      const id = Number(location.hash.replace("#caso-", ""));
-      if (id) selecionar(id);
-    });
+    iniciarFila();
     setInterval(carregarAlertas, 30000);
+  }
+
+  function iniciarFila() {
+    recarregar()
+      .then(() => {
+        const id = Number(location.hash.replace("#caso-", ""));
+        if (id) selecionar(id);
+      })
+      .catch((e) => {
+        document.getElementById("fila").innerHTML = `<li class="vazio"><div class="alerta-erro mb-2">${esc(e.erro || "Não foi possível carregar a fila.")}</div><button type="button" class="btn-c sec pequeno" id="tentar-fila">Tentar de novo</button></li>`;
+        document.getElementById("tentar-fila").addEventListener("click", iniciarFila);
+      });
   }
 
   function abrirAba(nome) {
     const grade = document.getElementById("grade");
     grade.className = `painel-grade ver-${nome}`;
     document.querySelectorAll(".abas button").forEach((b) => b.setAttribute("aria-selected", String(b.dataset.aba === nome)));
-    if (nome === "mapa") setTimeout(() => mapa.invalidateSize(), 50);
+    if (nome === "mapa") {
+      setTimeout(() => {
+        mapa.invalidateSize();
+        if (enquadrarAoAbrirMapa && limitesDosBairros) {
+          mapa.fitBounds(limitesDosBairros, { padding: [60, 60], maxZoom: 12 });
+          enquadrarAoAbrirMapa = false;
+        }
+      }, 50);
+    }
   }
 
   async function recarregar() {

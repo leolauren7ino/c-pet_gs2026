@@ -15,8 +15,15 @@
         if (b.dataset.aba === "mapa") setTimeout(() => mapa.invalidateSize(), 50);
       })
     );
-    carregar();
+    iniciarLista();
   });
+
+  function iniciarLista() {
+    carregar().catch((e) => {
+      document.getElementById("lista").innerHTML = `<div class="alerta-erro">${esc(e.erro || "Não foi possível carregar os casos.")}</div><button type="button" class="btn-c sec pequeno" id="tentar-lista">Tentar de novo</button>`;
+      document.getElementById("tentar-lista").addEventListener("click", iniciarLista);
+    });
+  }
 
   async function carregar(aviso) {
     const [recurso, recebidos] = await Promise.all([api("/api/recurso"), api("/api/recurso/casos")]);

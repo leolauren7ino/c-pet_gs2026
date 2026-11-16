@@ -80,6 +80,16 @@ OBS_ATENDIMENTO = [
     "Fiscalização realizada e tutor orientado.",
 ]
 
+# Quando o caso tem foto, a descrição do primeiro reporte acompanha a imagem.
+DESCRICAO_DA_FOTO = {
+    "ferido": "Cachorro de porte médio com ferimento na pata, deitado na calçada e sem conseguir levantar.",
+    "colonia": "Vários gatos vivendo no muro e na calçada, alimentados pelos moradores, e a colônia só cresce.",
+    "filhote": "Ninhada de filhotes numa caixa de papelão perto da feira, sem a mãe.",
+    "doente": "Animal muito magro, com falhas no pelo e os olhos fundos, parado perto do portão.",
+    "maustratos": "Cachorro preso em corrente curta no portão, sem água nem abrigo.",
+    "risco": "Lixo acumulado na calçada com ratos ao redor, a duas quadras de uma escola.",
+}
+
 CONTATOS = ["joana.s@exemplo.com", "(11) 90000-1234", "seu.antonio@exemplo.com", "(11) 90000-5678"]
 
 # bairro, tipo, qtd, dx(m), dy(m), status, horas desde a criacao, opcoes
@@ -229,7 +239,7 @@ def main():
         for k in range(n_reportes):
             rep_id += 1
             idx = caso_id
-            texto = DESCRICOES[tipo][idx % len(DESCRICOES[tipo])] if k == 0 else rng.choice(
+            texto = DESCRICAO_DA_FOTO[opc["foto"]] if k == 0 and "foto" in opc else DESCRICOES[tipo][idx % len(DESCRICOES[tipo])] if k == 0 else rng.choice(
                 ["Continua no mesmo lugar.", "Mais um morador avisando: a situação segue igual.", "Passei hoje e o animal ainda está aqui."]
             )
             quando = criado if k == 0 else rng.uniform(min(ultimo, criado * 0.9), criado * 0.9)

@@ -11,7 +11,7 @@ Onde o enunciado deixou uma escolha em aberto, ficou a opção mais simples. Cad
 - **Sequences de 1000 em diante** para CASO, REPORTE e HISTORICO_STATUS. O seed usa ids de 1 a 999, então o reset nunca colide com ids novos. Vale igual para Oracle e H2.
 - **Datas do seed relativas a `LOCALTIMESTAMP`** (`LOCALTIMESTAMP - INTERVAL '3' DAY - INTERVAL '5' HOUR`). Assim cada reset deixa os dados com cara de "hoje". Os intervalos de dia e hora ficam abaixo de 100, o limite padrão do Oracle.
 - **`seed.sql` gerado** por `tools/gerar_seed.py` (Python 3, sem dependências). O arquivo gerado é versionado, então rodar o app não exige Python.
-- **Banco criado na subida**: `BancoService` roda `schema.sql` se a tabela CASO não existir e `seed.sql` se BAIRRO estiver vazia. Sem `ddl-auto`, sem `spring.sql.init`, que quebraria numa segunda subida em Oracle.
+- **Banco criado na subida**, antes de o servidor abrir a porta (`SmartInitializingSingleton`, para nenhuma requisição ver o banco vazio): `BancoService` roda `schema.sql` se a tabela CASO não existir e `seed.sql` se BAIRRO estiver vazia, o seed em uma transação. Sem `ddl-auto`, sem `spring.sql.init`, que quebraria numa segunda subida em Oracle.
 - **Reset** (`POST /api/demo/reset`) apaga as tabelas em ordem de FK e reexecuta o `seed.sql`. Pode ser desligado com `cpet.demo.reset-habilitado=false`.
 - **Perfil padrão h2** via `spring.profiles.default`. Só vale quando nenhum perfil é informado.
 
