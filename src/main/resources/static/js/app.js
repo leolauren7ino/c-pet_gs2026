@@ -13,6 +13,7 @@
     TRIAGEM: "Triagem",
     ENCAMINHADO: "Encaminhado",
     ATENDIDO: "Atendido",
+    ADOTADO: "Adotado",
     ARQUIVADO: "Arquivado",
   };
   const RECURSOS = { ONG: "ONG", CLINICA: "Clínica", UNIDADE_MOVEL: "Unidade móvel", ORGAO_PUBLICO: "Órgão público" };

@@ -71,7 +71,7 @@
     const contatos = [...new Set(d.reportes.map((r) => r.contato).filter(Boolean))];
     const descricoes = d.reportes.filter((r) => r.descricao).map((r) => `<p>${esc(r.descricao)}</p>`).join("");
     const notaCentral = d.historico.filter((h) => h.novo === "ENCAMINHADO" && h.anterior !== "ENCAMINHADO").pop();
-    return `<article class="caso-card ${d.aceito ? "" : "destaque"}" id="caso-${c.id}">
+    return `<article class="caso-card ${d.aceito ? "" : "destaque"}" id="caso-${c.id}" data-contato="${d.contatoRegistrado ? "1" : "0"}">
       <header>
         <span class="score ${classeScore(c.score)}" title="Prioridade">${c.score}</span>
         <h2>${TIPOS[c.tipo]}</h2>
@@ -94,6 +94,8 @@
       <div class="acoes" id="acoes-${c.id}">
         ${d.aceito ? "" : `<button class="btn-c pequeno" type="button" data-acao="aceitar">Aceitar caso</button>`}
         <button class="btn-c ${d.aceito ? "" : "sec"} pequeno" type="button" data-acao="atender">Marcar atendido</button>
+        <button class="btn-c sec pequeno" type="button" data-acao="adotar">Marcar adotado</button>
+        <button class="btn-c sec pequeno" type="button" data-acao="campanha">Precisa de recurso extra</button>
         <button class="btn-c perigo pequeno" type="button" data-acao="recusar">Recusar</button>
       </div>
       <div id="form-${c.id}"></div>
@@ -114,13 +116,25 @@
   function abrirFormulario(id, acao) {
     const rotulos = {
       atender: ["Observação do atendimento", "Descreva o que foi feito", "Registrar atendimento", "btn-c"],
+      adotar: ["Observação da adoção", "Quem adotou e em que condições", "Registrar adoção", "btn-c"],
+      campanha: ["", "", "Abrir campanha", "btn-c"],
       recusar: ["Motivo da recusa", "Por que o recurso não pode receber o caso", "Confirmar recusa", "btn-c perigo"],
     };
     const [titulo, dica, botao, classe] = rotulos[acao];
     const alvo = document.getElementById(`form-${id}`);
+    const comMeta = acao === "atender" || acao === "adotar" || acao === "campanha";
+    const campoMeta = `<div class="campo-meta">
+        ${acao === "campanha" ? "" : `<label class="marca-meta"><input type="checkbox" data-extra> Precisa de recurso extra (abre uma campanha)</label>`}
+        <div class="meta-valor" ${acao === "campanha" ? "" : "hidden"}>
+          <label class="rotulo" for="meta-${id}" style="font-weight:600">Meta da campanha (R$)</label>
+          <input class="form-control mono" id="meta-${id}" type="number" min="1" max="1000000" step="1" inputmode="numeric" placeholder="Ex.: 500">
+          <span class="ajuda">A campanha aparece no acompanhamento do caso. Contribuições são simuladas, sem pagamento real.</span>
+        </div>
+      </div>`;
     alvo.innerHTML = `<form class="obs" novalidate>
-      <label class="rotulo" for="obs-${id}" style="font-weight:600">${titulo}</label>
-      <textarea class="form-control" id="obs-${id}" rows="2" maxlength="480" placeholder="${dica}"></textarea>
+      ${acao === "campanha" ? "" : `<label class="rotulo" for="obs-${id}" style="font-weight:600">${titulo}</label>
+      <textarea class="form-control" id="obs-${id}" rows="2" maxlength="480" placeholder="${dica}"></textarea>`}
+      ${comMeta ? campoMeta : ""}
       <div class="alerta-erro mb-2" hidden></div>
       <div class="d-flex gap-2">
         <button class="${classe} pequeno" type="submit">${botao}</button>
@@ -128,31 +142,48 @@
       </div>
     </form>`;
     const form = alvo.querySelector("form");
-    form.querySelector("textarea").focus();
+    const extra = form.querySelector("[data-extra]");
+    if (extra) extra.addEventListener("change", () => (form.querySelector(".meta-valor").hidden = !extra.checked));
+    (form.querySelector("textarea") || form.querySelector("input")).focus();
     form.querySelector("[data-cancelar]").addEventListener("click", () => (alvo.innerHTML = ""));
     form.addEventListener("submit", (ev) => {
       ev.preventDefault();
-      const obs = form.querySelector("textarea").value.trim();
+      const area = form.querySelector("textarea");
+      const obs = area ? area.value.trim() : "";
       const erro = form.querySelector(".alerta-erro");
-      if (!obs) {
-        erro.textContent = acao === "atender" ? "Descreva o atendimento realizado." : "Informe o motivo da recusa.";
+      if (area && !obs) {
+        erro.textContent = { atender: "Descreva o atendimento realizado.", adotar: "Descreva a adoção realizada." }[acao] || "Informe o motivo da recusa.";
         erro.hidden = false;
         return;
       }
-      executar(id, acao, obs, form.querySelector("button[type=submit]"));
+      const metaCampo = form.querySelector(".meta-valor");
+      const quer = acao === "campanha" || (extra && extra.checked);
+      const meta = quer ? Number(form.querySelector("input[type=number]").value) : null;
+      if (quer && !(meta > 0)) {
+        erro.textContent = "Informe a meta da campanha, maior que zero.";
+        erro.hidden = false;
+        return;
+      }
+      executar(id, acao, obs, form.querySelector("button[type=submit]"), meta);
     });
   }
 
-  async function executar(id, acao, observacao, botao) {
+  async function executar(id, acao, observacao, botao, meta) {
     botao.disabled = true;
     try {
-      await api(`/api/recurso/casos/${id}/${acao}`, { json: observacao ? { observacao } : {} });
+      await api(`/api/recurso/casos/${id}/${acao}`, { json: { ...(observacao ? { observacao } : {}), ...(meta ? { meta } : {}) } });
+      const contato = document.getElementById(`caso-${id}`).dataset.contato === "1";
+      const aviso = acao === "aceitar" || acao === "campanha" ? "" : contato
+        ? " Notificação ao cidadão (simulada): o contato registrado seria avisado; nada é enviado na demonstração."
+        : " Sem contato registrado: o cidadão só vê a mudança ao consultar o código.";
       const mensagens = {
         aceitar: "Caso aceito. Quando o animal for atendido, registre o atendimento.",
         atender: "Atendimento registrado. A vaga foi devolvida ao seu recurso.",
+        adotar: "Adoção registrada. A vaga foi devolvida ao seu recurso.",
+        campanha: "Campanha aberta. O cidadão a vê ao acompanhar o caso.",
         recusar: "Caso recusado e devolvido para a triagem da central. A vaga foi devolvida.",
       };
-      await carregar(mensagens[acao]);
+      await carregar(mensagens[acao] + aviso);
     } catch (e) {
       botao.disabled = false;
       const erro = document.querySelector(`#form-${id} .alerta-erro`);

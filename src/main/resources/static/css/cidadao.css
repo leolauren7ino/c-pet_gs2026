@@ -138,3 +138,11 @@
 .proto-bloco { margin-top: 28px; max-width: 820px; }
 .proto-bloco h2 { margin-bottom: 12px; }
 .proto-bloco { overflow-x: auto; }
+
+/* Campanha no acompanhamento */
+.campanha { margin-top: 28px; padding: 18px 20px; border: 1px solid var(--linha-forte); background: var(--superficie); border-radius: var(--raio); max-width: 520px; }
+.campanha-valores { margin-top: 10px; }
+.trilho-campanha { height: 6px; background: var(--papel-2); margin: 8px 0 14px; }
+.trilho-campanha i { display: block; height: 100%; background: var(--teal); }
+.linha-contribuir { display: flex; gap: 8px; max-width: 320px; }
+.linha-contribuir .form-control { max-width: 120px; }

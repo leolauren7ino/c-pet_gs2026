@@ -150,6 +150,7 @@ a:hover { color: var(--teal-escuro); }
 .chip.TRIAGEM { color: var(--tinta); border-color: var(--tinta-2); }
 .chip.ENCAMINHADO { color: var(--teal-escuro); border-color: var(--teal); background: var(--teal-claro); }
 .chip.ATENDIDO { color: #fff; border-color: var(--ok); background: var(--ok); }
+.chip.ADOTADO { color: var(--ferrugem-escuro); border-color: var(--ferrugem); background: var(--ferrugem-claro); }
 .chip.ARQUIVADO { color: var(--tinta-3); border-style: dashed; }
 
 /* Score */

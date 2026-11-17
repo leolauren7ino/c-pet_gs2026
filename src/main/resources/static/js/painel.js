@@ -276,7 +276,7 @@
       const r = await api(`/api/casos/${id}/encaminhar`, { json: { recursoId } });
       await recarregar();
       const d = await api(`/api/casos/${id}`);
-      renderDetalhe(d, `Caso encaminhado para ${r.recurso}.`);
+      renderDetalhe(d, `Caso encaminhado para ${r.recurso}.${d.contatoRegistrado ? " Notificação ao cidadão (simulada): o contato registrado seria avisado; nada é enviado na demonstração." : " Sem contato registrado: nenhuma notificação."}`);
     } catch (e) {
       botao.disabled = false;
       botao.textContent = "Encaminhar";
