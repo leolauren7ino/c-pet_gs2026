@@ -94,3 +94,7 @@
 @media (max-width: 640px) { .abas { top: 64px; } }
 .proto-bloco table { min-width: 640px; }
 .proto-bloco td { vertical-align: top; }
+
+.etiqueta-uc { border-radius: 12px; margin-bottom: var(--e3); line-height: 1.4; }
+.barra-ferramenta .etiqueta-uc { margin-bottom: 0; }
+.linha-tempo .quando { display: block; }

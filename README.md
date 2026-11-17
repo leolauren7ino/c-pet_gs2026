@@ -67,7 +67,7 @@ Se algo falhar no Oracle, execute `schema.sql` e `seed.sql` à mão no SQL Devel
 mvn test
 ```
 
-52 testes: score, duplicata (Haversine, 50 m, 48 h), encaminhamento (3 mais próximos, vagas, tipos), transições de status e um teste de integração com MockMvc do fluxo completo (reportar, priorizar, encaminhar, aceitar, atender e acompanhar), mais recusa, privacidade e permissões. As regras são lidas do `application.yml` real.
+56 testes: score, duplicata (Haversine, 50 m, 48 h), encaminhamento (3 mais próximos, vagas, tipos), transições de status e um teste de integração com MockMvc do fluxo completo (reportar, priorizar, encaminhar, aceitar, atender e acompanhar), mais recusa, privacidade, permissões, ADOTADO, campanha (soma e campanha inexistente) e relatório CSV agregado. As regras são lidas do `application.yml` real.
 
 ## Telas
 
@@ -84,26 +84,36 @@ Os usuários do seed: Carlos Almeida (operador), Juliana Rocha (agente da Clíni
 
 ## Cobertura dos casos de uso
 
-A lista oficial UC01 a UC07 não foi informada ao autor desta seção, então os nomes abaixo são **descrições do que o código faz**, na ordem em que o enunciado trata os fluxos (UC01, 02, 05 e 06 funcionais; UC03, 04 e 07 protótipos). Confira os nomes com a lista do grupo antes de entregar.
+Execução local em H2; arquitetura-alvo em nuvem descrita no dossiê. Execução de demonstração em H2 em modo Oracle; script Oracle incluso e não testado em instância real.
 
-| UC | Cobertura | Telas | Endpoints reais |
-|---|---|---|---|
-| UC01 (supõe-se: reportar animal) | Funcional | `index.html` | `POST /api/reportes` |
-| UC02 (supõe-se: acompanhar caso) | Funcional | `acompanhar.html` | `GET /api/acompanhar/{codigo}` |
-| UC05 (supõe-se: triagem e encaminhamento pela central) | Funcional | `painel.html` | `GET /api/casos`, `GET /api/casos/{id}`, `POST /api/casos/{id}/encaminhar`, `POST /api/casos/{id}/arquivar`, `GET /api/alertas` |
-| UC06 (supõe-se: recurso parceiro atende o caso) | Funcional | `recurso.html` | `GET /api/recurso`, `GET /api/recurso/casos`, `POST /api/recurso/casos/{id}/aceitar`, `.../recusar`, `.../atender` |
-| UC03 (arrecadação) | Protótipo estático, dados fictícios | `arrecadacao.html` | nenhum |
-| UC04 (lar temporário) | Protótipo estático, dados fictícios | `lar-temporario.html` | nenhum |
-| UC07 (painel do gestor) | Protótipo, só números agregados existentes | `gestor.html` | lê `GET /api/dados/resumo` e `GET /api/dados/bairros` (já existentes, públicos) |
+Nomes dos UC conforme o UML da equipe. A mesma matriz está na tela `rastreabilidade.html` (link no rodapé).
 
-Apoio: `dados.html` (`/api/dados/celulas`, `/api/dados/bairros`, `/api/dados/resumo`), `entrar.html` (`/api/sessao`, `/api/usuarios`, `/api/demo/reset`).
+| UC | Pilar | Cobertura | Telas | Endpoints reais | Testes |
+|---|---|---|---|---|---|
+| UC01 Reportar Animal em Situação de Rua | Estima | Funcional | `index.html` | `POST /api/reportes` | FluxoIntegracaoTest, DetectorDuplicataTest, PrivacidadeTest |
+| UC02 Acompanhar Status do Caso Reportado (FA-02: campanha vinculada) | Cuida | Funcional | `acompanhar.html` | `GET /api/acompanhar/{codigo}`, `POST /api/campanhas/{id}/contribuicoes` (simulado) | FluxoIntegracaoTest, CampanhaTest |
+| UC05 Responder Solicitação de Atendimento | Conecta | Funcional | `recurso.html` (a solicitação nasce em `painel.html`) | `POST /api/casos/{id}/encaminhar`, `POST /api/recurso/casos/{id}/aceitar` e `/recusar` | FluxoIntegracaoTest, SugestorRecursosTest, StatusCasoTest |
+| UC06 Atualizar Status do Caso Atendido (FA-02: precisa de recurso extra) | Cuida e Alerta | Funcional | `recurso.html` | `POST /api/recurso/casos/{id}/atender`, `/adotar`, `/campanha` | FluxoIntegracaoTest, CampanhaTest, StatusCasoTest |
+| UC07 Consultar Indicadores Agregados de Densidade | Estima | Funcional em `dados.html`, protótipo em `gestor.html` | `dados.html`, `gestor.html` | `GET /api/dados/celulas`, `/bairros`, `/resumo`, `/relatorio.csv` | PrivacidadeTest, CampanhaTest |
+| UC03 Arrecadação | Cuida | Protótipo estático, dados fictícios | `arrecadacao.html` | nenhum | nenhum |
+| UC04 Lar temporário | Cuida | Protótipo estático, dados fictícios | `lar-temporario.html` | nenhum | nenhum |
+
+O pilar Prioriza (score de 0 a 100 com detalhe por fator) aparece em `painel.html` e é coberto por CalculadoraScoreTest. O pilar Alerta aparece no botão Alertas do painel.
+
+**Atores.** O UML tem Cidadão, Equipe de Atendimento e Gestor Público. O sistema tem dois perfis com login simulado, OPERADOR (central de triagem) e AGENTE (recurso parceiro), e os dois são papéis da Equipe de Atendimento. O perfil Operador não existe no UML como ator separado; o alinhamento mínimo adotado é tratá-lo como a Equipe de Atendimento na central de triagem (as telas indicam isso). Nada foi renomeado no código.
+
+**Desfechos e campanha.** Além de ATENDIDO, o caso pode terminar em ADOTADO (transição a partir de ENCAMINHADO). ARQUIVADO continua como estado interno. O agente pode marcar "precisa de recurso extra" e informar a meta ao atender, adotar ou à parte; o Acompanhar mostra a campanha e o botão "Contribuir (simulado)", que apenas soma ao total, sem pagamento real.
+
+**Recusa.** Quando o recurso recusa, o caso volta para TRIAGEM, a vaga é devolvida e o painel passa a listar de novo os 3 recursos compatíveis. O sistema não exclui o recurso que recusou nem escolhe o próximo sozinho: a escolha continua com a central. Se a central quiser o "próximo compatível" automático, é uma mudança de regra, não feita aqui.
+
+**Notificação ao cidadão.** Só quando há contato registrado, e sempre rotulada como simulada: o painel e o recurso mostram o aviso "Notificação ao cidadão (simulada)". Nada é enviado.
 
 **Lacunas conhecidas, sem funcionalidade inventada:**
 
-- Nenhuma mensagem sai do sistema. Encaminhar e alertar apenas registram e exibem dentro do C-PET; as telas dizem "simulado na demonstração".
-- Não há notificação ao cidadão quando o status muda: ele precisa consultar pelo código.
+- Nenhuma mensagem sai do sistema (encaminhar, alertar e notificar apenas registram e exibem dentro do C-PET).
 - Não há cadastro de recursos nem edição de vagas pela interface (vêm do seed).
-- UC03, UC04 e UC07 não têm persistência nem ações.
+- UC03 e UC04 não têm persistência nem ações; a campanha real do UC02/UC06 é a única arrecadação, e é simulada.
+- A campanha só pode ser aberta enquanto o caso está ENCAMINHADO ou junto de atender e adotar; depois disso o caso sai da lista do agente.
 
 **Roadmap fase 2 (não implementado):** padrinho recorrente, notificação de proximidade e reativação de usuário (CRM).
 

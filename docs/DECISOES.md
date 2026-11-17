@@ -86,3 +86,13 @@ No primeiro roteiro automatizado, 3 requisições do painel falharam com erro de
 - Marca: pata em rede em SVG (`marca-cpet.svg`, inline no cabeçalho), `favicon.ico` e `apple-touch-icon.png` gerados por `tools/gerar_icones.py`.
 - O PNG do logo grande foi testado a 340 px: o fragmento branco no T, o hífen branco e os hexágonos soltos nos cantos aparecem, então não é usado no site (fica no repositório só como fonte da paleta).
 - Capturas em `docs/capturas/` (antes e depois, 1280 e 390 px). Os 390 px são um iframe de 390 px, porque o Edge headless não renderiza janela tão estreita.
+
+## Rodada de alinhamento ao UML
+
+- Não havia `logo-cpet-limpo.png` nem `docs/identidade/`: usei o emblema de `logo-cpet.png` recortado por CSS e as cores já extraídas. O cabeçalho voltou ao fundo `#121212` (cor exata do PNG), a pedido; o SVG inventado foi para `docs/descartados/`.
+- Favicon e apple-touch-icon vêm só do centro do emblema (cabeça do cavalo e do cão): o emblema inteiro a 32 px ficou ilegível.
+- ADOTADO transita a partir de ENCAMINHADO, como ATENDIDO. Bancos criados antes desta versão recebem `db/atualizacao-campanha.sql` na subida (muda o CHECK de status e cria CAMPANHA). Não testado em Oracle real.
+- A campanha é uma por caso ativa; ao atingir a meta fecha. Contribuição simulada vai até R$ 10.000 por vez, meta até R$ 1.000.000.
+- Recusa: comportamento atual mantido (volta à TRIAGEM e a central reescolhe); registrado no README.
+- No acompanhamento público o responsável de cada evento aparece como papel (Cidadão, Equipe de Atendimento), nunca com o nome do usuário.
+- Os UC03 e UC04 não têm nome exato no UML recebido; ficam como "Arrecadação" e "Lar temporário".
