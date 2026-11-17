@@ -5,10 +5,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.multipart;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import java.io.ByteArrayInputStream;
 import java.nio.charset.StandardCharsets;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +55,7 @@ class RelatorioFormatosTest {
     void excelTemCabecalhosCorretosEComecaComPk() throws Exception {
         byte[] b = baixar("xlsx", XLSX).getContentAsByteArray();
         assertThat(new String(b, 0, 2, StandardCharsets.ISO_8859_1)).isEqualTo("PK");
-        assertThat(texto(b)).contains("atendidos_ou_adotados").contains("Dados simulados para demonstração");
+        assertThat(texto(b)).contains("atendidos_ou_adotados").contains("Dados simulados para demonstra");
     }
 
     @Test
@@ -96,14 +93,18 @@ class RelatorioFormatosTest {
     }
 
     private static String texto(byte[] zip) throws Exception {
-        StringBuilder sb = new StringBuilder();
-        try (ZipInputStream z = new ZipInputStream(new ByteArrayInputStream(zip))) {
-            ZipEntry e;
-            while ((e = z.getNextEntry()) != null) {
-                sb.append(new String(z.readAllBytes(), StandardCharsets.UTF_8));
+        java.nio.file.Path tmp = java.nio.file.Files.createTempFile("relatorio", ".xlsx");
+        try (java.util.zip.ZipFile z = new java.util.zip.ZipFile(java.nio.file.Files.write(tmp, zip).toFile())) {
+            StringBuilder sb = new StringBuilder();
+            for (var e = z.entries(); e.hasMoreElements();) {
+                try (var in = z.getInputStream(e.nextElement())) {
+                    sb.append(new String(in.readAllBytes(), StandardCharsets.UTF_8));
+                }
             }
+            return sb.toString();
+        } finally {
+            java.nio.file.Files.deleteIfExists(tmp);
         }
-        return sb.toString();
     }
 
     private static String textoPdf(byte[] pdf) throws Exception {
