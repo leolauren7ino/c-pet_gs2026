@@ -194,3 +194,18 @@ details.arquivar summary { color: var(--erro); }
 @media (prefers-reduced-motion: reduce) {
   .usuario-cartao:hover { transform: none; }
 }
+
+/* Exportar relatório (UC07) */
+.exportar { padding: var(--e5); margin-top: var(--e5); }
+.exportar h2 { margin-bottom: var(--e2); }
+.exportar-grade { display: grid; grid-template-columns: repeat(4, 1fr); gap: var(--e3); margin-top: var(--e4); }
+.export-btn {
+  display: flex; flex-direction: column; align-items: flex-start; gap: var(--e1); padding: var(--e4);
+  border: 1px solid var(--borda); border-radius: var(--raio-cartao); background: var(--fundo);
+  color: var(--texto); text-decoration: none; transition: border-color var(--t), background var(--t);
+}
+.export-btn:hover { border-color: var(--menta); background: var(--menta-fundo); color: var(--texto); }
+.export-btn b { font-family: var(--fonte-titulo); font-weight: 400; font-size: 1.5rem; letter-spacing: 0.05em; color: var(--menta); margin-top: var(--e2); }
+.export-btn small { color: var(--texto-2); font-size: 12.5px; overflow-wrap: anywhere; }
+@media (max-width: 900px) { .exportar-grade { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 640px) { .exportar { padding: var(--e4); } .export-btn { padding: var(--e3); } }
