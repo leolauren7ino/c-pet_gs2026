@@ -6,15 +6,16 @@
   <title>Acompanhar um caso | C-PET</title>
   <meta name="description" content="Digite o código do seu reporte e veja cada etapa do atendimento.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="img/marca-cpet.svg">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="stylesheet" href="vendor/bootstrap.min.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/cidadao.css">
+  <link rel="stylesheet" href="css/moderno.css">
 </head>
 <body>
   <div id="cabecalho"></div>
   <main class="pagina">
+    <p class="etiqueta-uc"><b>UC02</b> Acompanhar Status do Caso Reportado · Pilar Cuida · Ator: Cidadão</p>
     <h1>Acompanhe o seu caso</h1>
     <p class="suave mt-2" style="max-width:54ch">Digite o código que apareceu depois do reporte. Ele começa com CP.</p>
 
@@ -28,7 +29,7 @@
 
     <section class="resultado" id="resultado" hidden aria-live="polite">
       <dl>
-        <dt>Caso</dt><dd class="mono" id="r-codigo"></dd>
+        <dt>Protocolo</dt><dd class="mono" id="r-codigo"></dd>
         <dt>Situação</dt><dd id="r-tipo"></dd>
         <dt>Região</dt><dd id="r-bairro"></dd>
         <dt>Status agora</dt><dd id="r-status"></dd>

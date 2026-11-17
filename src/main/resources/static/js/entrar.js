@@ -34,6 +34,7 @@
           (u) => `<button type="button" class="usuario-cartao" data-id="${u.id}">
             <b>${esc(u.nome)}</b>
             <span class="onde">${esc(u.recurso)}</span>
+            <span class="onde">Ator no UML: Equipe de Atendimento</span>
             <span class="chip perfil ${u.perfil === "OPERADOR" ? "TRIAGEM" : "ENCAMINHADO"}">${u.perfil === "OPERADOR" ? "Operador" : "Agente"}</span>
           </button>`
         )

@@ -1,31 +1,26 @@
-"""Gera favicon.ico e apple-touch-icon.png a partir da geometria de marca-cpet.svg (Pillow)."""
-from PIL import Image, ImageDraw
+"""Gera favicon.ico e apple-touch-icon.png a partir do emblema de img/logo-cpet.png (Pillow).
+Uso: python tools/gerar_icones.py [centro]   (com 'centro', recorta so o miolo do emblema)"""
 import os
-TEAL, TERRA, CREME = (19, 89, 105), (169, 67, 30), (242, 238, 228)
-NOS = [(9, 23), (18, 10), (30, 10), (39, 23)]
-PAD = (24, 37)
+import sys
+from PIL import Image, ImageDraw
 
-def desenhar(tam):
-    s = 8
-    im = Image.new("RGBA", (tam * s, tam * s), (0, 0, 0, 0))
-    d = ImageDraw.Draw(im)
-    d.rounded_rectangle([0, 0, tam * s - 1, tam * s - 1], radius=tam * s * 0.18, fill=CREME)
-    k = tam * s / 48 * 0.78
-    off = tam * s * 0.11
-    p = lambda x, y: (off + x * k, off + y * k + tam * s * 0.01)
-    w = max(2, int(2.6 * k))
-    d.line([p(*n) for n in NOS], fill=TEAL, width=w, joint="curve")
-    for n in NOS:
-        d.line([p(*n), p(*PAD)], fill=TEAL, width=w)
-    for n in NOS:
-        x, y = p(*n); r = 4.4 * k
-        d.ellipse([x - r, y - r, x + r, y + r], fill=TEAL)
-    x, y = p(*PAD); r = 6 * k
-    d.ellipse([x - r, y - r, x + r, y + r], fill=TERRA)
-    return im.resize((tam, tam), Image.LANCZOS)
+DEST = os.path.join("src", "main", "resources", "static", "img")
+FUNDO = (18, 18, 18)
+CX, CY = 988 * 1.04, 1060 * 1.04
+src = Image.open(os.path.join(DEST, "logo-cpet.png")).convert("RGB")
 
-dest = os.path.join("src", "main", "resources", "static", "img")
-desenhar(180).save(os.path.join(dest, "apple-touch-icon.png"))
-desenhar(256).save(os.path.join(dest, "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])
-desenhar(96).save(os.path.join("tools", "_prev96.png"))
-desenhar(32).resize((128, 128), Image.NEAREST).save(os.path.join("tools", "_prev32.png"))
+def emblema(tam, centro=False):
+    r = (300 if centro else 480) * 1.04
+    cx, cy = (CX - 10, CY + 10) if centro else (CX, CY)
+    rec = src.crop((int(cx - r), int(cy - r), int(cx + r), int(cy + r))).resize((tam, tam), Image.LANCZOS)
+    if not centro:
+        d = ImageDraw.Draw(rec)
+        d.rectangle([int(tam * 0.295), 0, int(tam * 0.715), int(tam * 0.15)], fill=FUNDO)
+    return rec
+
+if __name__ == "__main__":
+    centro = len(sys.argv) > 1 and sys.argv[1] == "centro"
+    emblema(180, centro).save(os.path.join(DEST, "apple-touch-icon.png"))
+    emblema(256, centro).save(os.path.join(DEST, "favicon.ico"), sizes=[(16, 16), (32, 32), (48, 48)])
+    if "--prev" in sys.argv:
+        emblema(32, centro).resize((160, 160), Image.NEAREST).save(sys.argv[sys.argv.index("--prev") + 1])

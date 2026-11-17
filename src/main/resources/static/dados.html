@@ -6,21 +6,23 @@
   <title>Dados abertos | C-PET</title>
   <meta name="description" content="Densidade de casos por região e por bairro, sem localização exata.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="img/marca-cpet.svg">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="stylesheet" href="vendor/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/cidadao.css">
+  <link rel="stylesheet" href="css/moderno.css">
 </head>
 <body>
   <div id="cabecalho"></div>
   <main class="pagina">
+    <p class="etiqueta-uc"><b>UC07</b> Consultar Indicadores Agregados de Densidade · Pilar Estima · Ator: Gestor Público</p>
     <h1>Onde estão os casos</h1>
     <p class="suave mt-2" style="max-width:60ch">Densidade de casos em aberto por quadra de cerca de 1 km e por bairro. Nada aqui mostra o endereço exato de um animal nem dados de quem reportou.</p>
 
     <div class="numeros" id="numeros"></div>
-    <p class="mt-3"><a class="btn-c sec pequeno" href="/api/dados/relatorio.csv" download>Exportar relatório (CSV)</a> <span class="nota-sim">Só contagens por bairro e tipo, sem localização exata nem dados pessoais. Base: todos os casos registrados, na data da geração.</span></p>
+    <p class="base-calculo" id="base"></p>
+    <p class="mt-3"><a class="btn-c sec pequeno" href="/api/dados/relatorio.csv" download><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4v11"/><path d="M7 11l5 5 5-5"/><path d="M5 20h14"/></svg>Exportar relatório (CSV)</a> <span class="nota-sim">Só contagens por bairro e tipo, sem localização exata nem dados pessoais. Base: todos os casos registrados, na data da geração.</span></p>
 
     <div class="filtro-tipo">
       <label for="f-tipo" class="rotulo">Ver por tipo de situação</label>

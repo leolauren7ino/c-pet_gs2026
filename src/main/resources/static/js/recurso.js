@@ -76,7 +76,7 @@
         <span class="score ${classeScore(c.score)}" title="Prioridade">${c.score}</span>
         <h2>${TIPOS[c.tipo]}</h2>
         <span class="chip ${d.aceito ? "ENCAMINHADO" : "REPORTADO"}">${d.aceito ? "Aceito" : "Aguardando aceite"}</span>
-        <span class="direita"><span class="mono">${esc(c.codigo)}</span></span>
+        <span class="direita">Protocolo <span class="mono">${esc(c.codigo)}</span></span>
       </header>
       <div class="corpo ${foto ? "" : "sem-foto-col"}">
         <div>

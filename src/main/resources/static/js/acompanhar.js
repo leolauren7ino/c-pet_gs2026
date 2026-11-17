@@ -1,5 +1,5 @@
 (function () {
-  const { api, iniciar, TIPOS, chipStatus, quando, esc } = window.CPET;
+  const { api, iniciar, TIPOS, STATUS, chipStatus, quando, quandoCompleto, esc } = window.CPET;
   iniciar("acompanhar.html");
 
   const campo = document.getElementById("codigo");
@@ -39,9 +39,11 @@
     document.getElementById("r-bairro").textContent = r.bairro;
     document.getElementById("r-status").innerHTML = chipStatus(r.status);
     document.getElementById("r-atualizado").textContent = quando(r.atualizadoEm);
-    const feitas = r.etapas.map(
-      (e) => `<li><strong>${esc(e.titulo)}</strong><span class="quando">${quando(e.em)}</span></li>`
-    );
+    const feitas = r.etapas.map((e, i) => {
+      const anterior = i > 0 ? STATUS[r.etapas[i - 1].status] : "início";
+      const quem = i === 0 ? "Cidadão" : "Equipe de Atendimento";
+      return `<li><strong>${esc(e.titulo)}</strong><span class="quando">${quandoCompleto(e.em)}</span><span class="quando">${anterior} → ${STATUS[e.status]} · Responsável: ${quem}</span></li>`;
+    });
     const futuras = (PROXIMOS[r.status] || []).map(
       (t) => `<li class="futuro"><strong>${esc(t)}</strong><span class="quando">Próxima etapa</span></li>`
     );

@@ -55,6 +55,12 @@
     return dataHora.format(new Date(iso)).replace(",", "");
   }
 
+  const dataCompleta = new Intl.DateTimeFormat("pt-BR", { day: "2-digit", month: "2-digit", year: "numeric", hour: "2-digit", minute: "2-digit" });
+
+  function quandoCompleto(iso) {
+    return dataCompleta.format(new Date(iso)).replace(",", "");
+  }
+
   function haTempo(iso) {
     const min = Math.max(0, Math.round((Date.now() - new Date(iso).getTime()) / 60000));
     if (min < 1) return "agora";
@@ -91,7 +97,7 @@
     const quem = usuario
       ? `<span class="usuario"><span>${esc(usuario.nome)}</span><button type="button" id="sair">Sair</button></span>`
       : "";
-    return `<header class="topo"><a class="marca" href="${usuario ? (usuario.perfil === "OPERADOR" ? "painel.html" : "recurso.html") : "index.html"}"><svg class="marca-svg" viewBox="0 0 48 48" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 23 L18 10 L30 10 L39 23"/><path d="M9 23 L24 37 M18 10 L24 37 M30 10 L24 37 M39 23 L24 37"/></g><circle cx="9" cy="23" r="4" fill="currentColor"/><circle cx="18" cy="10" r="4" fill="currentColor"/><circle cx="30" cy="10" r="4" fill="currentColor"/><circle cx="39" cy="23" r="4" fill="currentColor"/><circle class="no-forte" cx="24" cy="37" r="5.5" fill="#A9431E"/></svg><svg class="wordmark" viewBox="0 0 76 24" width="76" height="24" role="img" aria-label="C-PET"><text x="0" y="19">C-<tspan class="pet">PET</tspan></text></svg><small>Reporte, prioridade e encaminhamento de animais de rua</small></a><nav aria-label="Principal">${nav}${quem}</nav></header>`;
+    return `<header class="topo"><a class="marca" href="${usuario ? (usuario.perfil === "OPERADOR" ? "painel.html" : "recurso.html") : "index.html"}"><span class="emblema" aria-hidden="true"><img src="img/logo-cpet.png" alt=""><i></i></span><svg class="wordmark" viewBox="0 0 80 28" width="80" height="28" role="img" aria-label="C-PET"><text x="0" y="22">C-<tspan class="pet">PET</tspan></text></svg><small>Reporte, prioridade e encaminhamento de animais de rua</small></a><nav aria-label="Principal">${nav}${quem}</nav></header>`;
   }
 
   async function iniciar(ativo, { usuario = null, exigir = null } = {}) {
@@ -120,6 +126,9 @@
         document.getElementById("faixa-demo").innerHTML = '<div class="faixa-demo">Dados simulados para demonstração</div>';
       }
     });
+    if (!document.body.classList.contains("tela-cheia") && !document.querySelector(".rodape")) {
+      document.body.insertAdjacentHTML("beforeend", '<footer class="rodape"><span>Dados simulados para demonstração</span><a href="rastreabilidade.html">Rastreabilidade: casos de uso, telas e pilares</a></footer>');
+    }
     const sair = document.getElementById("sair");
     if (sair) {
       sair.addEventListener("click", async () => {
@@ -130,5 +139,5 @@
     return atual;
   }
 
-  window.CPET = { TIPOS, STATUS, RECURSOS, api, esc, quando, haTempo, classeScore, chipStatus, mapaBase, iniciar };
+  window.CPET = { TIPOS, STATUS, RECURSOS, api, esc, quando, quandoCompleto, haTempo, classeScore, chipStatus, mapaBase, iniciar };
 })();

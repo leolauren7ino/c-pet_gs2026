@@ -6,19 +6,21 @@
   <title>Painel do gestor | C-PET</title>
   <meta name="description" content="Protótipo, fora do escopo funcional do MVP.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="img/marca-cpet.svg">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="stylesheet" href="vendor/bootstrap.min.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/cidadao.css">
+  <link rel="stylesheet" href="css/moderno.css">
 </head>
 <body>
   <div id="cabecalho"></div>
   <main class="pagina">
+    <p class="etiqueta-uc"><b>UC07</b> Consultar Indicadores Agregados de Densidade · Pilar Estima · Ator: Gestor Público</p>
     <p class="selo-proto">Protótipo, fora do escopo funcional do MVP</p>
     <h1>Painel do gestor</h1>
     <p class="suave mt-2" style="max-width:62ch">Mostraria uma visão resumida para quem gerencia a rede. Todos os dados abaixo são fictícios. Esta tela não envia nada, não grava nada e não tem botões de ação.</p>
     <div class="numeros" id="numeros"></div>
+    <p class="base-calculo" id="base"></p>
     <section class="proto-bloco">
       <h2>Casos em aberto por bairro</h2>
       <table class="tabela-bairros">
@@ -38,6 +40,7 @@
           `<div><div class="valor">${r.abertos}</div><div class="rotulo">casos em aberto</div></div>
            <div><div class="valor">${r.atendidos}</div><div class="rotulo">casos atendidos</div></div>
            <div><div class="valor">${r.total}</div><div class="rotulo">casos registrados</div></div>`;
+        document.getElementById("base").textContent = `Base: ${r.total} casos registrados no C-PET (simulados na demonstração), posição de ${new Date().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}.`;
         document.getElementById("bairros").innerHTML = [...b].sort((x, y) => y.abertos - x.abertos)
           .map((x) => `<tr><td>${esc(x.nome)}</td><td class="num mono">${x.abertos}</td><td class="num mono">${x.atendidos}</td></tr>`).join("");
       }).catch((e) => { document.getElementById("numeros").innerHTML = `<div class="alerta-erro" style="grid-column:1/-1">${esc(e.erro)}</div>`; });

@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Rastreabilidade | C-PET</title>
+  <meta name="description" content="Casos de uso, telas, endpoints e testes do C-PET, e os cinco pilares.">
+  <link rel="icon" href="img/favicon.ico" sizes="any">
+  <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="vendor/bootstrap.min.css">
+  <link rel="stylesheet" href="css/app.css">
+  <link rel="stylesheet" href="css/cidadao.css">
+  <link rel="stylesheet" href="css/moderno.css">
+</head>
+<body>
+  <div id="cabecalho"></div>
+  <main class="pagina">
+    <h1>Rastreabilidade</h1>
+    <p class="suave mt-2" style="max-width:66ch">Cada caso de uso do UML da equipe, a tela que o atende, os endpoints reais e os testes que o cobrem. Tudo aqui descreve o que existe no código desta versão.</p>
+
+    <section class="proto-bloco" style="max-width:none">
+      <h2>Casos de uso, telas, endpoints e testes</h2>
+      <table class="tabela-bairros">
+        <thead><tr><th scope="col">Caso de uso</th><th scope="col">Pilar</th><th scope="col">Tela</th><th scope="col">Endpoint</th><th scope="col">Teste</th></tr></thead>
+        <tbody>
+          <tr><td>UC01 Reportar Animal em Situação de Rua</td><td>Estima</td><td><a href="index.html">index.html</a></td><td class="mono">POST /api/reportes</td><td>FluxoIntegracaoTest, DetectorDuplicataTest, PrivacidadeTest</td></tr>
+          <tr><td>UC02 Acompanhar Status do Caso Reportado (FA-02: campanha vinculada)</td><td>Cuida</td><td><a href="acompanhar.html">acompanhar.html</a></td><td class="mono">GET /api/acompanhar/{codigo}<br>POST /api/campanhas/{id}/contribuicoes (simulado)</td><td>FluxoIntegracaoTest, CampanhaTest</td></tr>
+          <tr><td>UC05 Responder Solicitação de Atendimento</td><td>Conecta</td><td><a href="recurso.html">recurso.html</a> (a solicitação nasce em painel.html)</td><td class="mono">POST /api/casos/{id}/encaminhar<br>POST /api/recurso/casos/{id}/aceitar<br>POST /api/recurso/casos/{id}/recusar</td><td>FluxoIntegracaoTest, SugestorRecursosTest, StatusCasoTest</td></tr>
+          <tr><td>UC06 Atualizar Status do Caso Atendido (FA-02: precisa de recurso extra)</td><td>Cuida e Alerta</td><td><a href="recurso.html">recurso.html</a></td><td class="mono">POST /api/recurso/casos/{id}/atender<br>POST /api/recurso/casos/{id}/adotar<br>POST /api/recurso/casos/{id}/campanha</td><td>FluxoIntegracaoTest, CampanhaTest, StatusCasoTest</td></tr>
+          <tr><td>UC07 Consultar Indicadores Agregados de Densidade</td><td>Estima</td><td><a href="dados.html">dados.html</a>, <a href="gestor.html">gestor.html</a> (protótipo)</td><td class="mono">GET /api/dados/celulas<br>GET /api/dados/bairros<br>GET /api/dados/resumo<br>GET /api/dados/relatorio.csv</td><td>PrivacidadeTest, CampanhaTest</td></tr>
+          <tr><td>UC03 Arrecadação (protótipo estático)</td><td>Cuida</td><td><a href="arrecadacao.html">arrecadacao.html</a></td><td>nenhum</td><td>nenhum</td></tr>
+          <tr><td>UC04 Lar temporário (protótipo estático)</td><td>Cuida</td><td><a href="lar-temporario.html">lar-temporario.html</a></td><td>nenhum</td><td>nenhum</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="proto-bloco" style="max-width:none">
+      <h2>Os cinco pilares e onde aparecem</h2>
+      <table class="tabela-bairros">
+        <thead><tr><th scope="col">Pilar</th><th scope="col">O que faz no C-PET</th><th scope="col">Onde aparece</th><th scope="col">Teste</th></tr></thead>
+        <tbody>
+          <tr><td>Estima</td><td>Registra reportes, detecta duplicatas e mostra densidade por célula e bairro.</td><td><a href="index.html">index.html</a>, <a href="dados.html">dados.html</a></td><td>DetectorDuplicataTest, PrivacidadeTest</td></tr>
+          <tr><td>Prioriza</td><td>Calcula o score de 0 a 100 com o detalhe de cada fator.</td><td><a href="entrar.html">painel.html</a> (perfil da central)</td><td>CalculadoraScoreTest</td></tr>
+          <tr><td>Conecta</td><td>Sugere os 3 recursos mais compatíveis e registra o aceite ou a recusa.</td><td>painel.html, <a href="entrar.html">recurso.html</a></td><td>SugestorRecursosTest, FluxoIntegracaoTest</td></tr>
+          <tr><td>Alerta</td><td>Lista casos abertos atualizados em 24 h e células com 5 ou mais casos. Nada é enviado: o aviso é só interno e simulado.</td><td>painel.html (botão Alertas)</td><td>FluxoIntegracaoTest</td></tr>
+          <tr><td>Cuida</td><td>Mostra a linha do tempo do caso, o desfecho (atendido ou adotado) e a campanha de apoio.</td><td><a href="acompanhar.html">acompanhar.html</a>, recurso.html</td><td>StatusCasoTest, CampanhaTest</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="proto-bloco" style="max-width:none">
+      <h2>Atores</h2>
+      <p class="suave" style="max-width:68ch">O UML tem três atores: Cidadão, Equipe de Atendimento e Gestor Público. O sistema tem dois perfis com login simulado: OPERADOR (central de triagem) e AGENTE (recurso parceiro). Os dois são papéis da Equipe de Atendimento. O perfil Operador não existe no UML como ator separado; o alinhamento mínimo é tratá-lo como a Equipe de Atendimento na central de triagem, o que as telas já indicam. O Gestor Público usa as telas de dados agregados, sem login.</p>
+    </section>
+  </main>
+  <script src="js/app.js"></script>
+  <script>window.CPET.iniciar("rastreabilidade.html");</script>
+</body>
+</html>

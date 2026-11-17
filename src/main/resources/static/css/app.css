@@ -16,6 +16,8 @@
   --tinta-3: #4F5E62;
   --linha: #D6CFBF;
   --linha-forte: #B3AA95;
+  --fundo-logo: #121212;
+  --terracota-claro: #E58A63;
   --teal: #135969;
   --teal-escuro: #0D404C;
   --teal-claro: #D7E8EA;
@@ -75,38 +77,42 @@ a:hover { color: var(--teal-escuro); }
 }
 
 .topo {
-  background: var(--papel);
-  color: var(--tinta);
-  border-bottom: 1px solid var(--linha-forte);
+  background: var(--fundo-logo);
+  color: var(--papel);
   display: flex;
   align-items: center;
   gap: 24px;
   padding: 0 20px;
-  min-height: 60px;
+  min-height: 76px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
 }
-.topo a { color: var(--tinta); text-decoration: none; }
-.marca { display: flex; align-items: center; gap: 10px; }
-.marca-svg { display: block; width: 38px; height: 38px; color: var(--teal); }
-.marca-svg .no-forte { fill: var(--ferrugem); }
-.wordmark { display: block; color: var(--teal); }
-.wordmark text { font-family: var(--fonte); font-weight: 700; font-size: 23px; letter-spacing: 0.02em; fill: currentColor; }
-.wordmark .pet { fill: var(--ferrugem); }
-.marca small { font-weight: 400; font-size: 12.5px; color: var(--tinta-2); letter-spacing: 0; }
+.topo a { color: var(--papel); text-decoration: none; }
+.marca { display: flex; align-items: center; gap: 12px; }
+.emblema { position: relative; display: block; flex: none; width: 60px; height: 60px; border-radius: 50%; overflow: hidden; background: var(--fundo-logo); }
+.emblema img { position: absolute; width: 201%; max-width: none; left: -52.7%; top: -60.4%; }
+.emblema i { position: absolute; left: 29%; width: 42%; top: 0; height: 15%; background: var(--fundo-logo); }
+.wordmark { display: block; color: var(--papel); }
+.wordmark text { font-family: var(--fonte); font-weight: 700; font-size: 26px; letter-spacing: 0.02em; fill: currentColor; }
+.wordmark .pet { fill: var(--terracota-claro); }
+.marca small { font-weight: 400; font-size: 12.5px; color: #B9C2C4; letter-spacing: 0; }
 .topo nav { display: flex; gap: 4px; flex-wrap: wrap; margin-left: auto; align-items: center; }
 .topo nav a {
-  padding: 19px 10px 17px;
+  padding: 28px 10px 26px;
   font-size: 14px;
   border-bottom: 2px solid transparent;
   transition: border-color var(--t), color var(--t);
 }
-.topo nav a:hover { border-bottom-color: var(--linha-forte); }
-.topo nav a[aria-current="page"] { border-bottom-color: var(--ferrugem); font-weight: 600; }
-.topo .usuario { font-size: 13px; color: var(--tinta-2); display: flex; align-items: center; gap: 12px; }
+.topo nav a:hover { border-bottom-color: #6B7A7E; }
+.topo nav a[aria-current="page"] { border-bottom-color: var(--terracota-claro); font-weight: 600; }
+.topo .usuario { font-size: 13px; color: #C4CDCF; display: flex; align-items: center; gap: 12px; }
 .topo .usuario button {
-  background: none; border: 1px solid var(--linha-forte); color: var(--tinta); border-radius: var(--raio);
+  background: none; border: 1px solid #5C6B6F; color: var(--papel); border-radius: var(--raio);
   padding: 4px 10px; font: inherit; font-size: 12.5px; cursor: pointer; transition: background var(--t);
 }
-.topo .usuario button:hover { background: var(--papel-2); }
+.topo .usuario button:hover { background: #26302F; }
+.topo a:focus-visible, .topo button:focus-visible { outline-color: var(--papel); }
 
 /* Botões */
 .btn-c {
@@ -192,6 +198,7 @@ a:hover { color: var(--teal-escuro); }
   .topo nav { margin-left: 0; width: 100%; }
   .topo nav a { padding: 8px 8px 6px; }
   .marca { padding: 8px 0 0; }
+  .emblema { width: 56px; height: 56px; }
   .pagina { padding: 28px 16px 56px; }
 }
 

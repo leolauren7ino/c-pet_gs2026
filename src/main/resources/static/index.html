@@ -6,18 +6,19 @@
   <title>Reportar um animal | C-PET</title>
   <meta name="description" content="Reporte um animal em situação de rua e acompanhe o atendimento pelo código do caso.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
-  <link rel="icon" type="image/svg+xml" href="img/marca-cpet.svg">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
   <link rel="stylesheet" href="vendor/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/cidadao.css">
+  <link rel="stylesheet" href="css/moderno.css">
 </head>
 <body>
   <div id="cabecalho"></div>
 
   <main id="tela-form">
     <section class="abertura">
+      <p class="etiqueta-uc"><b>UC01</b> Reportar Animal em Situação de Rua · Pilar Estima · Ator: Cidadão</p>
       <h1>Viu um animal em situação de rua? Marque onde ele está.</h1>
       <p>Leva um minuto e não precisa de cadastro. Você recebe um código para acompanhar o que acontece com o caso.</p>
     </section>
@@ -27,7 +28,7 @@
         <section class="passo" style="margin-bottom:0">
           <p class="passo-rotulo">Passo 1 de 3</p>
           <h2>Onde ele está</h2>
-          <button class="btn-c cheio" type="button" id="localizar">Estou no local: usar minha localização</button>
+          <button class="btn-c cheio" type="button" id="localizar"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6-5.6-6-11a6 6 0 0 1 12 0c0 5.4-6 11-6 11z"/><circle cx="12" cy="10" r="2.2"/></svg>Estou no local: usar minha localização</button>
           <p class="ajuda-envio my-2">Ou aproxime o mapa e toque no ponto exato onde o animal está.</p>
           <div id="mapa" class="mapa" role="application" aria-label="Mapa para marcar o local"></div>
           <p class="leitura-local" id="leitura-local" aria-live="polite">Nenhum ponto marcado.</p>
@@ -83,7 +84,7 @@
 
         <div class="alerta-erro mb-3" id="erro-geral" role="alert" tabindex="-1" hidden></div>
         <div class="acoes-form">
-          <button class="btn-c" type="submit" id="enviar">Enviar reporte</button>
+          <button class="btn-c acao" type="submit" id="enviar">Enviar reporte</button>
           <span class="ajuda-envio">Ao enviar, você concorda com o uso do contato como descrito acima.</span>
         </div>
       </div>

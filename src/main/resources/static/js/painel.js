@@ -1,5 +1,5 @@
 (function () {
-  const { api, iniciar, esc, TIPOS, STATUS, RECURSOS, quando, haTempo, classeScore, chipStatus, mapaBase } = window.CPET;
+  const { api, iniciar, esc, TIPOS, STATUS, RECURSOS, quando, quandoCompleto, haTempo, classeScore, chipStatus, mapaBase } = window.CPET;
 
   const estado = { casos: [], selecionado: null, filtros: { status: "ABERTOS", tipo: "", bairro: "" } };
   let mapa;
@@ -103,7 +103,7 @@
 
   function desenhar(ajustarMapa) {
     const lista = filtrados();
-    document.getElementById("resumo-fila").textContent = `${lista.length} ${lista.length === 1 ? "caso" : "casos"}`;
+    document.getElementById("resumo-fila").textContent = `${lista.length} ${lista.length === 1 ? "caso" : "casos"} na lista (base: casos registrados, ${new Date().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })})`;
     const fila = document.getElementById("fila");
     fila.innerHTML = lista.length
       ? lista
@@ -237,14 +237,14 @@
 
     const historico = d.historico
       .map(
-        (h) => `<li><span class="quando">${quando(h.criadoEm)}</span><span>${h.anterior === h.novo ? "Aceito pelo recurso" : chipStatus(h.novo)}<small>${esc(h.autor)}${h.observacao && h.anterior !== h.novo ? `: ${esc(h.observacao)}` : ""}</small></span></li>`
+        (h) => `<li><span class="quando">${quandoCompleto(h.criadoEm)}</span><span class="passagem">${h.anterior === h.novo ? `${chipStatus(h.novo)}<span>aceito pelo recurso</span>` : `${h.anterior ? chipStatus(h.anterior) : '<span class="fraco">início</span>'}<span class="seta" aria-label="para">→</span>${chipStatus(h.novo)}`}</span><small>Responsável: ${esc(h.autor)}${h.observacao && h.anterior !== h.novo ? `. ${esc(h.observacao)}` : ""}</small></li>`
       )
       .join("");
 
     document.getElementById("detalhe").innerHTML = `<div class="detalhe">
       ${aviso ? `<div class="aviso-ok" role="status">${esc(aviso)}</div>` : ""}
       <h2>${TIPOS[c.tipo]}</h2>
-      <div class="meta">${chipStatus(c.status)}<span class="mono">${esc(c.codigo)}</span><span>${esc(c.bairro)}</span><span>${c.qtdAnimais} ${c.qtdAnimais === 1 ? "animal" : "animais"}</span><span>aberto ${haTempo(c.criadoEm)}</span></div>
+      <div class="meta">${chipStatus(c.status)}<span>Protocolo <span class="mono">${esc(c.codigo)}</span></span><span>${esc(c.bairro)}</span><span>${c.qtdAnimais} ${c.qtdAnimais === 1 ? "animal" : "animais"}</span><span>aberto ${haTempo(c.criadoEm)}</span></div>
       <p class="mt-2" style="font-size:12.5px;color:var(--tinta-2)">Local exato: <span class="mono">${c.lat.toFixed(5)}, ${c.lng.toFixed(5)}</span>
         <a href="https://www.openstreetmap.org/?mlat=${c.lat}&mlon=${c.lng}#map=18/${c.lat}/${c.lng}" target="_blank" rel="noopener">abrir mapa</a></p>
 
@@ -313,6 +313,7 @@
       caixa.innerHTML = `
         <p class="nota-sim mb-2">Alertas só aparecem aqui. Nenhum aviso é enviado a ninguém: simulado na demonstração.</p>
         <h3>Células com 5 ou mais casos abertos</h3>
+        <p class="base-calculo">Base: casos em aberto, posição de ${new Date().toLocaleTimeString("pt-BR", { timeStyle: "short" })}.</p>
         ${a.celulasCriticas.length ? a.celulasCriticas.map((c) => `<button type="button" class="item-alerta" data-celula="${esc(c.celula)}"><span class="score alto">${c.abertos}</span><span class="quem"><b>${esc(c.bairro)}</b><small class="mono">${esc(c.celula)}</small></span></button>`).join("") : '<p class="suave">Nenhuma célula crítica.</p>'}
         <h3>Casos abertos atualizados nas últimas 24 h</h3>
         ${a.casosAtualizados.length ? a.casosAtualizados.map((c) => `<button type="button" class="item-alerta" data-caso="${c.id}"><span class="score ${classeScore(c.score)}">${c.score}</span><span class="quem"><b>${TIPOS[c.tipo]}</b>, ${esc(c.bairro)}<small>${STATUS[c.status]} ${haTempo(c.atualizadoEm)}</small></span></button>`).join("") : '<p class="suave">Nada novo.</p>'}`;

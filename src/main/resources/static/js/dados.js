@@ -86,6 +86,7 @@
   Promise.all([api("/api/dados/resumo"), api("/api/dados/celulas"), api("/api/dados/bairros")]).then(([resumo, c, b]) => {
     celulas = c;
     bairros = b;
+    document.getElementById("base").textContent = `Base: ${resumo.total} casos registrados no C-PET${resumo.simulados > 0 ? " (simulados na demonstração)" : ""}, posição de ${new Date().toLocaleString("pt-BR", { dateStyle: "short", timeStyle: "short" })}. Células e bairros usam a mesma base.`;
     document.getElementById("numeros").innerHTML = `
       <div><div class="valor">${resumo.abertos}</div><div class="rotulo">casos em aberto</div></div>
       <div><div class="valor">${resumo.atendidos}</div><div class="rotulo">casos atendidos</div></div>
