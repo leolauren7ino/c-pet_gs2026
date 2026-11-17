@@ -98,3 +98,36 @@
 .etiqueta-uc { border-radius: 12px; margin-bottom: var(--e3); line-height: 1.4; }
 .barra-ferramenta .etiqueta-uc { margin-bottom: 0; }
 .linha-tempo .quando { display: block; }
+
+/* Etiqueta curta de caso de uso */
+.etiqueta-uc { white-space: nowrap; margin-bottom: var(--e5); }
+.barra-ferramenta .etiqueta-uc { margin-bottom: 0; }
+.abertura .etiqueta-uc { margin-bottom: var(--e5); }
+.identidade { margin-top: var(--e3); max-width: 78ch; font-size: 14px; color: var(--tinta-2); }
+.abertura .identidade { font-size: 14px; margin-top: var(--e3); }
+
+/* Sobre */
+.sobre-topo { background: var(--fundo-logo); color: var(--papel); }
+.sobre-topo-miolo { max-width: 1120px; margin: 0 auto; padding: var(--e6) 20px; display: flex; gap: var(--e6); align-items: center; }
+.emblema-grande { width: 160px; height: 160px; }
+.sobre-topo h1 { color: var(--papel); }
+.sobre-topo p { margin-top: var(--e2); max-width: 56ch; color: #C4CDCF; font-size: 17px; }
+.sobre section { margin-top: var(--e7); max-width: 780px; }
+.sobre section:first-child { margin-top: 0; }
+.sobre h2 { margin-bottom: var(--e3); }
+.sobre p + p, .sobre p + ul { margin-top: var(--e3); }
+.lista-dados { margin: var(--e3) 0 0; padding-left: 20px; color: var(--tinta-2); }
+.lista-dados li { margin-bottom: var(--e2); }
+.lista-dados b { color: var(--tinta); }
+.pilares { list-style: none; margin: var(--e4) 0 0; padding: 0; display: grid; gap: var(--e3); }
+.pilares li { padding: var(--e4); background: var(--superficie); border: 1px solid var(--linha-forte); border-radius: var(--raio-cartao); box-shadow: var(--sombra); }
+.pilares h3 { font-size: 1.05rem; margin-bottom: var(--e1); color: var(--teal); }
+.acoes-sobre { display: flex; gap: var(--e3); flex-wrap: wrap; }
+@media (max-width: 640px) {
+  .sobre-topo-miolo { flex-direction: column; align-items: flex-start; padding: var(--e5) var(--e4); gap: var(--e4); }
+  .emblema-grande { width: 140px; height: 140px; }
+}
+@media (max-width: 640px) {
+  .topo nav a { white-space: nowrap; font-size: 12px; padding-left: 2px; padding-right: 2px; }
+}
+.abertura .identidade { max-width: 92ch; margin-top: var(--e2); }

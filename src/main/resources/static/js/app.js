@@ -90,9 +90,9 @@
   function cabecalho(ativo, usuario) {
     const links = usuario
       ? usuario.perfil === "OPERADOR"
-        ? [["painel.html", "Painel"], ["dados.html", "Dados abertos"]]
-        : [["recurso.html", "Meus casos"], ["dados.html", "Dados abertos"]]
-      : [["index.html", "Reportar"], ["acompanhar.html", "Acompanhar"], ["dados.html", "Dados abertos"], ["entrar.html", "Entrar"]];
+        ? [["painel.html", "Painel"], ["dados.html", "Dados abertos"], ["sobre.html", "Sobre"]]
+        : [["recurso.html", "Meus casos"], ["dados.html", "Dados abertos"], ["sobre.html", "Sobre"]]
+      : [["index.html", "Reportar"], ["acompanhar.html", "Acompanhar"], ["dados.html", "Dados abertos"], ["sobre.html", "Sobre"], ["entrar.html", "Entrar"]];
     const nav = links.map(([href, rotulo]) => `<a href="${href}"${href === ativo ? ' aria-current="page"' : ""}>${rotulo}</a>`).join("");
     const quem = usuario
       ? `<span class="usuario"><span>${esc(usuario.nome)}</span><button type="button" id="sair">Sair</button></span>`

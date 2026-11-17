@@ -95,6 +95,7 @@ Nomes dos UC conforme o UML da equipe. A mesma matriz está na tela `rastreabili
 | UC05 Responder Solicitação de Atendimento | Conecta | Funcional | `recurso.html` (a solicitação nasce em `painel.html`) | `POST /api/casos/{id}/encaminhar`, `POST /api/recurso/casos/{id}/aceitar` e `/recusar` | FluxoIntegracaoTest, SugestorRecursosTest, StatusCasoTest |
 | UC06 Atualizar Status do Caso Atendido (FA-02: precisa de recurso extra) | Cuida e Alerta | Funcional | `recurso.html` | `POST /api/recurso/casos/{id}/atender`, `/adotar`, `/campanha` | FluxoIntegracaoTest, CampanhaTest, StatusCasoTest |
 | UC07 Consultar Indicadores Agregados de Densidade | Estima | Funcional em `dados.html`, protótipo em `gestor.html` | `dados.html`, `gestor.html` | `GET /api/dados/celulas`, `/bairros`, `/resumo`, `/relatorio.csv` | PrivacidadeTest, CampanhaTest |
+| Apresentação do projeto (sem UC próprio) | os cinco pilares | Página estática | `sobre.html` | nenhum | nenhum |
 | UC03 Arrecadação | Cuida | Protótipo estático, dados fictícios | `arrecadacao.html` | nenhum | nenhum |
 | UC04 Lar temporário | Cuida | Protótipo estático, dados fictícios | `lar-temporario.html` | nenhum | nenhum |
 
