@@ -7,6 +7,7 @@
   <meta name="description" content="Reporte um animal em situação de rua e acompanhe o atendimento pelo código do caso.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="vendor/bootstrap.min.css">
   <link rel="stylesheet" href="vendor/leaflet/leaflet.css">
   <link rel="stylesheet" href="css/app.css">
@@ -17,11 +18,12 @@
   <div id="cabecalho"></div>
 
   <main id="tela-form">
-    <section class="abertura">
+    <section class="abertura heroi">
+      <svg class="rede" viewBox="0 0 560 360" preserveAspectRatio="xMaxYMid slice" aria-hidden="true" focusable="false"><path d="M30 300 L150 210 L260 250 L370 130 L470 170 L540 60"/><path d="M150 210 L190 90 L370 130"/><path d="M260 250 L330 330 L470 280 L470 170"/><path d="M190 90 L300 30 L370 130"/><path d="M470 280 L540 220 L470 170"/><circle cx="30" cy="300" r="5"/><circle cx="150" cy="210" r="7"/><circle cx="260" cy="250" r="5"/><circle cx="370" cy="130" r="9"/><circle cx="470" cy="170" r="6"/><circle cx="540" cy="60" r="5"/><circle cx="190" cy="90" r="5"/><circle cx="300" cy="30" r="4"/><circle cx="330" cy="330" r="5"/><circle cx="470" cy="280" r="7"/><circle cx="540" cy="220" r="4"/></svg>
       <p class="etiqueta-uc" title="UC01 Reportar Animal em Situação de Rua. Pilar Estima. Ator: Cidadão">UC01 · Estima</p>
-      <h1>Viu um animal em situação de rua? Marque onde ele está.</h1>
+      <h1>Viu um animal em situação de rua? <span class="dest">Marque onde ele está.</span></h1>
       <p>Leva um minuto e não precisa de cadastro. Você recebe um código para acompanhar o que acontece com o caso.</p>
-      <p class="identidade">O C-PET é a camada de inteligência que estima, prioriza, conecta, alerta e cuida: orquestra ONGs, clínicas e órgãos públicos que já atuam, em vez de competir com eles. <a href="sobre.html">Saiba mais</a></p>
+      <p class="identidade-linha">A inteligência que faltava no cuidado animal. <a href="sobre.html">Saiba mais</a></p>
     </section>
 
     <form id="form" class="pagina reportar" novalidate>

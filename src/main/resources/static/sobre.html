@@ -4,9 +4,10 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Sobre | C-PET</title>
-  <meta name="description" content="O que é o C-PET, o problema que ele trata, os cinco pilares, quem ganha e os ODS relacionados.">
+  <meta name="description" content="O que é o C-PET, o problema que ele trata, os cinco pilares, a jornada de cuidado, os benefícios, os ODS e a equipe.">
   <link rel="icon" href="img/favicon.ico" sizes="any">
   <link rel="apple-touch-icon" href="img/apple-touch-icon.png">
+  <link rel="stylesheet" href="css/tokens.css">
   <link rel="stylesheet" href="vendor/bootstrap.min.css">
   <link rel="stylesheet" href="css/app.css">
   <link rel="stylesheet" href="css/cidadao.css">
@@ -14,70 +15,116 @@
 </head>
 <body>
   <div id="cabecalho"></div>
-  <header class="sobre-topo">
+  <header class="sobre-topo heroi">
+    <svg class="rede" viewBox="0 0 560 360" preserveAspectRatio="xMaxYMid slice" aria-hidden="true" focusable="false"><path d="M30 300 L150 210 L260 250 L370 130 L470 170 L540 60"/><path d="M150 210 L190 90 L370 130"/><path d="M260 250 L330 330 L470 280 L470 170"/><path d="M190 90 L300 30 L370 130"/><path d="M470 280 L540 220 L470 170"/><circle cx="30" cy="300" r="5"/><circle cx="150" cy="210" r="7"/><circle cx="260" cy="250" r="5"/><circle cx="370" cy="130" r="9"/><circle cx="470" cy="170" r="6"/><circle cx="540" cy="60" r="5"/><circle cx="190" cy="90" r="5"/><circle cx="300" cy="30" r="4"/><circle cx="330" cy="330" r="5"/><circle cx="470" cy="280" r="7"/><circle cx="540" cy="220" r="4"/></svg>
     <div class="sobre-topo-miolo">
-      <span class="emblema emblema-grande" aria-hidden="true"><img src="img/logo-cpet.png" alt=""><i></i></span>
+      <img class="emblema-grande" src="img/emblema.png" alt="Emblema do C-PET" width="160" height="160">
       <div>
-        <h1>Sobre o C-PET</h1>
-        <p>Camada de inteligência que estima, prioriza, conecta, alerta e cuida dos animais em situação de rua, apoiando as organizações que já atuam.</p>
+        <p class="wordmark grande" aria-hidden="true">C-<b>PET</b></p>
+        <h1>A inteligência que faltava <span class="dest">no cuidado animal.</span></h1>
+        <p class="sub">Camada de inteligência que estima, prioriza, conecta, alerta e cuida dos animais em situação de rua, apoiando as organizações que já atuam.</p>
       </div>
     </div>
   </header>
 
   <main class="pagina sobre">
     <section aria-labelledby="h-problema">
-      <h2 id="h-problema">O problema</h2>
-      <p>ONGs, abrigos, clínicas e órgãos públicos atuam de forma isolada. O cidadão que encontra um animal em situação de rua não sabe a quem recorrer. E não há censo nacional de animais de rua, o que dificulta saber onde concentrar o esforço.</p>
+      <p class="rotulo-secao">O problema</p>
+      <h2 id="h-problema">Não é falta de boa vontade. <span class="dest">É falta de inteligência.</span></h2>
+      <ul class="lista-dados">
+        <li>Não há censo nacional de animais de rua; o que existe vem de levantamentos independentes.</li>
+        <li>ONGs, abrigos, clínicas e programas de castração já existem, mas atuam isolados e sem comunicação entre si.</li>
+        <li>Quem acha um animal em situação de rua muitas vezes não sabe a quem recorrer, e os serviços não sabem quem, onde e quantos precisam de cuidado.</li>
+      </ul>
       <ul class="lista-dados">
         <li>Pesquisa da SEMIL, entre os 151 de 645 municípios paulistas que responderam: 62,3% oferecem castração permanente; 42,3% fizeram censo de animais domiciliados; 24,5% fizeram levantamento de animais de rua. <span class="fonte-ref">Fonte: SEMIL, 2024.</span></li>
-        <li>Estimativa de cerca de 30 milhões de animais domésticos abandonados no Brasil. É uma estimativa, pois não há estatística oficial. <span class="fonte-ref">Fonte: Agência Brasil, dez/2025.</span></li>
+        <li>Levantamento do governo federal (DPDA/MMA): entre os 440 municípios que responderam, a maioria não tem plano ou programa para o problema nem iniciativa de censo animal. <span class="fonte-ref">Fonte: DPDA/MMA. Ano e link a preencher.</span></li>
+        <li>Cerca de 30 milhões de animais abandonados ou em situação de rua (estimativa), pois não há estatística oficial. <span class="fonte-ref">Fonte: Agência Brasil, dez/2025.</span></li>
       </ul>
-      <p class="nota-sim">Esses números são contexto externo, não medido pelo C-PET. Veja as fontes completas em <a href="dados.html">Dados abertos</a>.</p>
+      <p class="nota-sim">Esses números são contexto externo, não medido pelo C-PET. Veja as fontes em <a href="dados.html">Dados abertos</a>.</p>
     </section>
 
     <section aria-labelledby="h-solucao">
-      <h2 id="h-solucao">A solução</h2>
-      <p>O C-PET funciona como um GPS de prioridade para o bem-estar animal: não presta o atendimento, mas indica onde está a necessidade, qual caso vem primeiro e quem pode atender.</p>
-      <ul class="pilares">
-        <li><h3>Estima</h3><p>Reúne os reportes dos cidadãos, junta os repetidos e mostra a densidade de casos por região. <a href="index.html">Reportar</a> · <a href="dados.html">Dados abertos</a></p></li>
-        <li><h3>Prioriza</h3><p>Dá a cada caso uma nota de 0 a 100 e mostra o peso de cada fator. Aparece no painel da equipe, com login simulado. <a href="entrar.html">Entrar</a></p></li>
-        <li><h3>Conecta</h3><p>Sugere os recursos compatíveis e próximos e registra o aceite ou a recusa do parceiro. <a href="entrar.html">Entrar</a></p></li>
-        <li><h3>Alerta</h3><p>Destaca casos atualizados nas últimas 24 horas e regiões com muitos casos abertos. Os avisos ficam no painel, sem envio de mensagens. <a href="entrar.html">Entrar</a></p></li>
-        <li><h3>Cuida</h3><p>Deixa o cidadão acompanhar o caso pelo protocolo, do reporte ao atendimento ou à adoção. <a href="acompanhar.html">Acompanhar</a></p></li>
-      </ul>
-    </section>
-
-    <section aria-labelledby="h-agir">
-      <h2 id="h-agir">Como agir</h2>
-      <div class="acoes-sobre">
-        <a class="btn-c acao" href="index.html">Reportar um animal</a>
+      <p class="rotulo-secao">A solução</p>
+      <h2 id="h-solucao">O ecossistema de resgate <span class="dest">e bem-estar animal.</span></h2>
+      <p class="texto">O C-PET funciona como um GPS de prioridade para o bem-estar animal: não presta o atendimento, mas indica onde está a necessidade, qual caso vem primeiro e quem pode atender. Qualquer pessoa reporta sem login; a plataforma estima a densidade de casos, prioriza, conecta ao recurso compatível e deixa o cidadão acompanhar até o desfecho.</p>
+      <div class="acoes-sobre mt-3">
+        <a class="btn-c" href="index.html">Reportar um animal</a>
         <a class="btn-c sec" href="acompanhar.html">Acompanhar um caso</a>
         <a class="btn-c sec" href="dados.html">Ver dados abertos</a>
       </div>
     </section>
 
-    <section aria-labelledby="h-ganha">
-      <h2 id="h-ganha">Quem ganha</h2>
-      <ul class="lista-dados">
-        <li><b>Cidadão.</b> Um só lugar para reportar, sem precisar procurar canal por canal, e acompanhamento do caso pelo código, sem login.</li>
-        <li><b>Animais.</b> Casos mais urgentes tendem a chegar antes a quem pode atender.</li>
-        <li><b>Equipes de atendimento.</b> Uma fila ordenada, com o motivo de cada prioridade, e só os casos encaminhados a cada recurso.</li>
-        <li><b>Gestores públicos.</b> Dados abertos agregados por região, sem endereço exato nem dados pessoais, e menos risco sanitário no bairro com apoio das ações de zoonoses.</li>
+    <section aria-labelledby="h-pilares">
+      <p class="rotulo-secao">Cinco pilares</p>
+      <h2 id="h-pilares">Solução pautada em <span class="dest">5 pilares.</span></h2>
+      <ul class="pilares">
+        <li><span class="num">01</span><h3>Estima</h3><p>Reúne os reportes dos cidadãos, junta os repetidos e mostra a densidade de casos por região. <a href="index.html">Reportar</a> · <a href="dados.html">Dados abertos</a></p></li>
+        <li><span class="num">02</span><h3>Prioriza</h3><p>Dá a cada caso uma nota de 0 a 100 e mostra o peso de cada fator. Aparece no painel da equipe, com login simulado. <a href="entrar.html">Entrar</a></p></li>
+        <li><span class="num">03</span><h3>Conecta</h3><p>Sugere os recursos compatíveis e próximos e registra o aceite ou a recusa do parceiro. <a href="entrar.html">Entrar</a></p></li>
+        <li><span class="num">04</span><h3>Alerta</h3><p>Destaca casos atualizados nas últimas 24 horas e regiões com muitos casos abertos. Os avisos ficam no painel, sem envio de mensagens. <a href="entrar.html">Entrar</a></p></li>
+        <li><span class="num">05</span><h3>Cuida</h3><p>Deixa o cidadão acompanhar o caso pelo protocolo, do reporte ao atendimento ou à adoção. <a href="acompanhar.html">Acompanhar</a></p></li>
       </ul>
     </section>
 
+    <section aria-labelledby="h-jornada">
+      <p class="rotulo-secao">A jornada de cuidado</p>
+      <h2 id="h-jornada">Da descoberta <span class="dest">ao acompanhamento.</span></h2>
+      <ol class="jornada">
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><h3>1. Descoberta</h3><p>O cidadão encontra um animal em situação de rua.</p><span class="seta-j" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></li>
+        <li><span class="ico-q"><img src="img/emblema.png" alt="" width="36" height="36"></span><h3>2. C-PET</h3><p>Abre o C-PET, sem login e sem cadastro.</p><span class="seta-j" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M10.5 18.5h3M12 6.5c-1.6 0-2.8 1.1-2.8 2.6 0 1.9 2.8 4.4 2.8 4.4s2.8-2.5 2.8-4.4c0-1.5-1.2-2.6-2.8-2.6z"/></svg></span><h3>3. Reporte</h3><p>Marca o local, escolhe o tipo e envia, com ou sem foto.</p><span class="seta-j" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h8M18 6h2M4 12h2M12 12h8M4 18h10M20 18h0"/><circle cx="15" cy="6" r="2"/><circle cx="9" cy="12" r="2"/><circle cx="17" cy="18" r="2"/></svg></span><h3>4. Priorização automática</h3><p>O sistema calcula a nota de 0 a 100 e junta reportes repetidos.</p></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="5" r="2.5"/><circle cx="5" cy="18" r="2.5"/><circle cx="19" cy="18" r="2.5"/><path d="M11 7.3 6 15.7M13 7.3l5 8.4M7.5 18h9"/></svg></span><h3>5. Conexão com recurso</h3><p>A central escolhe entre os 3 recursos mais compatíveis e encaminha.</p><span class="seta-j" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 16v-5a6 6 0 0 1 12 0v5l1.5 2h-15z"/><path d="M10 21h4"/></svg></span><h3>6. Alerta ao recurso</h3><p>O recurso recebe o caso e aceita ou recusa. Nada é enviado fora do C-PET.</p><span class="seta-j" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3 4.5 6v6c0 4.5 3.2 7.8 7.5 9 4.3-1.2 7.5-4.5 7.5-9V6z"/><path d="m8.8 12 2.4 2.4 4.3-4.4"/></svg></span><h3>7. Resgate e atualização</h3><p>O desfecho (atendido ou adotado) aparece para o cidadão no acompanhamento.</p><span class="seta-j" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="m9 5 7 7-7 7"/></svg></span></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 20s-7-4.4-7-9.6A3.9 3.9 0 0 1 12 8a3.9 3.9 0 0 1 7 2.4C19 15.6 12 20 12 20z"/></svg></span><h3>8. Continuar ajudando</h3><p>Campanha de apoio ao caso (simulada) e, como protótipo, lar temporário.</p></li>
+      </ol>
+    </section>
+
+    <section aria-labelledby="h-beneficios">
+      <p class="rotulo-secao">Benefícios</p>
+      <h2 id="h-beneficios">Como ajudamos <span class="dest">(do pet ao cidadão).</span></h2>
+      <div class="beneficios">
+        <article class="card-sobre">
+          <h3>Benefícios ao cidadão</h3>
+          <ul>
+            <li>Um só lugar para reportar, sem procurar canal por canal.</li>
+            <li>Acompanhamento do caso pelo código, sem login.</li>
+            <li>Participação ativa: o cidadão deixa de ser espectador e vira parte da solução.</li>
+            <li>Gestores e equipes trabalham com dados agregados e uma fila com o motivo de cada prioridade.</li>
+          </ul>
+        </article>
+        <article class="card-sobre cheio">
+          <h3>Benefícios aos animais</h3>
+          <ul>
+            <li>Ser visto mais rápido: o caso é priorizado assim que reportado.</li>
+            <li>Chegar ao cuidado certo: o sistema sugere o recurso compatível mais próximo.</li>
+            <li>Atualizações registradas até o desfecho, atendido ou adotado.</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
     <section aria-labelledby="h-ods">
-      <h2 id="h-ods">Objetivos de Desenvolvimento Sustentável</h2>
-      <ul class="lista-dados">
-        <li><b>ODS 3, Saúde e bem-estar.</b> Reduz riscos sanitários ligados a animais de rua e apoia o atendimento veterinário. <a href="https://brasil.un.org/pt-br/sdgs/3" target="_blank" rel="noopener">brasil.un.org/pt-br/sdgs/3</a></li>
-        <li><b>ODS 10, Redução das desigualdades.</b> Dá prioridade a bairros com maior vulnerabilidade, que têm menos acesso a serviços. <a href="https://brasil.un.org/pt-br/sdgs/10" target="_blank" rel="noopener">brasil.un.org/pt-br/sdgs/10</a></li>
-        <li><b>ODS 11, Cidades e comunidades sustentáveis.</b> Oferece dados abertos para o poder público planejar o manejo de animais na cidade. <a href="https://brasil.un.org/pt-br/sdgs/11" target="_blank" rel="noopener">brasil.un.org/pt-br/sdgs/11</a></li>
+      <p class="rotulo-secao">ODS</p>
+      <h2 id="h-ods">Objetivos de Desenvolvimento <span class="dest">Sustentável.</span></h2>
+      <ul class="ods">
+        <li><span class="num">ODS 3</span><h3>Saúde e bem-estar</h3><p>Reduz riscos sanitários ligados a animais de rua e apoia o atendimento veterinário.</p><a href="https://brasil.un.org/pt-br/sdgs/3" target="_blank" rel="noopener">brasil.un.org/pt-br/sdgs/3</a></li>
+        <li><span class="num">ODS 10</span><h3>Redução das desigualdades</h3><p>Dá prioridade a bairros com maior vulnerabilidade, que têm menos acesso a serviços.</p><a href="https://brasil.un.org/pt-br/sdgs/10" target="_blank" rel="noopener">brasil.un.org/pt-br/sdgs/10</a></li>
+        <li><span class="num">ODS 11</span><h3>Cidades e comunidades sustentáveis</h3><p>Oferece dados abertos para o poder público planejar o manejo de animais na cidade.</p><a href="https://brasil.un.org/pt-br/sdgs/11" target="_blank" rel="noopener">brasil.un.org/pt-br/sdgs/11</a></li>
       </ul>
     </section>
 
     <section aria-labelledby="h-equipe">
-      <h2 id="h-equipe">Equipe</h2>
-      <p>Felipe Durante Slavic e Leonardo Laurentino de Curcio. FIAP, Global Solution 2026.2, desafio CitizenTech.</p>    </section>
+      <p class="rotulo-secao">Equipe</p>
+      <h2 id="h-equipe">Conheça quem está <span class="dest">por trás do C-PET.</span></h2>
+      <ul class="equipe">
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span><div><b>Felipe Slavic</b><span>Co-founder e Head de Produto</span></div></li>
+        <li><span class="ico-q"><svg class="ico" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7"/></svg></span><div><b>Leonardo Laurentino</b><span>Co-founder e Head de Tecnologia</span></div></li>
+      </ul>
+      <p class="nota-sim">Estudantes de Sistemas de Informação na FIAP. Global Solution 2026.2, desafio CitizenTech.</p>
+    </section>
   </main>
   <script src="js/app.js"></script>
   <script>window.CPET.iniciar("sobre.html");</script>
