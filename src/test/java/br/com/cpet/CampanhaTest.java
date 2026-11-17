@@ -122,6 +122,19 @@ class CampanhaTest {
         assertThat(csv).doesNotContain("CP-").doesNotContain("-23.");
     }
 
+    @Test
+    void relatorioCsvForcaDownloadEComecaComBomECabecalho() throws Exception {
+        var res = mvc.perform(get("/api/dados/relatorio.csv")).andExpect(status().isOk()).andReturn().getResponse();
+        assertThat(res.getHeader("Content-Disposition")).isEqualTo("attachment; filename=\"cpet-relatorio-agregado.csv\"");
+        assertThat(res.getContentType()).isEqualToIgnoringCase("text/csv;charset=UTF-8");
+        byte[] corpo = res.getContentAsByteArray();
+        assertThat(corpo[0]).isEqualTo((byte) 0xEF);
+        assertThat(corpo[1]).isEqualTo((byte) 0xBB);
+        assertThat(corpo[2]).isEqualTo((byte) 0xBF);
+        String primeira = new String(corpo, 3, corpo.length - 3, StandardCharsets.UTF_8).split("\\R")[0];
+        assertThat(primeira).isEqualTo("bairro;tipo;abertos;atendidos_ou_adotados;total;base_de_calculo;data_de_geracao");
+    }
+
     private JsonNode contribuir(long campanhaId, String valor) throws Exception {
         return ler(post("/api/campanhas/" + campanhaId + "/contribuicoes")
                 .contentType(MediaType.APPLICATION_JSON).content("{\"valor\":" + valor + "}"));
