@@ -96,3 +96,13 @@ No primeiro roteiro automatizado, 3 requisições do painel falharam com erro de
 - Recusa: comportamento atual mantido (volta à TRIAGEM e a central reescolhe); registrado no README.
 - No acompanhamento público o responsável de cada evento aparece como papel (Cidadão, Equipe de Atendimento), nunca com o nome do usuário.
 - Os UC03 e UC04 não têm nome exato no UML recebido; ficam como "Arrecadação" e "Lar temporário".
+
+## Rodada do tema escuro (branch `tema-escuro`)
+
+- O PDF do pitch estava em `Downloads` com outro nome ("Pitch C-PET para CitizenTech.pdf"); copiei para `docs/identidade/Pitch_C-PET_para_CitizenTech.pdf` (26 MB) e não o versionei no Git, só o deixei na pasta.
+- Não existe `static/img/identidade/` nem a foto de capa em preto e branco: o herói usa só o brilho e a rede em SVG. As fotos do deck (cavalo, cão, gato) não foram extraídas do PDF.
+- Fontes: o projeto não tinha Bebas Neue nem DM Sans. Baixei os dois arquivos OFL do repositório `google/fonts` e converti para woff2 (`static/fonts`). Removi Schibsted Grotesk e IBM Plex Mono, que deixaram de ser usadas (esta nota substitui a de "Fontes locais" acima). Os textos "mono" agora usam DM Sans com números tabulares.
+- Emblema: `tools/gerar_emblema.py` gera `img/emblema.png` com o fundo `#0F0F0E`, no lugar do recorte por CSS sobre `logo-cpet.png`, que deixava um disco `#121212` sobre o novo fundo. Favicon e apple-touch-icon continuam os da versão anterior (fundo `#121212`).
+- O cabeçalho usa o wordmark claro (menta e menta claro); o teal profundo (2,39:1 sobre o fundo) só aparece no wordmark grande de `sobre.html`.
+- Números do deck: não copiei nenhum. O deck cita "mais de 20 milhões" de animais em situação de rua (fonte Jornal de Brasília/OMS), R$ 76 bilhões do mercado pet em 2025 (Abinpet) e 65% e 67% dos municípios sem plano e sem censo (DPDA/MMA). O site mantém as 30 milhões (estimativa) já presentes em `dados.html`, o R$ 75,4 bilhões de 2024 e, para o levantamento federal, só a frase qualitativa com os 440 municípios que responderam (número informado pela equipe, sem fonte com link nesta versão). Nenhum desses números foi verificado contra a fonte original.
+- Captura de página inteira com navegação inferior fixa: a barra aparece no meio da imagem, é efeito da captura, não da tela.
