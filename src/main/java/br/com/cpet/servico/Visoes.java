@@ -1,5 +1,6 @@
 package br.com.cpet.servico;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,13 +34,18 @@ public final class Visoes {
     }
 
     public record CasoDetalhe(CasoResumo caso, List<ReporteVisao> reportes, ScoreDetalhe score,
-                              List<Sugestao> sugestoes, List<HistoricoVisao> historico, boolean aceito) {
+                              List<Sugestao> sugestoes, List<HistoricoVisao> historico, boolean aceito,
+                              boolean contatoRegistrado, CampanhaVisao campanha) {
     }
 
     public record EtapaPublica(StatusCaso status, String titulo, LocalDateTime em) {
     }
 
     public record Acompanhamento(String codigo, TipoCaso tipo, String bairro, StatusCaso status,
-                                 LocalDateTime criadoEm, LocalDateTime atualizadoEm, List<EtapaPublica> etapas) {
+                                 LocalDateTime criadoEm, LocalDateTime atualizadoEm, List<EtapaPublica> etapas,
+                                 CampanhaVisao campanha) {
+    }
+
+    public record CampanhaVisao(Long id, BigDecimal meta, BigDecimal valorArrecadado, boolean ativa) {
     }
 }

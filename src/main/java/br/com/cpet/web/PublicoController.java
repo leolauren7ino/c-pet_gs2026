@@ -39,16 +39,18 @@ public class PublicoController {
     private final CasoService casos;
     private final DadosAbertosService dados;
     private final BancoService banco;
+    private final br.com.cpet.servico.CampanhaService campanhas;
     private final UsuarioRepository usuarios;
     private final RecursoRepository recursos;
     private final boolean resetHabilitado;
 
     public PublicoController(CasoService casos, DadosAbertosService dados, BancoService banco,
-                             UsuarioRepository usuarios, RecursoRepository recursos,
+                             br.com.cpet.servico.CampanhaService campanhas, UsuarioRepository usuarios, RecursoRepository recursos,
                              @Value("${cpet.demo.reset-habilitado}") boolean resetHabilitado) {
         this.casos = casos;
         this.dados = dados;
         this.banco = banco;
+        this.campanhas = campanhas;
         this.usuarios = usuarios;
         this.recursos = recursos;
         this.resetHabilitado = resetHabilitado;
@@ -79,6 +81,23 @@ public class PublicoController {
     @GetMapping("/dados/bairros")
     public List<BairroAgregado> bairros() {
         return dados.bairros();
+    }
+
+    @GetMapping(value = "/dados/relatorio.csv", produces = "text/csv;charset=UTF-8")
+    public org.springframework.http.ResponseEntity<byte[]> relatorio() {
+        byte[] corpo = ("﻿" + dados.relatorioCsv()).getBytes(java.nio.charset.StandardCharsets.UTF_8);
+        return org.springframework.http.ResponseEntity.ok()
+                .header("Content-Disposition", "attachment; filename=\"cpet-relatorio-agregado.csv\"")
+                .contentType(org.springframework.http.MediaType.parseMediaType("text/csv;charset=UTF-8")).body(corpo);
+    }
+
+    public record Contribuicao(java.math.BigDecimal valor) {
+    }
+
+    /** Contribuição simulada: só soma ao total da campanha, sem pagamento. */
+    @PostMapping("/campanhas/{id}/contribuicoes")
+    public br.com.cpet.servico.Visoes.CampanhaVisao contribuir(@PathVariable Long id, @org.springframework.web.bind.annotation.RequestBody Contribuicao c) {
+        return campanhas.contribuir(id, c.valor());
     }
 
     @GetMapping("/dados/resumo")

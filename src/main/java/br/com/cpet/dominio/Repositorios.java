@@ -41,6 +41,10 @@ public final class Repositorios {
     public interface BairroRepository extends JpaRepository<Bairro, Long> {
     }
 
+    public interface CampanhaRepository extends JpaRepository<Campanha, Long> {
+        List<Campanha> findByCasoIdOrderByIdDesc(Long casoId);
+    }
+
     public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
     }
 }

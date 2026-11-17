@@ -41,7 +41,7 @@ public class InternoController {
     public record EntradaSessao(Long usuarioId) {
     }
 
-    public record Acao(Long recursoId, String observacao) {
+    public record Acao(Long recursoId, String observacao, java.math.BigDecimal meta) {
     }
 
     private final SessaoService sessao;
@@ -127,7 +127,17 @@ public class InternoController {
 
     @PostMapping("/recurso/casos/{id}/atender")
     public CasoResumo atender(@PathVariable Long id, @RequestBody Acao acao, HttpSession http) {
-        return casos.atender(id, acao.observacao(), sessao.exigir(http, Perfil.AGENTE));
+        return casos.atender(id, acao.observacao(), sessao.exigir(http, Perfil.AGENTE), acao.meta());
+    }
+
+    @PostMapping("/recurso/casos/{id}/adotar")
+    public CasoResumo adotar(@PathVariable Long id, @RequestBody Acao acao, HttpSession http) {
+        return casos.adotar(id, acao.observacao(), sessao.exigir(http, Perfil.AGENTE), acao.meta());
+    }
+
+    @PostMapping("/recurso/casos/{id}/campanha")
+    public br.com.cpet.servico.Visoes.CampanhaVisao campanha(@PathVariable Long id, @RequestBody Acao acao, HttpSession http) {
+        return casos.pedirRecursoExtra(id, acao.meta(), sessao.exigir(http, Perfil.AGENTE));
     }
 
     @GetMapping("/alertas")

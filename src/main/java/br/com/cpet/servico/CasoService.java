@@ -34,6 +34,9 @@ import br.com.cpet.regras.DetectorDuplicata;
 import br.com.cpet.regras.Geo;
 import br.com.cpet.regras.SugestorRecursos;
 import br.com.cpet.servico.Visoes.Acompanhamento;
+import java.math.BigDecimal;
+
+import br.com.cpet.servico.Visoes.CampanhaVisao;
 import br.com.cpet.servico.Visoes.CasoDetalhe;
 import br.com.cpet.servico.Visoes.CasoResumo;
 import br.com.cpet.servico.Visoes.EtapaPublica;
@@ -58,11 +61,12 @@ public class CasoService {
     private final DetectorDuplicata detector;
     private final SugestorRecursos sugestor;
     private final FotoService fotos;
+    private final CampanhaService campanhas;
     private final Clock relogio;
 
     public CasoService(CasoRepository casos, ReporteRepository reportes, HistoricoRepository historicos,
                        RecursoRepository recursos, BairroRepository bairros, CalculadoraScore calculadora,
-                       DetectorDuplicata detector, SugestorRecursos sugestor, FotoService fotos, Clock relogio) {
+                       DetectorDuplicata detector, SugestorRecursos sugestor, FotoService fotos, CampanhaService campanhas, Clock relogio) {
         this.casos = casos;
         this.reportes = reportes;
         this.historicos = historicos;
@@ -72,6 +76,7 @@ public class CasoService {
         this.detector = detector;
         this.sugestor = sugestor;
         this.fotos = fotos;
+        this.campanhas = campanhas;
         this.relogio = relogio;
     }
 
@@ -128,7 +133,8 @@ public class CasoService {
                 .map(h -> new EtapaPublica(h.getStatusNovo(), tituloPublico(h.getStatusNovo()), h.getCriadoEm()))
                 .toList();
         return new Acompanhamento(caso.getCodigoAcompanhamento(), caso.getTipo(), bairro.getNome(),
-                caso.getStatus(), caso.getCriadoEm(), caso.getAtualizadoEm(), etapas);
+                caso.getStatus(), caso.getCriadoEm(), caso.getAtualizadoEm(), etapas,
+                campanhas.doCaso(caso.getId()).orElse(null));
     }
 
     public List<CasoResumo> listar(StatusCaso status, TipoCaso tipo, Long bairroId) {
@@ -167,7 +173,9 @@ public class CasoService {
                 elegivelParaSugestao ? sugestor.sugerir(caso, recursos.findAll()) : List.of(),
                 hist.stream().map(h -> new HistoricoVisao(h.getStatusAnterior(), h.getStatusNovo(), h.getAutor(),
                         h.getObservacao(), h.getCriadoEm())).toList(),
-                foiAceito(hist));
+                foiAceito(hist),
+                listaReportes.stream().anyMatch(r -> r.contato() != null),
+                campanhas.doCaso(id).orElse(null));
     }
 
     public List<CasoDetalhe> casosDoRecurso(Long recursoId) {
@@ -237,6 +245,36 @@ public class CasoService {
         devolverVaga(caso);
         mudarStatus(caso, StatusCaso.ATENDIDO, agente.getNome(), observacao.trim(), LocalDateTime.now(relogio));
         return resumoSimples(caso);
+    }
+
+    public CasoResumo atender(Long id, String observacao, Usuario agente, BigDecimal meta) {
+        CasoResumo r = atender(id, observacao, agente);
+        if (meta != null) {
+            campanhas.criar(id, meta);
+        }
+        return r;
+    }
+
+    public CasoResumo adotar(Long id, String observacao, Usuario agente, BigDecimal meta) {
+        CasoResumo r = adotar(id, observacao, agente);
+        if (meta != null) {
+            campanhas.criar(id, meta);
+        }
+        return r;
+    }
+
+    public CasoResumo adotar(Long id, String observacao, Usuario agente) {
+        exigirObservacao(observacao, "Descreva a adoção realizada.");
+        Caso caso = buscarDoRecurso(id, agente);
+        devolverVaga(caso);
+        mudarStatus(caso, StatusCaso.ADOTADO, agente.getNome(), observacao.trim(), LocalDateTime.now(relogio));
+        return resumoSimples(caso);
+    }
+
+    /** UC06 FA-02: o agente sinaliza que o caso precisa de recurso extra e informa a meta. */
+    public CampanhaVisao pedirRecursoExtra(Long id, BigDecimal meta, Usuario agente) {
+        Caso caso = buscarDoRecurso(id, agente);
+        return campanhas.criar(caso.getId(), meta);
     }
 
     public void recalcularTodos() {
@@ -401,6 +439,7 @@ public class CasoService {
             case TRIAGEM -> "Em análise pela central";
             case ENCAMINHADO -> "Encaminhado a um parceiro da rede";
             case ATENDIDO -> "Atendido";
+            case ADOTADO -> "Adotado";
             case ARQUIVADO -> "Encerrado sem atendimento";
         };
     }

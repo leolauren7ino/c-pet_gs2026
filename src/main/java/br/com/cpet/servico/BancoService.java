@@ -21,7 +21,7 @@ import br.com.cpet.dominio.Repositorios.CasoRepository;
 public class BancoService implements SmartInitializingSingleton {
 
     private static final String[] TABELAS_EM_ORDEM_DE_LIMPEZA = {
-        "HISTORICO_STATUS", "REPORTE", "CASO", "USUARIO", "RECURSO", "BAIRRO"
+        "CAMPANHA", "HISTORICO_STATUS", "REPORTE", "CASO", "USUARIO", "RECURSO", "BAIRRO"
     };
 
     private final DataSource dataSource;
@@ -52,6 +52,8 @@ public class BancoService implements SmartInitializingSingleton {
     public void inicializar() throws SQLException {
         if (!tabelaExiste("CASO")) {
             executar("db/schema.sql");
+        } else if (!tabelaExiste("CAMPANHA")) {
+            executar("db/atualizacao-campanha.sql");
         }
         Integer bairros = jdbc.queryForObject("SELECT COUNT(*) FROM BAIRRO", Integer.class);
         if (bairros == null || bairros == 0) {

@@ -33,10 +33,14 @@ public class DadosAbertosService {
     public record Resumo(long abertos, long atendidos, long total, long simulados) {
     }
 
+    private static final String FIM_DE_LINHA = "" + (char) 13 + (char) 10;
+
     private final CasoRepository casos;
     private final BairroRepository bairros;
+    private final java.time.Clock relogio;
 
-    public DadosAbertosService(CasoRepository casos, BairroRepository bairros) {
+    public DadosAbertosService(CasoRepository casos, BairroRepository bairros, java.time.Clock relogio) {
+        this.relogio = relogio;
         this.casos = casos;
         this.bairros = bairros;
     }
@@ -71,10 +75,25 @@ public class DadosAbertosService {
                 .toList();
     }
 
+    /** UC07: relatório só com contagens agregadas por bairro e tipo, sem localização exata nem dados pessoais. */
+    public String relatorioCsv() {
+        Map<Long, String> nomes = bairros.findAll().stream().collect(Collectors.toMap(Bairro::getId, Bairro::getNome));
+        Map<String, List<Caso>> grupos = casos.findAll().stream()
+                .collect(Collectors.groupingBy(c -> nomes.get(c.getBairroId()) + ";" + c.getTipo().name()));
+        StringBuilder sb = new StringBuilder("bairro;tipo;abertos;atendidos_ou_adotados;total;base_de_calculo;data_de_geracao").append(FIM_DE_LINHA);
+        String data = java.time.LocalDateTime.now(relogio).format(java.time.format.DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm"));
+        grupos.entrySet().stream().sorted(Map.Entry.comparingByKey()).forEach(e -> {
+            List<Caso> l = e.getValue();
+            sb.append(e.getKey()).append(';').append(contar(l, true)).append(';').append(contar(l, false)).append(';')
+                    .append(l.size()).append(";todos os casos registrados;").append(data).append(FIM_DE_LINHA);
+        });
+        return sb.toString();
+    }
+
     public Resumo resumo() {
         List<Caso> todos = casos.findAll();
         return new Resumo(contar(todos, true),
-                todos.stream().filter(c -> c.getStatus() == StatusCaso.ATENDIDO).count(),
+                todos.stream().filter(c -> c.getStatus().desfecho()).count(),
                 todos.size(), casos.countBySimulado(1));
     }
 
@@ -86,7 +105,7 @@ public class DadosAbertosService {
 
     private static long contar(List<Caso> lista, boolean abertos) {
         return lista.stream()
-                .filter(c -> abertos ? c.getStatus().aberto() : c.getStatus() == StatusCaso.ATENDIDO)
+                .filter(c -> abertos ? c.getStatus().aberto() : c.getStatus().desfecho())
                 .count();
     }
 }
