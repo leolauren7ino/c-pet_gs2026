@@ -1,0 +1,88 @@
+/* C-PET: tokens do tema escuro. Único arquivo com cores, fontes e escalas.
+   Cores medidas no deck "Pitch C-PET para CitizenTech" (ver docs/DESIGN.md).
+   Nenhum outro CSS ou JS define cor: tudo vem daqui. */
+
+@font-face { font-family: "Bebas Neue"; font-weight: 400; font-display: swap; src: url("../fonts/bebas-neue-400.woff2") format("woff2"); }
+@font-face { font-family: "DM Sans"; font-weight: 100 1000; font-display: swap; src: url("../fonts/dm-sans-var.woff2") format("woff2"); }
+
+:root {
+  color-scheme: dark;
+
+  /* Identidade (deck) */
+  --fundo: #0F0F0E;
+  --superficie-a: #0A1D21;
+  --superficie-b: #0E1A1B;
+  --menta: #3CC3A4;
+  --menta-claro: #90D8C8;
+  --menta-claro-2: #ADE4D8;
+  --teal-profundo: #105868;
+  --texto: #EAF1EF;
+  --texto-2: #9DB2AE;
+  --borda: rgba(60, 195, 164, 0.35);
+  --borda-fraca: rgba(60, 195, 164, 0.18);
+  --borda-campo: rgba(60, 195, 164, 0.7);
+  --menta-fundo: rgba(60, 195, 164, 0.12);
+  --menta-fundo-forte: rgba(60, 195, 164, 0.22);
+  --sobre-menta: #0F0F0E;
+
+  /* Sinais: âmbar e vermelho sóbrios (texto/contorno) e vermelho sólido (fundo com texto claro) */
+  --ambar: #E6B450;
+  --ambar-fundo: rgba(230, 180, 80, 0.14);
+  --erro: #F2877D;
+  --erro-fundo: rgba(242, 135, 125, 0.14);
+  --erro-solido: #B3261E;
+  --sobre-erro: #FFFFFF;
+
+  /* Mapa */
+  --mapa-filtro: invert(1) hue-rotate(180deg) brightness(0.78) contrast(0.92) saturate(0.28) sepia(0.4) hue-rotate(122deg) saturate(1.5);
+  --score-alto: var(--erro);
+  --score-medio: var(--ambar);
+  --score-baixo: var(--menta);
+  --rampa-1: #105868; --sobre-rampa-1: #EAF1EF;
+  --rampa-2: #3CC3A4; --sobre-rampa-2: #0F0F0E;
+  --rampa-3: #E6B450; --sobre-rampa-3: #0F0F0E;
+  --rampa-4: #F2877D; --sobre-rampa-4: #0F0F0E;
+  --rampa-5: #B3261E; --sobre-rampa-5: #FFFFFF;
+
+  /* Herói */
+  --brilho: rgba(60, 195, 164, 0.16);
+  --rede-linha: rgba(60, 195, 164, 0.28);
+
+  /* Ícone do select (seta menta clara) */
+  --seta-select: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%2390D8C8' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='m2 5 6 6 6-6'/%3e%3c/svg%3e");
+
+  /* Fontes */
+  --fonte-titulo: "Bebas Neue", "Arial Narrow", "Helvetica Neue Condensed", Impact, sans-serif;
+  --fonte: "DM Sans", system-ui, "Segoe UI", sans-serif;
+  --mono: "DM Sans", system-ui, sans-serif;
+
+  /* Escalas */
+  --e1: 4px; --e2: 8px; --e3: 12px; --e4: 16px; --e5: 24px; --e6: 32px; --e7: 48px;
+  --raio: 10px;
+  --raio-chip: 8px;
+  --raio-cartao: 18px;
+  --t: 120ms ease;
+  --sombra: none;
+  --sombra-forte: 0 8px 28px rgba(0, 0, 0, 0.55);
+
+  /* Nomes antigos, apontando para os novos (os componentes ainda os usam) */
+  --papel: var(--fundo);
+  --papel-2: var(--superficie-b);
+  --superficie: var(--superficie-a);
+  --tinta: var(--texto);
+  --tinta-2: var(--texto-2);
+  --tinta-3: var(--texto-2);
+  --linha: var(--borda-fraca);
+  --linha-forte: var(--borda);
+  --fundo-logo: var(--fundo);
+  --terracota-claro: var(--menta-claro);
+  --teal: var(--menta);
+  --teal-escuro: var(--menta-claro);
+  --teal-claro: var(--menta-fundo);
+  --ferrugem: var(--erro);
+  --ferrugem-escuro: var(--erro);
+  --ferrugem-claro: var(--erro-fundo);
+  --ocre: var(--ambar);
+  --ocre-claro: var(--ambar-fundo);
+  --ok: var(--menta);
+}
