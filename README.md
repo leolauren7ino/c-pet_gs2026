@@ -189,3 +189,5 @@ tools/       gerador do seed
 ```
 
 Decisões e simplificações de MVP (incluindo o acesso sem senha) estão em `docs/DECISOES.md`. A direção de design está em `docs/DESIGN.md`.
+
+Este MVP foi desenvolvido com apoio de IA (Claude Code), conforme declaração de uso de IA entregue com o trabalho.
