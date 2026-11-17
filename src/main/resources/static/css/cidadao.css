@@ -38,9 +38,9 @@
 /* Confirmação */
 .recebido { max-width: 640px; margin: 0 auto; padding: 48px 20px 80px; }
 .carimbo {
-  display: inline-block; margin: 22px 0 14px; padding: 14px 22px; border: 2px solid var(--tinta);
-  font-family: var(--mono); font-weight: 500; font-size: clamp(1.9rem, 8vw, 2.8rem); letter-spacing: 0.08em;
-  transform: rotate(-1.5deg); background: var(--superficie);
+  display: inline-block; margin: 22px 0 14px; padding: 12px 22px; border: 1px solid var(--menta); border-radius: var(--raio-cartao);
+  font-family: var(--fonte-titulo); font-weight: 400; font-size: clamp(2.2rem, 9vw, 3.4rem); letter-spacing: 0.1em; color: var(--menta);
+  background: var(--superficie-a);
 }
 .recebido .acoes-form { margin-top: 26px; }
 .recebido p { max-width: 54ch; color: var(--tinta-2); font-size: 16px; }
@@ -71,21 +71,21 @@
 .numeros { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); border: 1px solid var(--linha-forte); background: var(--superficie); margin-top: 28px; }
 .numeros > div { padding: 16px 18px; border-left: 1px solid var(--linha); }
 .numeros > div:first-child { border-left: 0; }
-.numeros .valor { font-family: var(--mono); font-size: 2rem; font-weight: 500; line-height: 1.1; }
+.numeros .valor { font-family: var(--fonte-titulo); font-size: 3rem; font-weight: 400; line-height: 1; letter-spacing: 0.03em; color: var(--menta); }
 .numeros .rotulo { font-size: 13px; color: var(--tinta-2); margin-top: 4px; }
 .dados-grade { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 36px; margin-top: 36px; align-items: start; }
 .dados-grade .mapa { height: 480px; }
 .tabela-bairros { width: 100%; border-collapse: collapse; font-size: 14px; }
-.tabela-bairros th { text-align: left; font-size: 13px; font-weight: 600; color: var(--tinta-2); padding: 0 0 8px 14px; border-bottom: 1px solid var(--tinta); }
+.tabela-bairros th { text-align: left; font-size: 13px; font-weight: 600; color: var(--tinta-2); padding: 0 0 8px 14px; border-bottom: 1px solid var(--borda); }
 .tabela-bairros th:first-child, .tabela-bairros td:first-child { padding-left: 0; }
 .tabela-bairros td { padding: 10px 0 10px 14px; border-bottom: 1px solid var(--linha); vertical-align: middle; }
 .tabela-bairros tbody th { font-size: 14px; font-weight: 600; color: var(--tinta); padding: 10px 0 10px 0; border-bottom: 1px solid var(--linha); }
 .tabela-bairros th.num, .tabela-bairros td.num { text-align: right; }
 .tabela-bairros td.num { font-family: var(--mono); }
 .barra { height: 6px; background: var(--papel-2); width: 100%; min-width: 60px; }
-.barra i { display: block; height: 100%; background: var(--ferrugem); }
+.barra i { display: block; height: 100%; background: var(--menta); border-radius: 3px; }
 .legenda { display: flex; gap: 14px; align-items: center; font-size: 12.5px; color: var(--tinta-2); margin-top: 10px; flex-wrap: wrap; }
-.legenda span.q { display: inline-block; width: 14px; height: 14px; margin-right: 5px; vertical-align: -2px; border: 1px solid rgba(0,0,0,.2); }
+.legenda span.q { display: inline-block; width: 14px; height: 14px; margin-right: 5px; vertical-align: -2px; border: 1px solid var(--borda); border-radius: 3px; }
 .nota-privacidade { margin-top: 28px; font-size: 13.5px; color: var(--tinta-2); max-width: 70ch; }
 
 @media (max-width: 900px) {
@@ -98,7 +98,7 @@
   .tipos, .linha-contato { grid-template-columns: minmax(0, 1fr); }
   .nota-consent { padding-top: 0; }
   .abertura { padding-top: 30px; }
-  .numeros .valor { font-size: 1.5rem; }
+  .numeros .valor { font-size: 2.2rem; }
   .numeros > div { padding: 12px; }
   .dados-grade .mapa { height: 320px; }
 }
@@ -107,15 +107,15 @@
 .filtro-tipo { margin-top: 28px; max-width: 320px; }
 .filtro-tipo .rotulo { display: block; font-weight: 600; font-size: 14px; margin-bottom: 6px; }
 .bolha {
-  display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid #17252A;
-  font-family: var(--mono); font-weight: 500; font-size: 13px; opacity: 0.92; cursor: pointer;
+  display: flex; align-items: center; justify-content: center; border-radius: 50%; border: 1px solid var(--fundo);
+  font-family: var(--mono); font-weight: 700; font-size: 13px; opacity: 0.95; cursor: pointer;
 }
 .ranking { list-style: none; margin: 0; padding: 0; }
 .ranking li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: center; padding: 9px 0; border-top: 1px solid var(--linha); }
-.ranking li:first-child { border-top: 1px solid var(--tinta); }
+.ranking li:first-child { border-top: 1px solid var(--borda); }
 .ranking b { display: block; font-weight: 600; }
 .ranking small { display: block; color: var(--tinta-2); font-size: 12.5px; }
-.bolha-mini { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid #17252A; font-family: var(--mono); font-weight: 500; }
+.bolha-mini { display: flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; border: 1px solid var(--fundo); font-family: var(--mono); font-weight: 700; }
 
 /* Campo de foto com rótulo próprio */
 .anexo { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }

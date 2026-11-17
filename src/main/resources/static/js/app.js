@@ -87,6 +87,10 @@
     return mapa;
   }
 
+  function cor(nome) {
+    return getComputedStyle(document.documentElement).getPropertyValue(nome).trim();
+  }
+
   function cabecalho(ativo, usuario) {
     const links = usuario
       ? usuario.perfil === "OPERADOR"
@@ -97,7 +101,7 @@
     const quem = usuario
       ? `<span class="usuario"><span>${esc(usuario.nome)}</span><button type="button" id="sair">Sair</button></span>`
       : "";
-    return `<header class="topo"><a class="marca" href="${usuario ? (usuario.perfil === "OPERADOR" ? "painel.html" : "recurso.html") : "index.html"}"><span class="emblema" aria-hidden="true"><img src="img/logo-cpet.png" alt=""><i></i></span><svg class="wordmark" viewBox="0 0 80 28" width="80" height="28" role="img" aria-label="C-PET"><text x="0" y="22">C-<tspan class="pet">PET</tspan></text></svg><small>Reporte, prioridade e encaminhamento de animais de rua</small></a><nav aria-label="Principal">${nav}${quem}</nav></header>`;
+    return `<header class="topo"><a class="marca" href="${usuario ? (usuario.perfil === "OPERADOR" ? "painel.html" : "recurso.html") : "index.html"}"><img class="emblema" src="img/emblema.png" alt="" width="52" height="52"><span class="wordmark" role="img" aria-label="C-PET">C-<b>PET</b></span><small>Reporte, prioridade e encaminhamento de animais de rua</small></a><nav aria-label="Principal">${nav}${quem}</nav></header>`;
   }
 
   async function iniciar(ativo, { usuario = null, exigir = null } = {}) {
@@ -139,5 +143,5 @@
     return atual;
   }
 
-  window.CPET = { TIPOS, STATUS, RECURSOS, api, esc, quando, quandoCompleto, haTempo, classeScore, chipStatus, mapaBase, iniciar };
+  window.CPET = { TIPOS, STATUS, RECURSOS, api, esc, quando, quandoCompleto, haTempo, classeScore, chipStatus, mapaBase, cor, iniciar };
 })();

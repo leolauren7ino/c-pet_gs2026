@@ -2,7 +2,8 @@
   const { api, iniciar, esc, mapaBase, TIPOS } = window.CPET;
   iniciar("dados.html");
 
-  const RAMPA = ["#F1E4C3", "#E3B66B", "#D2832E", "#A9431E", "#7E2410"];
+  const RAMPA = [1, 2, 3, 4, 5].map((i) => CPET.cor("--rampa-" + i));
+  const SOBRE_RAMPA = [1, 2, 3, 4, 5].map((i) => CPET.cor("--sobre-rampa-" + i));
   const FAIXAS = [
     [0, "nenhum"],
     [1, "1 a 2"],
@@ -19,13 +20,11 @@
   let celulas = [];
   let bairros = [];
 
-  function cor(abertos) {
-    if (abertos >= 7) return RAMPA[4];
-    if (abertos >= 5) return RAMPA[3];
-    if (abertos >= 3) return RAMPA[2];
-    if (abertos >= 1) return RAMPA[1];
-    return RAMPA[0];
+  function faixa(abertos) {
+    return abertos >= 7 ? 4 : abertos >= 5 ? 3 : abertos >= 3 ? 2 : abertos >= 1 ? 1 : 0;
   }
+  const cor = (abertos) => RAMPA[faixa(abertos)];
+  const sobre = (abertos) => SOBRE_RAMPA[faixa(abertos)];
 
   function abertos(item) {
     const tipo = filtro.value;
@@ -49,7 +48,7 @@
         icon: L.divIcon({
           className: "",
           iconSize: [d, d],
-          html: `<span class="bolha" style="width:${d}px;height:${d}px;background:${cor(n)};color:${n >= 5 ? "#fff" : "#17252A"}">${n}</span>`,
+          html: `<span class="bolha" style="width:${d}px;height:${d}px;background:${cor(n)};color:${sobre(n)}">${n}</span>`,
         }),
         keyboard: false,
       })
@@ -63,7 +62,7 @@
           .sort((a, b) => abertos(b) - abertos(a))
           .slice(0, 5)
           .map(
-            (c) => `<li><span class="bolha-mini" style="background:${cor(abertos(c))};color:${abertos(c) >= 5 ? "#fff" : "#17252A"}">${abertos(c)}</span>
+            (c) => `<li><span class="bolha-mini" style="background:${cor(abertos(c))};color:${sobre(abertos(c))}">${abertos(c)}</span>
               <span><b>${esc(c.bairro)}</b><small>${esc(resumoTipos(c))}</small></span></li>`
           )
           .join("")
