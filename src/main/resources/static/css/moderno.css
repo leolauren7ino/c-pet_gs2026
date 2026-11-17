@@ -158,6 +158,8 @@ details.arquivar summary { color: var(--erro); }
 .equipe { list-style: none; margin: var(--e5) 0 0; padding: 0; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--e4); }
 .equipe li { display: flex; gap: var(--e4); align-items: center; padding: var(--e5); border: 1px solid var(--borda); border-radius: var(--raio-cartao); background: var(--superficie-a); }
 .equipe b { display: block; font-family: var(--fonte-titulo); font-weight: 400; font-size: 1.6rem; letter-spacing: 0.04em; text-transform: uppercase; }
+.equipe .foto-equipe { flex: none; width: 96px; height: 96px; border-radius: 50%; object-fit: cover; object-position: 50% 25%; border: 1px solid var(--borda); background: var(--fundo); display: block; }
+.equipe .foto-leonardo { object-position: 50% 35%; }
 .equipe span { color: var(--texto-2); font-size: 14px; }
 
 /* Celular: navegação inferior fixa */
